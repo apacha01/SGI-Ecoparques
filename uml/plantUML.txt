@@ -1,0 +1,130 @@
+@startuml
+hide circles
+skinparam monochrome true
+skinparam classAttributeIconSize 0
+
+class Main
+class Sistema
+class MenuUsos
+class Especie
+class Habitat
+class Clima
+class Vegetacion
+class Continente
+class Zona
+class Intinerario
+class Empleado
+class Guia
+class Cuidador
+class Administrador
+
+class Sistema{
+   +arrancar()
+   +acceder()
+   +menuCasosUso()
+}
+
+class MenuUsos{
+   +printMenu()
+   +manejarCasoUso()
+}
+
+class Especie {
+   -String nomEsp
+   -String nomCientifico
+   -String descripcion
+}
+
+class Habitat {
+   -String nom
+   -Clima clima
+   -Vegetacion vegPredo
+   -Continente continente
+}
+
+class Clima{
+   -int climaActual
+   +final int SOLEADO
+   +final int NUBLADO
+   +final int LLUVIA
+   +final int TORMENTA
+   +final int TEMPLADO
+   +getClimaActual(): int
+}
+
+class Vegetacion{
+   -int vegActual
+   +final int PASTIZAL
+   +final int SABANA
+   +final int BOSQUE
+   +final int DESIERTO
+   +getVegActual(): int
+}
+
+class Continente{
+   -int contActual
+   +final int AMERICA
+   +final int EUROPA
+   +final int ASIA
+   +final int OCEANIA
+   +final int AFRICA
+   +final int ANTARTIDA
+   +getContActual(): int
+}
+
+class Zona{
+   String nom
+   int extension
+}
+
+class Intinerario{
+   -int cod
+   -int duracion
+   -int longitud
+   -final int MAX_PERSONAS
+   -final int NUM_ESPE_VISITA
+}
+
+class Empleado{
+   -String nom
+   -String direccion
+   -String telefono
+   -String fechaIngreso
+   +{abstract} consultarDatos()
+}
+
+class Guia{
+   -Fecha intinerarioAsignado
+}
+
+class Cuidador{
+   -Fecha tomaEspecie
+}
+
+class Administrador{
+   +gestionarTodo()
+   +listarXantiguedad()
+}
+
+Main --> Sistema
+
+Sistema *-- MenuUsos
+Sistema o-- Empleado
+
+Empleado <|-- Cuidador
+Empleado <|-- Guia
+Empleado <|-- Administrador
+
+Especie "n" o-- "n" Habitat : habitats /\nespecies
+Especie "n" o-- "1" Zona : zonasParque
+
+Habitat --> Clima
+Habitat --> Continente
+Habitat --> Vegetacion
+
+Guia "1" o-- "n" Intinerario : intinerarios
+
+Cuidador "n" o-- "n" Especie : especiesCuidadas /\ncuidadores
+
+Intinerario "n" o-- "n" Zona : zonasRecorrido /\nintinerarios
+@enduml
