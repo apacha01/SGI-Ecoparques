@@ -127,4 +127,19 @@ public class LecturaPorConsola {
         return datos;
     }
     
+    public static boolean confirmarDecision(){
+        boolean decision = false;
+        char c = 'a';
+        
+        while(c != 's' && c == 'S' && c == 'n' && c == 'N'){
+            System.out.print("\n¿Está seguro que desea realizar esta acción? (s/n): ");
+            c = leerChar();
+        }
+        
+        if (c == 's' || c == 'S') decision = true;
+        if (c == 'n' || c == 'N') decision = false;
+        
+        return decision;
+    }
+    
 }

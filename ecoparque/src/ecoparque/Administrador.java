@@ -40,10 +40,8 @@ public class Administrador extends Empleado implements Serializable{
         System.out.println(DAR_ALTA_ESPECIE + ". Dar de alta una especie.");
         System.out.println(DAR_BAJA_EMPLEADO + ". Dar de baja una especie.");
         System.out.println(REGISTRAR_ZONA + ". Registrar zona.");
-        System.out.println(MODIFICAR_ZONA + ". Modificar zona.");
         System.out.println(INHABILITAR_ZONA + ". Inhabilitar zona.");
         System.out.println(REGISTRAR_HABITAT + ". Registrar habitat.");
-        System.out.println(MODIFICAR_HABITAT + ". Modificar habitat.");
         System.out.println(INHABILITAR_HABITAT + ". Inhabilitar habitat.");
         System.out.println(ASIGNAR_ESP_CUIDADOR + ". Asignar una especie a un cuidador.");
         System.out.println(REMOVER_ESP_CUIDADOR + ". Remover una especie a un cuidador.");
@@ -64,10 +62,8 @@ public class Administrador extends Empleado implements Serializable{
             case DAR_BAJA_ESPECIE: darBajaEsp(s); break;
             case REGISTRAR_ZONA: registrar(STRING_ZONA, s); break;
             case INHABILITAR_ZONA: inhabilitar(STRING_ZONA, s); break;
-            case MODIFICAR_ZONA: modificar(STRING_ZONA, s); break;
             case REGISTRAR_HABITAT: registrar(STRING_HABITAT, s); break;
             case INHABILITAR_HABITAT: inhabilitar(STRING_HABITAT, s); break;
-            case MODIFICAR_HABITAT: modificar(STRING_HABITAT, s); break;
             case ASIGNAR_ESP_CUIDADOR: ; break;
             case REMOVER_ESP_CUIDADOR: ; break;
             case ASIGNAR_INT_GUIA: ; break;
@@ -75,7 +71,7 @@ public class Administrador extends Empleado implements Serializable{
             case LISTAR_EMPLEADOS_X_ANTIGUEDAD: listarXantiguedad(s); break;
             default: break;
         }
-        if (op >= 2 && op <= 15) {
+        if (op >= 3 && op <= CANT_OPC_MENU_ADMIN-1) {
             try { s.serializar(NOMBRE_ARCHIVO); }
             catch (IOException e) { e.printStackTrace(); }
         }
@@ -83,41 +79,30 @@ public class Administrador extends Empleado implements Serializable{
         return seguir;
     }
     
-    @Override
-    public void consultarDatos(Sistema s) {
-        System.out.println("\n");
-        //MUESTRO EMPLEADOS
+    private void mostrarEmpleados (Sistema s){
         System.out.println(SEPARADOR_MEDIO + "Empleados" + SEPARADOR_MEDIO);
         ArrayList<Empleado> emps = s.getEmpleados();
         for (int i = 0; i < emps.size(); i++) {
             emps.get(i).mostrarDatos();
             System.out.println(SEPARADOR);
         }
-        
-        //MUESTRO ESPECIES
+    }
+    
+    private void mostrarEspecies (Sistema s) {
         System.out.println(SEPARADOR_MEDIO + "Especies" + SEPARADOR_MEDIO);
         ArrayList<Especie> esps = new ArrayList<>();
-        //ArrayList<Especie> esps = s.getEspecies();
+        //ArrayList<Especie> esps = s.getEspecies();        //ME TOMA esps COMO NULL
         if (esps.isEmpty()) {
             System.out.println("No hay especies registradas en el sistema.");
         } else {
             for (int i = 0; i < esps.size(); i++) {
                 esps.get(i).mostrarDatos();
+                System.out.println(SEPARADOR);
             }
         }
-        
-        //MUESTRO ZONAS
-//        System.out.println(SEPARADOR_MEDIO + "Zonas" + SEPARADOR_MEDIO);
-//        ArrayList<Zona> zonas = s.getZonas();
-//        if (zonas.isEmpty()) {
-//            System.out.println("No hay zonas registradas en el sistema.");
-//        } else {
-//            for (int i = 0; i < zona.size(); i++) {
-//                zonas.get(i).mostrarDatos();
-//            }
-//        }
-        
-        //MUESTRO HABITATS
+    }
+    
+    private void mostrarHabitats (Sistema s){
         System.out.println(SEPARADOR_MEDIO + "Habitats" + SEPARADOR_MEDIO);
         ArrayList<Habitat> habitats = s.getHabitats();
         if (habitats.isEmpty()) {
@@ -125,19 +110,55 @@ public class Administrador extends Empleado implements Serializable{
         } else {
             for (int i = 0; i < habitats.size(); i++) {
                 habitats.get(i).mostrarDatos();
+                System.out.println(SEPARADOR);
             }
-        }   
-        
-        //MUESTRO INTINERARIOS
+        }
+    }
+    
+    private void mostrarZonas (Sistema s){
+//        System.out.println(SEPARADOR_MEDIO + "Zonas" + SEPARADOR_MEDIO);
+//        ArrayList<Zona> zonas = s.getZonas();
+//        if (zonas.isEmpty()) {
+//            System.out.println("No hay zonas registradas en el sistema.");
+//        } else {
+//            for (int i = 0; i < zona.size(); i++) {
+//              zonas.get(i).mostrarDatos();
+//              System.out.println(SEPARADOR);
+//            }
+//        }
+    }
+    
+    private void mostrarIntinerarios (Sistema s){
 //        System.out.println(SEPARADOR_MEDIO + "Habitats" + SEPARADOR_MEDIO);
 //        ArrayList<Intinerario> ints = s.getIntinerarios();
 //        if (ints.isEmpty()) {
 //            System.out.println("No hay intinerarios registradas en el sistema.");
 //        } else {
 //            for (int i = 0; i < ints.size(); i++) {
-//                ints.get(i).mostrarDatos();
+//              ints.get(i).mostrarDatos();
+//              System.out.println(SEPARADOR);
 //            }
 //        }
+    }
+    
+    @Override
+    public void consultarDatos(Sistema s) {
+        System.out.println("\n");
+        
+        //MUESTRO EMPLEADOS
+        mostrarEmpleados(s);
+        
+        //MUESTRO ESPECIES
+        mostrarEspecies(s);
+        
+        //MUESTRO HABITATS
+        mostrarHabitats(s);
+        
+        //MUESTRO ZONAS
+        mostrarZonas(s);
+        
+        //MUESTRO INTINERARIOS
+        mostrarIntinerarios(s);
         
     }
 
@@ -166,6 +187,19 @@ public class Administrador extends Empleado implements Serializable{
     }
 
     private void darBajaEmp(Sistema s) {
+        String empBaja;
+        Empleado e = null;
+        
+        while(true){
+            System.out.println("\n¿Qué empleado desea dar de baja?");
+            mostrarEmpleados(s);
+            System.out.print("\nIngrese el nombre de usuario del empleado que desea elminiar: ");
+            empBaja = leerString();
+            e = s.existeEmpleado(empBaja);
+            if (e != null) break;
+        }
+        
+        s.eliminarEmpleado(e);
         
     }
 
@@ -182,10 +216,6 @@ public class Administrador extends Empleado implements Serializable{
     }
 
     private void inhabilitar(String s, Sistema sis) {
-        
-    }
-
-    private void modificar(String s, Sistema sis) {
         
     }
 

@@ -61,10 +61,10 @@ public class SistemaSerializable {
         }
 
         while (seguir) {
-            System.out.println("Ingrese el nombre de usuario: ");
+            System.out.print("\nIngrese el nombre de usuario: ");
             String usuario = LecturaPorConsola.leerString();
             
-            System.out.println("Ingrese la contraseña: ");
+            System.out.print("\nIngrese la contraseña: ");
             String contra = LecturaPorConsola.leerString();
             
             Empleado e = s.existeEmpleado(usuario,contra);

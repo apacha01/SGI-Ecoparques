@@ -82,6 +82,20 @@ public class Sistema implements Serializable {
         return null;
     }
     
+    public Empleado existeEmpleado(String nomUsuario){
+        for (Empleado emp: empleados) {
+            if (emp.getUsuario().equals(nomUsuario)){
+                return emp;
+            }
+        }
+        return null;
+    }
+    
+    public void eliminarEmpleado(Empleado e){
+        if (e == null) return;
+        empleados.remove(e);
+    }
+    
     /**
     *  @param a es el nombre del archivo del que se deserializa 
      * @return sistema que deserializo del archivo
