@@ -1,6 +1,7 @@
 
 package ecoparque;
 
+import static clasesAuxiliares.Constantes.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,12 +19,14 @@ public class Sistema implements Serializable {
     private ArrayList<Especie> especies;
     private ArrayList<Habitat> habitats;
     //private ArrayList<Zona> zonas;
+    //private ArrayList<Intinerario> ints;
     
     public Sistema() {
         empleados = new ArrayList<>();
         especies = new ArrayList<>();
         habitats = new ArrayList<>();
         //zonas = new ArrayList<>();
+        //ints = new ArrayList<>();
     }
     
     /**
@@ -94,6 +97,77 @@ public class Sistema implements Serializable {
     public void eliminarEmpleado(Empleado e){
         if (e == null) return;
         empleados.remove(e);
+    }
+    
+    /**
+     * Muestra los empleados en el sistema por consola
+     */
+    public void mostrarEmpleados(){
+        System.out.println(SEPARADOR_MEDIO + "Empleados" + SEPARADOR_MEDIO);
+        for (int i = 0; i < empleados.size(); i++) {
+            empleados.get(i).mostrarDatos();
+            System.out.println(SEPARADOR);
+        }
+    }
+    
+    /**
+     * Muestra las especies en el sistema por consola
+     */
+    public void mostrarEspecies() {
+        System.out.println(SEPARADOR_MEDIO + "Especies" + SEPARADOR_MEDIO);
+        if (especies.isEmpty()) {
+            System.out.println("No hay especies registradas en el sistema.");
+        } else {
+            for (int i = 0; i < especies.size(); i++) {
+                especies.get(i).mostrarDatos();
+                System.out.println(SEPARADOR);
+            }
+        }
+    }
+    
+    /**
+     * Muestra los habitats en el sistema por consola
+     */
+    public void mostrarHabitats (){
+        System.out.println(SEPARADOR_MEDIO + "Habitats" + SEPARADOR_MEDIO);
+        if (habitats.isEmpty()) {
+            System.out.println("No hay habitats registradas en el sistema.");
+        } else {
+            for (int i = 0; i < habitats.size(); i++) {
+                habitats.get(i).mostrarDatos();
+                System.out.println(SEPARADOR);
+            }
+        }
+    }
+    
+    /**
+     * Muestra las zonas en el sistema por consola
+     */
+    public void mostrarZonas (){
+//        System.out.println(SEPARADOR_MEDIO + "Zonas" + SEPARADOR_MEDIO);
+//        if (zonas.isEmpty()) {
+//            System.out.println("No hay zonas registradas en el sistema.");
+//        } else {
+//            for (int i = 0; i < zona.size(); i++) {
+//              zonas.get(i).mostrarDatos();
+//              System.out.println(SEPARADOR);
+//            }
+//        }
+    }
+    
+    /**
+     * Muestra los intinerarios en el sistema por consola
+     */
+    public void mostrarIntinerarios (){
+//        System.out.println(SEPARADOR_MEDIO + "Intinerarios" + SEPARADOR_MEDIO);
+//        if (ints.isEmpty()) {
+//            System.out.println("No hay intinerarios registradas en el sistema.");
+//        } else {
+//            for (int i = 0; i < ints.size(); i++) {
+//              ints.get(i).mostrarDatos();
+//              System.out.println(SEPARADOR);
+//            }
+//        }
     }
     
     /**

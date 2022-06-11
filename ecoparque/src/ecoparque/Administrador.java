@@ -69,7 +69,7 @@ public class Administrador extends Empleado implements Serializable{
             case ASIGNAR_INT_GUIA: ; break;
             case REMOVER_INT_GUIA: ; break;
             case LISTAR_EMPLEADOS_X_ANTIGUEDAD: listarXantiguedad(s); break;
-            default: break;
+            default: System.err.println("Error: esa opción no existe."); break;
         }
         if (op >= 3 && op <= CANT_OPC_MENU_ADMIN-1) {
             try { s.serializar(NOMBRE_ARCHIVO); }
@@ -79,86 +79,24 @@ public class Administrador extends Empleado implements Serializable{
         return seguir;
     }
     
-    private void mostrarEmpleados (Sistema s){
-        System.out.println(SEPARADOR_MEDIO + "Empleados" + SEPARADOR_MEDIO);
-        ArrayList<Empleado> emps = s.getEmpleados();
-        for (int i = 0; i < emps.size(); i++) {
-            emps.get(i).mostrarDatos();
-            System.out.println(SEPARADOR);
-        }
-    }
-    
-    private void mostrarEspecies (Sistema s) {
-        System.out.println(SEPARADOR_MEDIO + "Especies" + SEPARADOR_MEDIO);
-        ArrayList<Especie> esps = new ArrayList<>();
-        //ArrayList<Especie> esps = s.getEspecies();        //ME TOMA esps COMO NULL
-        if (esps.isEmpty()) {
-            System.out.println("No hay especies registradas en el sistema.");
-        } else {
-            for (int i = 0; i < esps.size(); i++) {
-                esps.get(i).mostrarDatos();
-                System.out.println(SEPARADOR);
-            }
-        }
-    }
-    
-    private void mostrarHabitats (Sistema s){
-        System.out.println(SEPARADOR_MEDIO + "Habitats" + SEPARADOR_MEDIO);
-        ArrayList<Habitat> habitats = s.getHabitats();
-        if (habitats.isEmpty()) {
-            System.out.println("No hay habitats registradas en el sistema.");
-        } else {
-            for (int i = 0; i < habitats.size(); i++) {
-                habitats.get(i).mostrarDatos();
-                System.out.println(SEPARADOR);
-            }
-        }
-    }
-    
-    private void mostrarZonas (Sistema s){
-//        System.out.println(SEPARADOR_MEDIO + "Zonas" + SEPARADOR_MEDIO);
-//        ArrayList<Zona> zonas = s.getZonas();
-//        if (zonas.isEmpty()) {
-//            System.out.println("No hay zonas registradas en el sistema.");
-//        } else {
-//            for (int i = 0; i < zona.size(); i++) {
-//              zonas.get(i).mostrarDatos();
-//              System.out.println(SEPARADOR);
-//            }
-//        }
-    }
-    
-    private void mostrarIntinerarios (Sistema s){
-//        System.out.println(SEPARADOR_MEDIO + "Habitats" + SEPARADOR_MEDIO);
-//        ArrayList<Intinerario> ints = s.getIntinerarios();
-//        if (ints.isEmpty()) {
-//            System.out.println("No hay intinerarios registradas en el sistema.");
-//        } else {
-//            for (int i = 0; i < ints.size(); i++) {
-//              ints.get(i).mostrarDatos();
-//              System.out.println(SEPARADOR);
-//            }
-//        }
-    }
-    
     @Override
     public void consultarDatos(Sistema s) {
         System.out.println("\n");
         
         //MUESTRO EMPLEADOS
-        mostrarEmpleados(s);
+        s.mostrarEmpleados();
         
         //MUESTRO ESPECIES
-        mostrarEspecies(s);
+        s.mostrarEspecies();
         
         //MUESTRO HABITATS
-        mostrarHabitats(s);
+        s.mostrarHabitats();
         
         //MUESTRO ZONAS
-        mostrarZonas(s);
+        s.mostrarZonas();
         
         //MUESTRO INTINERARIOS
-        mostrarIntinerarios(s);
+        s.mostrarIntinerarios();
         
     }
 
@@ -170,10 +108,10 @@ public class Administrador extends Empleado implements Serializable{
         System.out.println("1. Cuidador\n2. Guía\n3. Salir");
         opc = leerInt(3);
         
-        ArrayList<String> datos = pedirDatos();
+        ArrayList<String> datos = pedirDatosEmpleado();
         
         switch(opc){
-            case -1: System.err.println("Error 1 al dar de alta empleado"); break;
+            case -1: System.err.println("Error 1 al dar de alta empleado."); break;
             case 1:
                 e = new Cuidador(datos.get(0),datos.get(1),datos.get(2),datos.get(3),datos.get(4), new Date());
                 break;
@@ -181,7 +119,7 @@ public class Administrador extends Empleado implements Serializable{
                 e = new Guia(datos.get(0),datos.get(1),datos.get(2),datos.get(3),datos.get(4), new Date());
                 break;
             case 3: return;
-            default: System.err.println("Error 2 al dar de alta empleado"); break;
+            default: System.err.println("Error 2 al dar de alta empleado."); break;
         }
         if (e != null) s.getEmpleados().add(e);
     }
@@ -192,7 +130,7 @@ public class Administrador extends Empleado implements Serializable{
         
         while(true){
             System.out.println("\n¿Qué empleado desea dar de baja?");
-            mostrarEmpleados(s);
+            s.mostrarEmpleados();
             System.out.print("\nIngrese el nombre de usuario del empleado que desea elminiar: ");
             empBaja = leerString();
             e = s.existeEmpleado(empBaja);
@@ -204,7 +142,14 @@ public class Administrador extends Empleado implements Serializable{
     }
 
     private void darAltaEsp(Sistema s) {
+         String nom = pedirNombreColoquialEspecie();
+         String nomCient = pedirNombreCientificoEspecie();
+         String desc = pedirDescripcion();
+         ArrayList<Empleado> cuidadores = pedirCuidadores(s);
          
+         Especie nuevaEspecie = new Especie(nom,nomCient,desc,cuidadores);
+         
+         s.getEspecies().add(nuevaEspecie);
     }
 
     private void darBajaEsp(Sistema s) {

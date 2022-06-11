@@ -38,7 +38,7 @@ public class SistemaSerializable {
             String contra = LecturaPorConsola.pedirContra();
             
             //PIDO NOMBRE DEL EMPLEADO
-            String nombre = LecturaPorConsola.pedirNombre();
+            String nombre = LecturaPorConsola.pedirNombreEmpleado();
             
             //PIDO DIRECCIÓN DEL EMPLEADO
             String direccion = LecturaPorConsola.pedirDireccion();

@@ -12,9 +12,16 @@ public class Especie {
     private String nomEspecie;
     private String nomCientifico;
     private String descripcion;
-    private ArrayList<Cuidador> cuidadores;
+    private ArrayList<Empleado> cuidadores;
     //private ArrayList<Habitat> habitats;
 
+    public Especie(String nomEspecie, String nomCientifico, String descripcion, ArrayList<Empleado> cuidadores) {
+        this.nomEspecie = nomEspecie;
+        this.nomCientifico = nomCientifico;
+        this.descripcion = descripcion;
+        this.cuidadores = cuidadores;
+    }
+    
     public void mostrarDatos() {
         System.out.println(SEPARADOR);
         System.out.println("Nombre de la Especie: " + nomEspecie);
