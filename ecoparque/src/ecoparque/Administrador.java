@@ -2,6 +2,7 @@
 package ecoparque;
 
 import static clasesAuxiliares.Constantes.*;
+import clasesAuxiliares.LecturaPorConsola;
 import static clasesAuxiliares.LecturaPorConsola.*;
 import java.io.IOException;
 import java.io.Serializable;
@@ -134,7 +135,11 @@ public class Administrador extends Empleado implements Serializable{
             System.out.print("\nIngrese el nombre de usuario del empleado que desea elminiar: ");
             empBaja = leerString();
             e = s.existeEmpleado(empBaja);
-            if (e != null) break;
+            if (e != null) {
+                if (confirmarDecision()) {
+                    break;
+                }
+            }
         }
         
         s.eliminarEmpleado(e);
@@ -145,7 +150,7 @@ public class Administrador extends Empleado implements Serializable{
          String nom = pedirNombreColoquialEspecie();
          String nomCient = pedirNombreCientificoEspecie();
          String desc = pedirDescripcion();
-         ArrayList<Empleado> cuidadores = pedirCuidadores(s);
+         ArrayList<Cuidador> cuidadores = pedirCuidadores(s);
          
          Especie nuevaEspecie = new Especie(nom,nomCient,desc,cuidadores);
          

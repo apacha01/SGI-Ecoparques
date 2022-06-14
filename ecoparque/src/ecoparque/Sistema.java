@@ -99,6 +99,28 @@ public class Sistema implements Serializable {
         empleados.remove(e);
     }
     
+    public Cuidador existeCuidador(String nomUsuario){
+        ArrayList<Cuidador> cuidadores = obtenerCuidadores();
+        
+        for (Cuidador cuidador : cuidadores) {
+            if (cuidador.getUsuario().equals(nomUsuario)) {
+                return cuidador;
+            }
+        }
+        
+        return null;
+    }
+    
+    public ArrayList<Cuidador> obtenerCuidadores(){
+        ArrayList<Cuidador> cuidadores = new ArrayList<>();
+        for (Empleado empleado : empleados) {
+            if (empleado instanceof Cuidador) {
+                cuidadores.add((Cuidador)empleado);
+            }
+        }
+        return cuidadores;
+    }
+    
     /**
      * Muestra los empleados en el sistema por consola
      */

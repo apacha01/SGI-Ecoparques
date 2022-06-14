@@ -1,6 +1,7 @@
 
 package clasesAuxiliares;
 
+import ecoparque.Cuidador;
 import ecoparque.Sistema;
 import ecoparque.Empleado;
 import java.util.ArrayList;
@@ -223,7 +224,7 @@ public class LecturaPorConsola {
         boolean decision = false;
         char c = 'a';
         
-        while(c != 's' && c == 'S' && c == 'n' && c == 'N'){
+        while(c != 's' && c != 'S' && c != 'n' && c != 'N'){
             System.out.print("\n¿Está seguro que desea realizar esta acción? (s/n): ");
             c = leerChar();
         }
@@ -242,7 +243,7 @@ public class LecturaPorConsola {
      */
     public static String pedirNombreColoquialEspecie(){
         //PIDO NOMBRE DEL HABITAT A REGISTRAR
-        System.out.println("Ingrese el nombre de la especie: ");
+        System.out.print("\nIngrese el nombre de la especie: ");
         String s = leerString();
         if (s.equals("")) {
             throw new NullPointerException("ERROR: Su nombre no puede ser nulo.");
@@ -257,7 +258,7 @@ public class LecturaPorConsola {
      */
     public static String pedirNombreCientificoEspecie(){
         //PIDO NOMBRE DEL HABITAT A REGISTRAR
-        System.out.println("Ingrese el nombre cientifico de la especie: ");
+        System.out.print("\nIngrese el nombre cientifico de la especie: ");
         String s = leerString();
         if (s.equals("")) {
             throw new NullPointerException("ERROR: Su nombre no puede ser nulo.");
@@ -284,24 +285,25 @@ public class LecturaPorConsola {
      * @param s sistema de donde se sacan los cuidadores
      * @return un Empleado encargado de cuidar a la especie
      */
-    public static ArrayList<Empleado> pedirCuidadores(Sistema s){
-        ArrayList<Empleado> e = new ArrayList<>();
+    public static ArrayList<Cuidador> pedirCuidadores(Sistema s){
+        ArrayList<Cuidador> e = new ArrayList<>();
         String cuidador;
         boolean hayMas;
         int i = 0;
         
         do{
             s.mostrarEmpleados();
-            System.out.print("Ingrese el nombre de usuario del cuidador de esta especie: ");
+            System.out.print("\nIngrese el nombre de usuario del cuidador de esta especie (0 para salir): ");
             cuidador = leerString();
-            e.add(s.existeEmpleado(cuidador));
+            e.add(s.existeCuidador(cuidador));
             if (e.get(i) == null) {
-                System.out.println("Error: ese empleado no existe.");
+                System.err.println("Error: ese empleado no existe o no es un cuidador.");
                 hayMas = true;
-                i--;
             }
+            else if(cuidador.equals("0")) hayMas = false;
             else {
-                System.out.print("¿Hay más cuidadores asignados a esta especie? (s/n)");
+                
+                System.out.print("¿Hay más cuidadores asignados a esta especie? (s/n): ");
                 hayMas = leerBoolean();
             }
             i++;
