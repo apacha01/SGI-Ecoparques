@@ -121,11 +121,26 @@ public class Sistema implements Serializable {
         return cuidadores;
     }
     
+    public Especie existeEspecie(String nomCientifico){
+        for (Especie esp: especies) {
+            //IGNORO CASE - LOS NOMBRES CIENTIFICOS SON COMPLICADOS
+            if (esp.getNomCientifico().equalsIgnoreCase(nomCientifico)){
+                return esp;
+            }
+        }
+        return null;
+    }
+    
+    public void eliminarEspecie(Especie e){
+        if (e == null) return;
+        especies.remove(e);
+    }
+    
     /**
      * Muestra los empleados en el sistema por consola
      */
     public void mostrarEmpleados(){
-        System.out.println(SEPARADOR_MEDIO + "Empleados" + SEPARADOR_MEDIO);
+        System.out.println("\n" + SEPARADOR_MEDIO + "Empleados" + SEPARADOR_MEDIO);
         for (int i = 0; i < empleados.size(); i++) {
             empleados.get(i).mostrarDatos();
             System.out.println(SEPARADOR);
@@ -136,7 +151,7 @@ public class Sistema implements Serializable {
      * Muestra las especies en el sistema por consola
      */
     public void mostrarEspecies() {
-        System.out.println(SEPARADOR_MEDIO + "Especies" + SEPARADOR_MEDIO);
+        System.out.println("\n" + SEPARADOR_MEDIO + "Especies" + SEPARADOR_MEDIO);
         if (especies.isEmpty()) {
             System.out.println("No hay especies registradas en el sistema.");
         } else {
@@ -151,7 +166,7 @@ public class Sistema implements Serializable {
      * Muestra los habitats en el sistema por consola
      */
     public void mostrarHabitats (){
-        System.out.println(SEPARADOR_MEDIO + "Habitats" + SEPARADOR_MEDIO);
+        System.out.println("\n" + SEPARADOR_MEDIO + "Habitats" + SEPARADOR_MEDIO);
         if (habitats.isEmpty()) {
             System.out.println("No hay habitats registradas en el sistema.");
         } else {
@@ -166,7 +181,7 @@ public class Sistema implements Serializable {
      * Muestra las zonas en el sistema por consola
      */
     public void mostrarZonas (){
-//        System.out.println(SEPARADOR_MEDIO + "Zonas" + SEPARADOR_MEDIO);
+//        System.out.println("\n" + SEPARADOR_MEDIO + "Zonas" + SEPARADOR_MEDIO);
 //        if (zonas.isEmpty()) {
 //            System.out.println("No hay zonas registradas en el sistema.");
 //        } else {
@@ -181,7 +196,7 @@ public class Sistema implements Serializable {
      * Muestra los intinerarios en el sistema por consola
      */
     public void mostrarIntinerarios (){
-//        System.out.println(SEPARADOR_MEDIO + "Intinerarios" + SEPARADOR_MEDIO);
+//        System.out.println("\n" + SEPARADOR_MEDIO + "Intinerarios" + SEPARADOR_MEDIO);
 //        if (ints.isEmpty()) {
 //            System.out.println("No hay intinerarios registradas en el sistema.");
 //        } else {

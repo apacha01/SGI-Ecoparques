@@ -39,7 +39,7 @@ public class Administrador extends Empleado implements Serializable{
         System.out.println(DAR_ALTA_EMPLEADO + ". Dar de alta un empleado.");
         System.out.println(DAR_BAJA_EMPLEADO + ". Dar de baja un empleado.");
         System.out.println(DAR_ALTA_ESPECIE + ". Dar de alta una especie.");
-        System.out.println(DAR_BAJA_EMPLEADO + ". Dar de baja una especie.");
+        System.out.println(DAR_BAJA_ESPECIE + ". Dar de baja una especie.");
         System.out.println(REGISTRAR_ZONA + ". Registrar zona.");
         System.out.println(INHABILITAR_ZONA + ". Inhabilitar zona.");
         System.out.println(REGISTRAR_HABITAT + ". Registrar habitat.");
@@ -102,21 +102,24 @@ public class Administrador extends Empleado implements Serializable{
     }
 
     private void darAltaEmp(Sistema s) {
+        //AGREAGAR VALIDACION DESPUES NO MAS DE 2 NOM_USUARIOS IGUALES ------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         int opc = -1;
         Empleado e = null;
+        ArrayList<String> datos;
         
         System.out.println("\n¿Qué tipo de empleado desea ingresar al sistema?\n");
         System.out.println("1. Cuidador\n2. Guía\n3. Salir");
         opc = leerInt(3);
         
-        ArrayList<String> datos = pedirDatosEmpleado();
         
         switch(opc){
             case -1: System.err.println("Error 1 al dar de alta empleado."); break;
             case 1:
+                datos = pedirDatosEmpleado();
                 e = new Cuidador(datos.get(0),datos.get(1),datos.get(2),datos.get(3),datos.get(4), new Date());
                 break;
             case 2: 
+                datos = pedirDatosEmpleado();
                 e = new Guia(datos.get(0),datos.get(1),datos.get(2),datos.get(3),datos.get(4), new Date());
                 break;
             case 3: return;
@@ -132,8 +135,9 @@ public class Administrador extends Empleado implements Serializable{
         while(true){
             System.out.println("\n¿Qué empleado desea dar de baja?");
             s.mostrarEmpleados();
-            System.out.print("\nIngrese el nombre de usuario del empleado que desea elminiar: ");
+            System.out.print("\nIngrese el nombre de usuario del empleado que desea elminiar (0 para salir): ");
             empBaja = leerString();
+            if (empBaja.equals("0")) break;
             e = s.existeEmpleado(empBaja);
             if (e != null) {
                 if (confirmarDecision()) {
@@ -147,6 +151,7 @@ public class Administrador extends Empleado implements Serializable{
     }
 
     private void darAltaEsp(Sistema s) {
+        //AGREAGAR VALIDACION DESPUES NO MAS DE 2 NOM_CIENTIFICOS IGUALES ------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
          String nom = pedirNombreColoquialEspecie();
          String nomCient = pedirNombreCientificoEspecie();
          String desc = pedirDescripcion();
@@ -158,7 +163,26 @@ public class Administrador extends Empleado implements Serializable{
     }
 
     private void darBajaEsp(Sistema s) {
+        String espBaja;
+        Especie e = null;
         
+        while(true){
+            System.out.println("\n¿Qué especie desea dar de baja?");
+            s.mostrarEspecies();
+            System.out.print("\nIngrese el nombre cientifico de la especie que desea elminiar (0 para salir): ");
+            espBaja= leerString();
+            
+            if (espBaja.equals("0")) break;
+            
+            e = s.existeEspecie(espBaja);
+            if (e != null) {
+                if (confirmarDecision()) {
+                    break;
+                }
+            }
+        }
+        
+        s.eliminarEspecie(e);
     }
 
     private void registrar(String s, Sistema sis) {

@@ -3,8 +3,8 @@ package clasesAuxiliares;
 
 import ecoparque.Cuidador;
 import ecoparque.Sistema;
-import ecoparque.Empleado;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -296,8 +296,9 @@ public class LecturaPorConsola {
             System.out.print("\nIngrese el nombre de usuario del cuidador de esta especie (0 para salir): ");
             cuidador = leerString();
             e.add(s.existeCuidador(cuidador));
+            
             if (e.get(i) == null) {
-                System.err.println("Error: ese empleado no existe o no es un cuidador.");
+                System.err.println("Error: ese empleado no existe o no es un cuidador.\n");
                 hayMas = true;
             }
             else if(cuidador.equals("0")) hayMas = false;
@@ -308,6 +309,9 @@ public class LecturaPorConsola {
             }
             i++;
         }while(hayMas);
+        
+        e.removeAll(Collections.singleton(null));
+                
         
         return e;
     }

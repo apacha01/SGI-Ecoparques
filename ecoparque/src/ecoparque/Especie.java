@@ -32,6 +32,9 @@ public class Especie implements Serializable{
         if(c != null) cuidadores.add(c);
     }
     
+    /**
+     * Muestra los datos de una especie
+     */
     public void mostrarDatos() {
         System.out.println("Nombre de la Especie: " + nomEspecie);
         System.out.println("Nombre Científico: " + nomCientifico);
@@ -42,6 +45,9 @@ public class Especie implements Serializable{
         }
         System.out.println(SEPARADOR);
     }
-    
+
+    public String getNomCientifico() {
+        return nomCientifico;
+    }
     
 }
