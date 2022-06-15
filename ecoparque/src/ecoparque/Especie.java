@@ -14,8 +14,8 @@ public class Especie implements Serializable{
     private String nomCientifico;
     private String descripcion;
     private ArrayList<Cuidador> cuidadores;
-    //private ArrayList<Habitat> habitats;
-    //private Zona zona;
+    private ArrayList<Habitat> habitats;
+    private Zona zona;
 
     public Especie(String nomEspecie, String nomCientifico, String descripcion, ArrayList<Cuidador> cuidadores) {
         this.nomEspecie = nomEspecie;
@@ -30,6 +30,18 @@ public class Especie implements Serializable{
      */
     public void agregarCuidador(Cuidador c){
         if(c != null) cuidadores.add(c);
+    }
+    
+    /**
+     *
+     * @param z Zona donde esta la especie
+     */
+    public void asignarEspeiceZona(Zona z){
+        zona = z;
+    }
+    
+    public void asignarHabitat(Habitat h){
+        habitats.add(h);
     }
     
     /**

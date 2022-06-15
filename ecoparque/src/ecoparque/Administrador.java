@@ -101,7 +101,7 @@ public class Administrador extends Empleado implements Serializable{
     }
 
     private void darAltaEmp(Sistema s) {
-        //AGREAGAR VALIDACION DESPUES NO MAS DE 2 NOM_USUARIOS IGUALES ------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //ASD AGREAGAR VALIDACION DESPUES NO MAS DE 2 NOM_USUARIOS IGUALES ------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         int opc = -1;
         Empleado e = null;
         ArrayList<String> datos;
@@ -150,7 +150,7 @@ public class Administrador extends Empleado implements Serializable{
     }
 
     private void darAltaEsp(Sistema s) {
-        //AGREAGAR VALIDACION DESPUES NO MAS DE 2 NOM_CIENTIFICOS IGUALES ------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //ASD AGREAGAR VALIDACION DESPUES NO MAS DE 2 NOM_CIENTIFICOS IGUALES ------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
          String nom = pedirNombreColoquialEspecie();
          String nomCient = pedirNombreCientificoEspecie();
          String desc = pedirDescripcion();
@@ -195,6 +195,7 @@ public class Administrador extends Empleado implements Serializable{
                 nomZona = leerString();
                 
                 System.out.print("\nExtensión de la zona en m2: ");
+                //ASD AGREAGAR VALIDACION PARA QUE NO PUEDA SER MENOR A 0
                 extZona = leerDouble();
                 
                 System.out.print("\n¿Esta zona tiene especies? (s/n): ");
@@ -202,7 +203,13 @@ public class Administrador extends Empleado implements Serializable{
                 
                 if (tieneEspecie){
                     ArrayList<Especie> e = pedirEspecies(sis);
-                    sis.getZonas().add(new Zona(nomZona,extZona,e));
+                    Zona z = new Zona(nomZona,extZona,e);
+                    sis.getZonas().add(z);
+                    
+                    //GUARDO EN LA ESPECIE LA ZONA EN LA QUE SE LA ESTA PONIENDO
+                    for (Especie esp : e) {
+                        esp.asignarEspeiceZona(z);
+                    }
                 }
                 else { sis.getZonas().add(new Zona(nomZona,extZona)); }
                 break;

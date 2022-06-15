@@ -160,7 +160,6 @@ public class Sistema implements Serializable {
     
     public Zona existeZona(String nombre){
         for (Zona zona: zonas) {
-            //IGNORO CASE - LOS NOMBRES CIENTIFICOS SON COMPLICADOS
             if (zona.getNombre().equalsIgnoreCase(nombre)){
                 return zona;
             }
