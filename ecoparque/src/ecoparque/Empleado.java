@@ -62,7 +62,6 @@ public abstract class Empleado implements Serializable{
         System.out.println("Dirección: " + direccion);
         System.out.println("Telefono: " + telefono);
         System.out.println("Fecha de Ingreso al Sistema: " + fechaIngreso);
-        //System.out.println(SEPARADOR);
     }
     
     public abstract void consultarDatos(Sistema s);

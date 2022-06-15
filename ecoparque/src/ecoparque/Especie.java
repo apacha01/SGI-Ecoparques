@@ -1,7 +1,6 @@
 
 package ecoparque;
 
-import static clasesAuxiliares.Constantes.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -22,6 +21,7 @@ public class Especie implements Serializable{
         this.nomCientifico = nomCientifico;
         this.descripcion = descripcion;
         this.cuidadores = cuidadores;
+        habitats = new ArrayList<>();
     }
     
     /**
@@ -36,7 +36,7 @@ public class Especie implements Serializable{
      *
      * @param z Zona donde esta la especie
      */
-    public void asignarEspeiceZona(Zona z){
+    public void asignarZona(Zona z){
         zona = z;
     }
     
@@ -55,6 +55,7 @@ public class Especie implements Serializable{
         for (int i = 0; i < cuidadores.size(); i++) {
             System.out.println("\t" + cuidadores.get(i).getNombre());
         }
+        if(zona != null) System.out.println("Zona en la que se encuentra la especie: " + zona.getNombre());
     }
 
     public String getNomEspecie() {
@@ -65,4 +66,7 @@ public class Especie implements Serializable{
         return nomCientifico;
     }
     
+    public ArrayList<Cuidador> getCuidadores() {
+        return cuidadores;
+    }
 }

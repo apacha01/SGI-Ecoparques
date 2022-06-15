@@ -18,6 +18,12 @@ public class Administrador extends Empleado implements Serializable{
     }
     
     @Override
+    public void mostrarDatos(){
+        System.out.println("Tipo de usuario: ADMINISTRADOR");
+        super.mostrarDatos();
+    }
+    
+    @Override
     public boolean ingresar(Sistema s) {
         boolean seguir = true;
         int opc;
@@ -151,14 +157,19 @@ public class Administrador extends Empleado implements Serializable{
 
     private void darAltaEsp(Sistema s) {
         //ASD AGREAGAR VALIDACION DESPUES NO MAS DE 2 NOM_CIENTIFICOS IGUALES ------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-         String nom = pedirNombreColoquialEspecie();
-         String nomCient = pedirNombreCientificoEspecie();
-         String desc = pedirDescripcion();
-         ArrayList<Cuidador> cuidadores = pedirCuidadores(s);
+        String nom = pedirNombreColoquialEspecie();
+        String nomCient = pedirNombreCientificoEspecie();
+        String desc = pedirDescripcion();
+        ArrayList<Cuidador> cuidadores = pedirCuidadores(s);
          
-         Especie nuevaEspecie = new Especie(nom,nomCient,desc,cuidadores);
+        Especie nuevaEspecie = new Especie(nom,nomCient,desc,cuidadores);
+        
+        //GUARDO QUE ESPECIE CUIDA CADA EMPLEADO EN LOS CUIDADORES.
+        for (Cuidador cuidador : cuidadores) {
+            cuidador.tomarEspecie(nuevaEspecie);
+        }
          
-         s.getEspecies().add(nuevaEspecie);
+        s.getEspecies().add(nuevaEspecie);
     }
 
     private void darBajaEsp(Sistema s) {
@@ -176,6 +187,10 @@ public class Administrador extends Empleado implements Serializable{
             e = s.existeEspecie(espBaja);
             if (e != null) {
                 if (confirmarDecision()) {
+                    //ELIMINO LA ESPECIE DE LOS CUIDADORES QUE LA CUIDAN
+                    for (Cuidador cuidador : e.getCuidadores()) {
+                        cuidador.quitarEspecie(e);
+                    }
                     break;
                 }
             }
@@ -208,7 +223,7 @@ public class Administrador extends Empleado implements Serializable{
                     
                     //GUARDO EN LA ESPECIE LA ZONA EN LA QUE SE LA ESTA PONIENDO
                     for (Especie esp : e) {
-                        esp.asignarEspeiceZona(z);
+                        esp.asignarZona(z);
                     }
                 }
                 else { sis.getZonas().add(new Zona(nomZona,extZona)); }
