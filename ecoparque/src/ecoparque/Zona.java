@@ -2,6 +2,7 @@
 package ecoparque;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -11,6 +12,7 @@ public class Zona implements Serializable{
     
     private String nombre;
     private double extension;
+    private ArrayList<Especie> especies;
 
     public Zona(String nombre, double extension) {
         this.nombre = nombre;
@@ -36,21 +38,34 @@ public class Zona implements Serializable{
     }
 
     /**
-     * Get the value of nomrbre
+     * Get the value of nombre
      *
-     * @return the value of nomrbre
+     * @return the value of nombre
      */
     public String getNombre() {
         return nombre;
     }
 
     /**
-     * Set the value of nomrbre
+     * Set the value of nombre
      *
-     * @param nombre new value of nomrbre
+     * @param nombre new value of nombre
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    public void agregarEspecie(Especie e){
+        especies.add(e);
+    }
+    
+    public ArrayList<Especie> getEspecies(){
+        return especies;
+    }
+    
+    public void mostrarEspeciesEnZona(){
+        for (Especie especie : especies) {
+            especie.mostrarDatos();
+        }
+    }
 }
