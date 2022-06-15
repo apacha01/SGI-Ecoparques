@@ -20,6 +20,12 @@ public class Zona implements Serializable{
         especies = new ArrayList<>();
     }
 
+    public Zona(String nombre, double extension, ArrayList<Especie> especies) {
+        this.nombre = nombre;
+        this.extension = extension;
+        this.especies = especies;
+    }
+
     /**
      * Get the value of extension
      *
@@ -79,6 +85,15 @@ public class Zona implements Serializable{
     public void mostrarEspeciesEnZona(){
         for (Especie especie : especies) {
             especie.mostrarDatos();
+        }
+    }
+    
+    public void mostrarDatos(){
+        System.out.println("Nombre de la Zona: " + nombre);
+        System.out.println("Extensión de la Zona: " + extension + " m2");
+        System.out.println("Esta zona esta habitada por las siguientes especies:");
+        for (Especie especie : especies) {
+            System.out.println("\t" + especie.getNomEspecie());
         }
     }
 }

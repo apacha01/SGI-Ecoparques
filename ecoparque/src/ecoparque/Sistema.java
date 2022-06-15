@@ -18,14 +18,14 @@ public class Sistema implements Serializable {
     private ArrayList<Empleado> empleados;
     private ArrayList<Especie> especies;
     private ArrayList<Habitat> habitats;
-    //private ArrayList<Zona> zonas;
+    private ArrayList<Zona> zonas;
     //private ArrayList<Intinerario> ints;
     
     public Sistema() {
         empleados = new ArrayList<>();
         especies = new ArrayList<>();
         habitats = new ArrayList<>();
-        //zonas = new ArrayList<>();
+        zonas = new ArrayList<>();
         //ints = new ArrayList<>();
     }
     
@@ -69,6 +69,10 @@ public class Sistema implements Serializable {
     public void setHabitats(ArrayList<Habitat> habitats) {
         this.habitats = habitats;
     }
+
+    public ArrayList<Zona> getZonas() {
+        return zonas;
+    }
     
     /**
      *
@@ -85,6 +89,11 @@ public class Sistema implements Serializable {
         return null;
     }
     
+    /**
+     *
+     * @param nomUsuario el nombre de usuario a buscar en el sistema
+     * @return al empleado si lo encontro, null en otro caso
+     */
     public Empleado existeEmpleado(String nomUsuario){
         for (Empleado emp: empleados) {
             if (emp.getUsuario().equals(nomUsuario)){
@@ -94,11 +103,20 @@ public class Sistema implements Serializable {
         return null;
     }
     
+    /**
+     *  Elimina un empleado del sistema
+     * @param e el empleado a eliminar
+     */
     public void eliminarEmpleado(Empleado e){
         if (e == null) return;
         empleados.remove(e);
     }
     
+    /**
+     *
+     * @param nomUsuario el nombre de usuario a buscar en el sistema
+     * @return al cuidador si lo encontro, null en otro caso
+     */
     public Cuidador existeCuidador(String nomUsuario){
         ArrayList<Cuidador> cuidadores = obtenerCuidadores();
         
@@ -111,6 +129,10 @@ public class Sistema implements Serializable {
         return null;
     }
     
+    /**
+     * Devuelve todos los cuidadores en el sistema
+     * @return un arraylist de cuidadores dentro del sistema
+     */
     public ArrayList<Cuidador> obtenerCuidadores(){
         ArrayList<Cuidador> cuidadores = new ArrayList<>();
         for (Empleado empleado : empleados) {
@@ -121,6 +143,11 @@ public class Sistema implements Serializable {
         return cuidadores;
     }
     
+    /**
+     *
+     * @param nomCientifico el nombre cientifico de la especie que se esta buscando
+     * @return la especie si se encontro, null en otro caso
+     */
     public Especie existeEspecie(String nomCientifico){
         for (Especie esp: especies) {
             //IGNORO CASE - LOS NOMBRES CIENTIFICOS SON COMPLICADOS
@@ -131,6 +158,24 @@ public class Sistema implements Serializable {
         return null;
     }
     
+    public Zona existeZona(String nombre){
+        for (Zona zona: zonas) {
+            //IGNORO CASE - LOS NOMBRES CIENTIFICOS SON COMPLICADOS
+            if (zona.getNombre().equalsIgnoreCase(nombre)){
+                return zona;
+            }
+        }
+        return null;
+    }
+    
+    public void eliminarZona(Zona z){
+        zonas.remove(z);
+    }
+    
+    /**
+     * Elimina una especie del sistema
+     * @param e especie a eliminar del sistema
+     */
     public void eliminarEspecie(Especie e){
         if (e == null) return;
         especies.remove(e);
@@ -181,15 +226,15 @@ public class Sistema implements Serializable {
      * Muestra las zonas en el sistema por consola
      */
     public void mostrarZonas (){
-//        System.out.println("\n" + SEPARADOR_MEDIO + "Zonas" + SEPARADOR_MEDIO);
-//        if (zonas.isEmpty()) {
-//            System.out.println("No hay zonas registradas en el sistema.");
-//        } else {
-//            for (int i = 0; i < zona.size(); i++) {
-//              zonas.get(i).mostrarDatos();
-//              System.out.println(SEPARADOR);
-//            }
-//        }
+        System.out.println("\n" + SEPARADOR_MEDIO + "Zonas" + SEPARADOR_MEDIO);
+        if (zonas.isEmpty()) {
+            System.out.println("No hay zonas registradas en el sistema.");
+        } else {
+            for (int i = 0; i < zonas.size(); i++) {
+              zonas.get(i).mostrarDatos();
+              System.out.println(SEPARADOR);
+            }
+        }
     }
     
     /**

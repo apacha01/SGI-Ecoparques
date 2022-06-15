@@ -43,9 +43,12 @@ public class Especie implements Serializable{
         for (int i = 0; i < cuidadores.size(); i++) {
             System.out.println("\t" + cuidadores.get(i).getNombre());
         }
-        System.out.println(SEPARADOR);
     }
 
+    public String getNomEspecie() {
+        return nomEspecie;
+    }
+    
     public String getNomCientifico() {
         return nomCientifico;
     }

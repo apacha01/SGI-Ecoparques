@@ -185,11 +185,63 @@ public class Administrador extends Empleado implements Serializable{
     }
 
     private void registrar(String s, Sistema sis) {
-        
+        switch (s) {
+            case STRING_ZONA:
+                String nomZona;
+                Double extZona;
+                boolean tieneEspecie;
+                
+                System.out.print("\nIngrese el nombre de la zona: ");
+                nomZona = leerString();
+                
+                System.out.print("\nExtensión de la zona en m2: ");
+                extZona = leerDouble();
+                
+                System.out.print("\n¿Esta zona tiene especies? (s/n): ");
+                tieneEspecie = leerBoolean();
+                
+                if (tieneEspecie){
+                    ArrayList<Especie> e = pedirEspecies(sis);
+                    sis.getZonas().add(new Zona(nomZona,extZona,e));
+                }
+                else { sis.getZonas().add(new Zona(nomZona,extZona)); }
+                break;
+            case STRING_HABITAT:
+                break;
+            default: System.err.println("Error al registrar, no es ni una zona ni un habitat."); break;
+        }
     }
 
     private void inhabilitar(String s, Sistema sis) {
-        
+        switch (s) {
+            case STRING_ZONA:
+                String inhabilitarZona;
+                Zona z = null;
+
+                while(true){
+                    System.out.println("\n¿Qué zona desea inhabilitar?");
+                    sis.mostrarZonas();
+                    System.out.print("\nIngrese el nombre de la zona que desea elminiar (0 para salir): ");
+                    inhabilitarZona = leerString();
+
+                    if (inhabilitarZona.equals("0")) break;
+
+                    z = sis.existeZona(inhabilitarZona);
+                    
+                    if (z != null) {
+                        if (confirmarDecision()) {
+                            break;
+                        }
+                    }
+                }
+
+                sis.eliminarZona(z);
+                
+                break;
+            case STRING_HABITAT:
+                break;
+            default: System.err.println("Error al inhabilitar, no es ni una zona ni un habitat."); break;
+        }
     }
 
     private void listarXantiguedad(Sistema s) {

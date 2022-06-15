@@ -2,6 +2,7 @@
 package clasesAuxiliares;
 
 import ecoparque.Cuidador;
+import ecoparque.Especie;
 import ecoparque.Sistema;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,16 +34,53 @@ public class LecturaPorConsola {
      * @return cualquier int leido por consola
      * @throws InputMismatchException
      */
-    public static int leerInt(){
+    private static int pedirInt(){
         Scanner in = new Scanner(System.in);
         int opc = Integer.MIN_VALUE;
         
         try{
-            System.out.println("Ingrese un número entero: ");   
+            System.out.print("\nIngrese un número entero: ");   
             opc = in.nextInt();
-        }catch(InputMismatchException e){System.out.println("\nEso no es un número entero.\n");}
+        }catch(InputMismatchException e){System.err.println("\nEso no es un número entero.\n");}
         
         return opc;
+    }
+    
+    public static int leerInt(){
+        int lectura;
+        
+        do {
+            lectura = pedirInt();
+        } while (lectura == Integer.MIN_VALUE);
+        
+        return lectura;
+    }
+    
+    /**
+     *
+     * @return cualquier int leido por consola
+     * @throws InputMismatchException
+     */
+    private static double pedirDouble(){
+        Scanner in = new Scanner(System.in);
+        double lectura = Integer.MIN_VALUE;
+        
+        try{
+            System.out.print("\nIngrese un número (para un decimal utilice la coma ',' en lugar del punto '.'): ");   
+            lectura = in.nextDouble();
+        }catch(InputMismatchException e){System.err.println("\nEso no es un número, recuerde usar la coma.\n");}
+        
+        return lectura;
+    }
+    
+    public static double leerDouble(){
+        double lectura;
+        
+        do {
+            lectura = pedirDouble();
+        } while (lectura == Integer.MIN_VALUE);
+        
+        return lectura;
     }
     
     /**
@@ -51,7 +89,7 @@ public class LecturaPorConsola {
      * @return numero leido por consola, lo limita entre 1 y max (para los menu)
      * @throws InputMismatchException
      */
-    public static int leerInt(int max){
+    private static int pedirInt(int max){
         Scanner in = new Scanner(System.in);
         int opc = Integer.MIN_VALUE;
         
@@ -63,6 +101,16 @@ public class LecturaPorConsola {
         } catch (InputMismatchException e){System.out.println("\nEso no es un número entero.\n");}
         
         return opc;
+    }
+    
+    public static int leerInt(int max){
+        int num;
+        
+        do {
+            num = pedirInt(max);
+        } while (num > max || num < 1);
+        
+        return num;
     }
     
     /**
@@ -102,9 +150,16 @@ public class LecturaPorConsola {
      */
     public static char leerSiNo(){
         char c;
+        boolean flag = false;
+        
         do{
+            if (flag) {
+                System.out.print("Debe ingresar 'S' (o 's') o 'N' (o 'n') para la respuesta: ");
+            }
             c = leerChar();
+            flag = true;
         }while(c != 's' && c == 'S' && c == 'n' && c == 'N');
+        
         return c;
     }
     
@@ -113,17 +168,8 @@ public class LecturaPorConsola {
      * @return un boolean dependiendo la entrada por consola, S,s true y N,n false
      */
     public static boolean leerBoolean(){
-        boolean resp;
         char c = leerSiNo();
-        
-        if (c == 's' || c == 'S') {
-            resp = true;
-        }
-        else {
-            resp = false;
-        }
-        
-        return resp;
+        return (c == 's' || c == 'S');
     }
     
     //////////////////////////////////////////DATOS PARA EMPLEADOS//////////////////////////////////////////
@@ -315,6 +361,39 @@ public class LecturaPorConsola {
         
         return e;
     }
+    //////////////////////////////////////////DATOS PARA ZONAS//////////////////////////////////////////
+    
+    public static ArrayList<Especie> pedirEspecies(Sistema s){
+        ArrayList<Especie> e = new ArrayList<>();
+        String especie;
+        boolean hayMas;
+        int i = 0;
+        
+        do{
+            s.mostrarEspecies();
+            System.out.print("\nIngrese el nombre de cientifico de la especie (0 para salir): ");
+            especie = leerString();
+            e.add(s.existeEspecie(especie));
+            
+            if (e.get(i) == null) {
+                System.err.println("Error: esa especie no existe.\n");
+                hayMas = true;
+            }
+            else if(especie.equals("0")) hayMas = false;
+            else {
+                
+                System.out.print("¿Hay más especies asignadas a esta zona? (s/n): ");
+                hayMas = leerBoolean();
+            }
+            
+            i++;
+        }while(hayMas);
+        
+        e.removeAll(Collections.singleton(null));
+        
+        return e;
+    }
+    
     
     
 }
