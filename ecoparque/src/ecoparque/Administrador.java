@@ -2,7 +2,6 @@
 package ecoparque;
 
 import static clasesAuxiliares.Constantes.*;
-import clasesAuxiliares.LecturaPorConsola;
 import static clasesAuxiliares.LecturaPorConsola.*;
 import java.io.IOException;
 import java.io.Serializable;
@@ -170,7 +169,7 @@ public class Administrador extends Empleado implements Serializable{
             System.out.println("\n¿Qué especie desea dar de baja?");
             s.mostrarEspecies();
             System.out.print("\nIngrese el nombre cientifico de la especie que desea elminiar (0 para salir): ");
-            espBaja= leerString();
+            espBaja = leerString();
             
             if (espBaja.equals("0")) break;
             
