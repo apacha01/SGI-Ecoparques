@@ -26,6 +26,15 @@ public class Guia extends Empleado{
     }
     
     @Override
+    public void mostrarDatos(){
+        System.out.println("Tipo de usuario: GUIA");
+        super.mostrarDatos();
+        /*
+        ASD mostrar intinerarios
+        */
+    }
+    
+    @Override
     public void consultarDatos(Sistema s){
         
     }

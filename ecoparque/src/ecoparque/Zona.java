@@ -70,6 +70,10 @@ public class Zona implements Serializable{
         especies.add(e);
     }
     
+    public void quitarEspecie(Especie e){
+        especies.remove(e);
+    }
+    
     /**
      * Get the value of especies
      *

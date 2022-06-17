@@ -22,6 +22,7 @@ public class Especie implements Serializable{
         this.descripcion = descripcion;
         this.cuidadores = cuidadores;
         habitats = new ArrayList<>();
+        zona = null;
     }
     
     /**
@@ -40,8 +41,16 @@ public class Especie implements Serializable{
         zona = z;
     }
     
+    public void quitarZona(){
+        zona = null;
+    }
+    
     public void asignarHabitat(Habitat h){
         habitats.add(h);
+    }
+    
+    public void asignarHabitats(ArrayList<Habitat> h){
+        habitats = h;
     }
     
     /**
@@ -64,6 +73,10 @@ public class Especie implements Serializable{
     
     public String getNomCientifico() {
         return nomCientifico;
+    }
+
+    public Zona getZona() {
+        return zona;
     }
     
     public ArrayList<Cuidador> getCuidadores() {

@@ -1,9 +1,15 @@
 
 package clasesAuxiliares;
 
+import static clasesAuxiliares.Clima.toStringClima;
+import static clasesAuxiliares.Vegetacion.toStringVegetacion;
+import static clasesAuxiliares.Continente.toStringContinente;
+import static clasesAuxiliares.Constantes.*;
 import ecoparque.Cuidador;
 import ecoparque.Especie;
+import ecoparque.Habitat;
 import ecoparque.Sistema;
+import ecoparque.Zona;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.InputMismatchException;
@@ -68,7 +74,7 @@ public class LecturaPorConsola {
         try{
             System.out.print("\nIngrese un número (para un decimal utilice la coma ',' en lugar del punto '.'): ");   
             lectura = in.nextDouble();
-        }catch(InputMismatchException e){System.err.println("\nEso no es un número, recuerde usar la coma.\n");}
+        }catch(InputMismatchException e){System.err.println("Eso no es un número, recuerde usar la coma.");}
         
         return lectura;
     }
@@ -98,7 +104,7 @@ public class LecturaPorConsola {
                 System.out.print("\nIngrese un número entero entre 1 y " + max +  ": ");
                 opc = in.nextInt();
             }
-        } catch (InputMismatchException e){System.out.println("\nEso no es un número entero.\n");}
+        } catch (InputMismatchException e){System.err.println("\nEso no es un número entero.\n");}
         
         return opc;
     }
@@ -120,7 +126,7 @@ public class LecturaPorConsola {
      * @return el int que lea por consola que este entre min y max
      * @throws InputMismatchException
      */
-    public static int leerInt(int max, int min){
+    private static int pedirInt(int min, int max){
         Scanner in = new Scanner(System.in);
         int opc = Integer.MIN_VALUE;
         
@@ -129,10 +135,20 @@ public class LecturaPorConsola {
                 System.out.println("Ingrese un número entero entre " + min + " y " + max +  "...");   
                 opc = in.nextInt();
             }
-        }catch(InputMismatchException e){System.out.println("\nEso no es un número entero.\n");}
+        }catch(InputMismatchException e){System.err.println("\nEso no es un número entero.\n");}
         
         
         return opc;
+    }
+    
+    public static int leerInt(int min, int max){
+        int num;
+        
+        do {
+            num = pedirInt(min, max);
+        } while (num > max || num < min);
+        
+        return num;
     }
     
     /**
@@ -158,7 +174,7 @@ public class LecturaPorConsola {
             }
             c = leerChar();
             flag = true;
-        }while(c != 's' && c == 'S' && c == 'n' && c == 'N');
+        }while(c != 's' && c != 'S' && c != 'n' && c != 'N');
         
         return c;
     }
@@ -338,22 +354,28 @@ public class LecturaPorConsola {
         int i = 0;
         
         do{
-            s.mostrarEmpleados();
-            System.out.print("\nIngrese el nombre de usuario del cuidador de esta especie (0 para salir): ");
-            cuidador = leerString();
-            e.add(s.existeCuidador(cuidador));
-            
-            if (e.get(i) == null) {
-                System.err.println("Error: ese empleado no existe o no es un cuidador.\n");
-                hayMas = true;
+            if (s.obtenerCuidadores().isEmpty()) {
+                System.err.println("No hay cuidadores registrados en el sistema.");
+                return e;
             }
-            else if(cuidador.equals("0")) hayMas = false;
-            else {
-                
-                System.out.print("¿Hay más cuidadores asignados a esta especie? (s/n): ");
-                hayMas = leerBoolean();
+            else{
+                s.mostrarEmpleados();
+                System.out.print("\nIngrese el nombre de usuario del cuidador de esta especie (0 para salir): ");
+                cuidador = leerString();
+                e.add(s.existeCuidador(cuidador));
+
+                if(cuidador.equals("0")) break;
+                if (e.get(i) == null) {
+                    System.err.println("Error: ese empleado no existe o no es un cuidador.\n");
+                    hayMas = true;
+                }
+                else {
+
+                    System.out.print("¿Hay más cuidadores que desee elegir? (s/n): ");
+                    hayMas = leerBoolean();
+                }
+                i++;
             }
-            i++;
         }while(hayMas);
         
         e.removeAll(Collections.singleton(null));
@@ -361,8 +383,82 @@ public class LecturaPorConsola {
         
         return e;
     }
-    //////////////////////////////////////////DATOS PARA ZONAS//////////////////////////////////////////
     
+    public static Zona pedirZona(Sistema s){
+        Zona e;
+        String zona;
+        boolean hayMas;
+        
+        do{
+            if (s.getZonas().isEmpty()) {
+                e = null;
+                hayMas = false;
+                System.err.println("No hay zonas en el sistema.");
+            }
+            else{
+                s.mostrarZonas();
+                System.out.print("\nIngrese el nombre de la zona (0 para salir): ");
+                zona = leerString();
+                e = s.existeZona(zona);
+                
+                if(zona.equals("0")) break;
+                if (e == null) {
+                    System.err.println("Error: esa zona no existe.\n");
+                    hayMas = true;
+                }
+                else{
+                    hayMas = false;
+                }
+            }
+        }while(hayMas);
+        
+        return e;
+    }
+    
+    public static ArrayList<Habitat> pedirHabitats(Sistema s){
+        ArrayList<Habitat> e = new ArrayList<>();
+        String habitat;
+        boolean hayMas;
+        int i = 0;
+        
+        do{
+            if (s.getHabitats().isEmpty()) {
+                System.err.println("No hay habitats registrados en el sistema.");
+                return e;
+            }
+            else{
+                s.mostrarHabitats();
+                System.out.print("\nIngrese el nombre del habitat que quiere seleccionar (0 para salir): ");
+                habitat = leerString();
+                e.add(s.existeHabitat(habitat));
+
+                if(habitat.equals("0")) break;
+                if (e.get(i) == null) {
+                    System.err.println("Error: ese habitat no existe.\n");
+                    hayMas = true;
+                }
+                else {
+
+                    System.out.print("¿Hay más habitats que desee elegir? (s/n): ");
+                    hayMas = leerBoolean();
+                }
+                i++;
+            }
+        }while(hayMas);
+        
+        e.removeAll(Collections.singleton(null));
+        
+        return e;
+    }
+    
+    //////////////////////////////////////////DATOS PARA ZONAS//////////////////////////////////////////
+
+    
+    /**
+     *
+     * @param s sistema del cual se quieren las especies
+     * @return un arraylist de las especies seleccionadas
+     */
     public static ArrayList<Especie> pedirEspecies(Sistema s){
         ArrayList<Especie> e = new ArrayList<>();
         String especie;
@@ -370,23 +466,32 @@ public class LecturaPorConsola {
         int i = 0;
         
         do{
-            s.mostrarEspecies();
-            System.out.print("\nIngrese el nombre de cientifico de la especie (0 para salir): ");
-            especie = leerString();
-            e.add(s.existeEspecie(especie));
-            
-            if (e.get(i) == null) {
-                System.err.println("Error: esa especie no existe.\n");
-                hayMas = true;
+            if (s.getEspecies().isEmpty()) {
+                hayMas = false;
+                System.err.println("No hay especies en el sistema.");
             }
-            else if(especie.equals("0")) hayMas = false;
-            else {
+            else{
+                s.mostrarEspecies();
+                System.out.print("\nIngrese el nombre de cientifico de la especie (0 para salir): ");
+                especie = leerString();
                 
-                System.out.print("¿Hay más especies asignadas a esta zona? (s/n): ");
-                hayMas = leerBoolean();
+                //ASD se pueden repetir especies, si se selecciona una vez prohibir que se vuelva a elegir
+                e.add(s.existeEspecie(especie));
+
+                
+                if(especie.equals("0")) break;
+                if (e.get(i) == null) {
+                    System.err.println("Error: esa especie no existe.\n");
+                    hayMas = true;
+                }
+                else {
+
+                    System.out.print("¿Hay más especies que desee elegir? (s/n): ");
+                    hayMas = leerBoolean();
+                }
+
+                i++;
             }
-            
-            i++;
         }while(hayMas);
         
         e.removeAll(Collections.singleton(null));
@@ -394,6 +499,84 @@ public class LecturaPorConsola {
         return e;
     }
     
+    //////////////////////////////////////////DATOS PARA HABITATS//////////////////////////////////////////
+
+    /**
+     *
+     * @return clima seleccionado por consola
+     */ 
+    public static Clima pedirClima(){
+        Clima c;
+        int opc;
+        
+        System.out.println("Ingrese el clima (0 para salir): ");
+        
+        System.out.println((SOLEADO - SUMA_CLIMA) + ". " + toStringClima(SOLEADO));
+        System.out.println((NUBLADO - SUMA_CLIMA) + ". " + toStringClima(NUBLADO));
+        System.out.println((LLUVIA - SUMA_CLIMA) + ". " + toStringClima(LLUVIA));
+        System.out.println((TORMENTA - SUMA_CLIMA) + ". " + toStringClima(TORMENTA));
+        System.out.println((TEMPLADO - SUMA_CLIMA) + ". " + toStringClima(TEMPLADO));
+        opc = leerInt(0,5) + SUMA_CLIMA;
+
+        if (opc == SUMA_CLIMA) return null;
+        else { c = new Clima(opc); }
+            
+        return c;
+    }
     
+    /**
+     *
+     * @return la vegetacion seleccionada por consola
+     */
+    public static Vegetacion pedirVegetacion(){
+        Vegetacion v;
+        int opc;
+        
+        System.out.println("Ingrese la vegetacion (0 para salir): ");
+        
+        System.out.println((PASTIZAL - SUMA_VEGETACION) + ". " + toStringVegetacion(PASTIZAL));
+        System.out.println((SABANA - SUMA_VEGETACION) + ". " + toStringVegetacion(SABANA));
+        System.out.println((BOSQUE - SUMA_VEGETACION) + ". " + toStringVegetacion(BOSQUE));
+        System.out.println((DESIERTO - SUMA_VEGETACION) + ". " + toStringVegetacion(DESIERTO));
+        opc = leerInt(0,4) + SUMA_VEGETACION;
+
+        if (opc == SUMA_VEGETACION) return null;
+        else { v = new Vegetacion(opc); }
+            
+        return v;
+    }
+    
+    /**
+     *
+     * @return un arraylist con los continentes que se eligan
+     */
+    public static ArrayList<Continente> pedirContinentes(){
+        ArrayList<Continente> conts = new ArrayList<>();
+        int opc;
+        boolean hayMas = false;
+        
+        while(hayMas){
+            System.out.println("Ingrese el continente (0 para salir): ");
+            
+            System.out.println((AMERICA - SUMA_CONTINENTE) + ". " + toStringContinente(AMERICA));
+            System.out.println((AFRICA - SUMA_CONTINENTE) + ". " + toStringContinente(AFRICA));
+            System.out.println((ANTARTIDA - SUMA_CONTINENTE) + ". " + toStringContinente(ANTARTIDA));
+            System.out.println((ASIA - SUMA_CONTINENTE) + ". " + toStringContinente(ASIA));
+            System.out.println((OCEANIA - SUMA_CONTINENTE) + ". " + toStringContinente(OCEANIA));
+            System.out.println((EUROPA - SUMA_CONTINENTE) + ". " + toStringContinente(EUROPA));
+            
+            opc = leerInt(0,6) + SUMA_CONTINENTE;
+            
+            if (opc == SUMA_CONTINENTE) break;
+            else {
+                conts.add(new Continente(opc));
+                System.out.print("¿Hay más continentes que contengan este habitat? (s/n): ");
+                hayMas = leerBoolean();
+            }
+        }
+        
+        
+        return conts;
+    }
     
 }

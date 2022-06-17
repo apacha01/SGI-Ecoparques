@@ -12,7 +12,7 @@ public class Clima {
 
     public Clima(int climaActual){
         if(isClima(climaActual)) this.climaActual = climaActual;
-        else { System.err.println("Error: ese clima no existe."); }
+        else { System.err.println("Error: ese clima no existe."); climaActual = 0; }
     }
     
     public boolean isClima(int i){
@@ -37,14 +37,14 @@ public class Clima {
         this.climaActual = climaActual;
     }
     
-    public String obtenerNombreClima(int clima){
+    public static String toStringClima(int clima){
         switch(clima){
             case SOLEADO: return "Soleado";
             case NUBLADO: return "Nublado";
             case LLUVIA: return "Lluvia";
             case TORMENTA: return "Tormenta";
             case TEMPLADO: return "Templado";
-            default: return null;
+            default: return "";
         }
     }
 

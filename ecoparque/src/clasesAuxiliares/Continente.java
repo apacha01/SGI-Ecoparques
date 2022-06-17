@@ -13,7 +13,7 @@ public class Continente {
 
     public Continente(int continente) {
         if(isContinente(continente)) this.continente = continente;
-        else { System.err.println("Error: ese continente no existe."); }
+        else { System.err.println("Error: ese continente no existe."); continente = 0; }
     }
     
     /**
@@ -38,7 +38,7 @@ public class Continente {
         return (i == AMERICA || i == AFRICA || i == ASIA || i == ANTARTIDA || i == OCEANIA || i == EUROPA);
     }
     
-    public String obtenerNombreCont(int cont){
+    public static String toStringContinente(int cont){
         switch(cont){
             case AMERICA: return "America";
             case AFRICA: return "Africa";
@@ -46,7 +46,7 @@ public class Continente {
             case ANTARTIDA: return "Antartida";
             case OCEANIA: return "Oceania";
             case EUROPA: return "Europa";
-            default: return null;
+            default: return "";
         }
     }
     

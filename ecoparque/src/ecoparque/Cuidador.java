@@ -25,10 +25,12 @@ public class Cuidador extends Empleado{
     public void mostrarDatos(){
         System.out.println("Tipo de usuario: CUIDADOR");
         super.mostrarDatos();
-        System.out.println("Especies que cuida:");
-        for (int i = 0; i < especiesCuidadas.size(); i++) {
-            System.out.println("\t" + especiesCuidadas.get(i).getNomEspecie() + "(fecha en la que tomo esta especie: " + 
-                    tomaEspecie.get(i) + ")");
+        if (!especiesCuidadas.isEmpty()) {
+            System.out.println("Especies que cuida:");
+            for (int i = 0; i < especiesCuidadas.size(); i++) {
+                System.out.println("\t" + especiesCuidadas.get(i).getNomEspecie() + " (Fecha en la que tomo esta especie: " + 
+                        tomaEspecie.get(i) + ")");
+            }
         }
     }
     

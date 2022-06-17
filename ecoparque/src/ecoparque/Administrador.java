@@ -3,6 +3,9 @@ package ecoparque;
 
 import static clasesAuxiliares.Constantes.*;
 import static clasesAuxiliares.LecturaPorConsola.*;
+import clasesAuxiliares.Clima;
+import clasesAuxiliares.Vegetacion;
+import clasesAuxiliares.Continente;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -59,6 +62,7 @@ public class Administrador extends Empleado implements Serializable{
     private boolean procesarOpcion(int op, Sistema s){
         boolean seguir = true;
         switch(op){
+            //ASD modificar cada cosa???
             case Integer.MIN_VALUE: System.err.println("Ocurrió un error al elegir la opción del menu."); break;
             case SALIR_MENU: seguir = false; break;
             case CONSULTAR_DATOS: consultarDatos(s); break;
@@ -95,11 +99,11 @@ public class Administrador extends Empleado implements Serializable{
         //MUESTRO ESPECIES
         s.mostrarEspecies();
         
-        //MUESTRO HABITATS
-        s.mostrarHabitats();
-        
         //MUESTRO ZONAS
         s.mostrarZonas();
+        
+        //MUESTRO HABITATS
+        s.mostrarHabitats();
         
         //MUESTRO INTINERARIOS
         s.mostrarIntinerarios();
@@ -107,33 +111,51 @@ public class Administrador extends Empleado implements Serializable{
     }
 
     private void darAltaEmp(Sistema s) {
-        //ASD AGREAGAR VALIDACION DESPUES NO MAS DE 2 NOM_USUARIOS IGUALES ------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         int opc = -1;
         Empleado e = null;
-        ArrayList<String> datos;
+        String _nomUsuario;
+        String _contra;
+        String _nombre;
+        String _direccion;
+        String _telefono;
+        Date _fechaIngreso;
+        boolean existeEmpleado = false;
         
         System.out.println("\n¿Qué tipo de empleado desea ingresar al sistema?\n");
         System.out.println("1. Cuidador\n2. Guía\n3. Salir");
         opc = leerInt(3);
         
+        if (opc == 3) return;
+        
+        do {
+            if (existeEmpleado) {
+                System.err.println("Ese empleado ya esta registrado en el sistema, no se puede repetir.");
+            }
+            _nomUsuario = pedirUsuario();
+            existeEmpleado = true;
+        } while (s.existeEmpleado(_nomUsuario) != null);
+        _contra = pedirContra();
+        _nombre = pedirNombreEmpleado();
+        _direccion = pedirDireccion();
+        _telefono = pedirTelefono();
+        _fechaIngreso = new Date();
         
         switch(opc){
             case -1: System.err.println("Error 1 al dar de alta empleado."); break;
             case 1:
-                datos = pedirDatosEmpleado();
-                e = new Cuidador(datos.get(0),datos.get(1),datos.get(2),datos.get(3),datos.get(4), new Date());
+                e = new Cuidador(_nomUsuario,_contra,_nombre,_direccion,_telefono, _fechaIngreso);
                 break;
-            case 2: 
-                datos = pedirDatosEmpleado();
-                e = new Guia(datos.get(0),datos.get(1),datos.get(2),datos.get(3),datos.get(4), new Date());
+            case 2:
+                e = new Guia(_nomUsuario,_contra,_nombre,_direccion,_telefono, _fechaIngreso);
                 break;
-            case 3: return;
+            case 3: return; //NO DEBERIA SER NECESARIO
             default: System.err.println("Error 2 al dar de alta empleado."); break;
         }
         if (e != null) s.getEmpleados().add(e);
     }
 
     private void darBajaEmp(Sistema s) {
+        //ASD hacer q no se pueda darBaja un ADMIN (o hacer q se pueda darAlta uno y SOLO DAR BAJA SI HAY AL MENOS 2)
         String empBaja;
         Empleado e = null;
         
@@ -156,19 +178,57 @@ public class Administrador extends Empleado implements Serializable{
     }
 
     private void darAltaEsp(Sistema s) {
-        //ASD AGREAGAR VALIDACION DESPUES NO MAS DE 2 NOM_CIENTIFICOS IGUALES ------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        String nom = pedirNombreColoquialEspecie();
-        String nomCient = pedirNombreCientificoEspecie();
-        String desc = pedirDescripcion();
-        ArrayList<Cuidador> cuidadores = pedirCuidadores(s);
-         
+        String nom;
+        String nomCient;
+        String desc;
+        ArrayList<Cuidador> cuidadores;
+        boolean hay = false;
+        
+        nom = pedirNombreColoquialEspecie();
+        
+        do {
+            if (hay) {
+                System.err.println("Ese nombre cientifico ya existe en el sistem, no se puede repetir.");
+            }
+            nomCient = pedirNombreCientificoEspecie();
+            hay = true;
+        } while (s.existeEspecie(nomCient) != null);
+        
+        desc = pedirDescripcion();
+        
+        cuidadores = pedirCuidadores(s);
+        
+        if (cuidadores.isEmpty()) {
+            System.err.println("No se puede dar de alta una especie sin un empleado que la cuide.");
+            return;
+        }
+        
         Especie nuevaEspecie = new Especie(nom,nomCient,desc,cuidadores);
         
         //GUARDO QUE ESPECIE CUIDA CADA EMPLEADO EN LOS CUIDADORES.
         for (Cuidador cuidador : cuidadores) {
             cuidador.tomarEspecie(nuevaEspecie);
         }
-         
+        
+        //PARA ZONAS
+        System.out.print("\n¿Existe alguna zona en la que se encuentre esta especie? (s/n): ");
+        hay = leerBoolean();
+        if (hay) {
+            Zona zona = pedirZona(s);
+            if (zona != null) {
+                nuevaEspecie.asignarZona(zona);
+                zona.agregarEspecie(nuevaEspecie);
+            }
+        }
+        
+        //PARA HABITATS
+        System.out.print("\n¿Existe algun habitat en el que se encuentre esta especie? (s/n): ");
+        hay = leerBoolean();
+        if (hay) {
+            ArrayList<Habitat> habitats = pedirHabitats(s);
+            if (habitats != null && !habitats.isEmpty()) nuevaEspecie.asignarHabitats(habitats);
+        }
+        
         s.getEspecies().add(nuevaEspecie);
     }
 
@@ -204,14 +264,21 @@ public class Administrador extends Empleado implements Serializable{
             case STRING_ZONA:
                 String nomZona;
                 Double extZona;
-                boolean tieneEspecie;
+                boolean tieneEspecie = false;
                 
                 System.out.print("\nIngrese el nombre de la zona: ");
                 nomZona = leerString();
                 
                 System.out.print("\nExtensión de la zona en m2: ");
-                //ASD AGREAGAR VALIDACION PARA QUE NO PUEDA SER MENOR A 0
-                extZona = leerDouble();
+                //USO LA VARIABLE tieneEspecie PARA NO CREAR OTRA, EL NOMBRE NO COINCIDE CON LA FUNCION QUE CUMPLE
+                do {
+                    if (tieneEspecie) {
+                        System.err.println("La extension no puede ser menor a 0.");
+                    }
+                    extZona = leerDouble();
+                    tieneEspecie = true;
+                } while (extZona < 0);
+                
                 
                 System.out.print("\n¿Esta zona tiene especies? (s/n): ");
                 tieneEspecie = leerBoolean();
@@ -223,12 +290,25 @@ public class Administrador extends Empleado implements Serializable{
                     
                     //GUARDO EN LA ESPECIE LA ZONA EN LA QUE SE LA ESTA PONIENDO
                     for (Especie esp : e) {
-                        esp.asignarZona(z);
+                        try {
+                            esp.getZona().quitarEspecie(esp);   //Quito la especie de la zona (ya que solo puede estar en 1)
+                        }catch(NullPointerException ex) {}      //Si no tiene zona, zona == null. Asiq trato la excepcion
+                        esp.asignarZona(z);                 //La agrego en la que acaban de ingresar
                     }
                 }
                 else { sis.getZonas().add(new Zona(nomZona,extZona)); }
                 break;
             case STRING_HABITAT:
+                System.out.print("\nIngrese el nombre del habitat: ");
+                String nom = leerString();
+                
+                Clima c = pedirClima();
+                
+                Vegetacion v = pedirVegetacion();
+                
+                ArrayList<Continente> conts = pedirContinentes();
+                
+                sis.getHabitats().add(new Habitat(nom,c,v,conts));
                 break;
             default: System.err.println("Error al registrar, no es ni una zona ni un habitat."); break;
         }
@@ -255,12 +335,43 @@ public class Administrador extends Empleado implements Serializable{
                             break;
                         }
                     }
+                    else { System.err.println("Esa zona no existe."); }
                 }
 
-                sis.eliminarZona(z);
+                if (z != null) {
+                    //QUITO A LAS ESPECIES LA ZONA YA QUE SE INHABILITA
+                    for (Especie especie : z.getEspecies()) {
+                        especie.quitarZona();
+                    }
+
+                    sis.eliminarZona(z);
+                }
                 
                 break;
+
             case STRING_HABITAT:
+                String inhabilitarHabitat;
+                Habitat h = null;
+
+                while(true){
+                    System.out.println("\n¿Qué habitats desea inhabilitar?");
+                    sis.mostrarHabitats();
+                    System.out.print("\nIngrese el nombre del habitat que desea elminiar (0 para salir): ");
+                    inhabilitarHabitat = leerString();
+
+                    if (inhabilitarHabitat.equals("0")) break;
+
+                    h = sis.existeHabitat(inhabilitarHabitat);
+                    
+                    if (h != null) {
+                        if (confirmarDecision()) {
+                            break;
+                        }
+                    }
+                }
+
+                sis.eliminarHabitat(h);
+                
                 break;
             default: System.err.println("Error al inhabilitar, no es ni una zona ni un habitat."); break;
         }

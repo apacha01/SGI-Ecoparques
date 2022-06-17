@@ -13,7 +13,7 @@ public class Vegetacion {
 
     public Vegetacion(int veg){
         if(isVegetacion(veg)) this.veg = veg;
-        else { System.err.println("Error: esa vegetación no existe."); }
+        else { System.err.println("Error: esa vegetación no existe."); veg = 0;}
     }
     
     /**
@@ -38,13 +38,13 @@ public class Vegetacion {
         return (i == PASTIZAL || i == BOSQUE || i == SABANA || i == DESIERTO);
     }
     
-    public String obtenerNombreVeg(int veg){
+    public static String toStringVegetacion(int veg){
         switch(veg){
             case PASTIZAL: return "Pastizal";
             case BOSQUE: return "Bosque";
             case SABANA: return "Sabana";
             case DESIERTO: return "Desierto";
-            default: return null;
+            default: return "";
         }
     }
 }

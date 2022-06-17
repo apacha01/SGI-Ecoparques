@@ -158,6 +158,15 @@ public class Sistema implements Serializable {
         return null;
     }
     
+    /**
+     * Elimina una especie del sistema
+     * @param e especie a eliminar del sistema
+     */
+    public void eliminarEspecie(Especie e){
+        if (e == null) return;
+        especies.remove(e);
+    }
+    
     public Zona existeZona(String nombre){
         for (Zona zona: zonas) {
             if (zona.getNombre().equalsIgnoreCase(nombre)){
@@ -168,16 +177,22 @@ public class Sistema implements Serializable {
     }
     
     public void eliminarZona(Zona z){
+        if (z == null) return;
         zonas.remove(z);
     }
     
-    /**
-     * Elimina una especie del sistema
-     * @param e especie a eliminar del sistema
-     */
-    public void eliminarEspecie(Especie e){
-        if (e == null) return;
-        especies.remove(e);
+    public Habitat existeHabitat(String s){
+        for (Habitat h: habitats) {
+            if (h.getNom().equals(s)){
+                return h;
+            }
+        }
+        return null;
+    }
+    
+    public void eliminarHabitat(Habitat h){
+        if (h == null) return;
+        habitats.remove(h);
     }
     
     /**
