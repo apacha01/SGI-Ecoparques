@@ -47,9 +47,16 @@ public class Cuidador extends Empleado{
     }
     
     public void tomarEspecies(ArrayList<Especie> es){
-        especiesCuidadas = es;
         for (int i = 0; i < es.size(); i++) {
+            especiesCuidadas.add(es.get(i));
             tomaEspecie.add(new Date());
+        }
+    }
+    
+    public void mostrarEspeciesCuidadas(){
+        System.out.println("Especies del cuidador " + this.getNombre());
+        for (Especie especieCuidada : especiesCuidadas) {
+            System.out.println("\t" + especieCuidada.getNomCientifico());
         }
     }
     

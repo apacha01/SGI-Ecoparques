@@ -37,7 +37,7 @@ public class Administrador extends Empleado implements Serializable{
             seguir = procesarOpcion(opc, s);
         }
         
-        return false;
+        return true;
     }
     
     @Override
@@ -74,13 +74,14 @@ public class Administrador extends Empleado implements Serializable{
             case INHABILITAR_ZONA: inhabilitar(STRING_ZONA, s); break;
             case REGISTRAR_HABITAT: registrar(STRING_HABITAT, s); break;
             case INHABILITAR_HABITAT: inhabilitar(STRING_HABITAT, s); break;
-            case ASIGNAR_ESP_CUIDADOR: ; break;
-            case REMOVER_ESP_CUIDADOR: ; break;
-            case ASIGNAR_INT_GUIA: ; break;
-            case REMOVER_INT_GUIA: ; break;
+            case ASIGNAR_ESP_CUIDADOR: asignarEspecieCuidador(s); break;
+            case REMOVER_ESP_CUIDADOR: removerEspecieCuidador(s); break;
+            case ASIGNAR_INT_GUIA: asignarIntinerarioGuia(s); break;
+            case REMOVER_INT_GUIA: removerIntinerarioGuia(s); break;
             case LISTAR_EMPLEADOS_X_ANTIGUEDAD: listarXantiguedad(s); break;
             default: System.err.println("Error: esa opción no existe."); break;
         }
+        
         if (op >= 3 && op <= CANT_OPC_MENU_ADMIN-1) {
             try { s.serializar(NOMBRE_ARCHIVO); }
             catch (IOException e) { e.printStackTrace(); }
@@ -188,7 +189,7 @@ public class Administrador extends Empleado implements Serializable{
         
         do {
             if (hay) {
-                System.err.println("Ese nombre cientifico ya existe en el sistem, no se puede repetir.");
+                System.err.println("Ese nombre cientifico ya existe en el sistema, no se puede repetir.");
             }
             nomCient = pedirNombreCientificoEspecie();
             hay = true;
@@ -377,9 +378,68 @@ public class Administrador extends Empleado implements Serializable{
         }
     }
 
-    private void listarXantiguedad(Sistema s) {
+    private void asignarEspecieCuidador(Sistema s) {
+        ArrayList<Especie> e;
+        Cuidador c;
+        
+        while(true){
+            e = pedirEspecies(s);
+            if (e != null && e.isEmpty()) {
+                c = pedirCuidador(s);
+                if (c != null) {
+                    c.tomarEspecies(e);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void removerEspecieCuidador(Sistema s) {
+        Cuidador c;
+        Especie e;
+        String esp;
+        boolean quitarOtra;
+        
+        do {
+            c = pedirCuidador(s);
+
+            if (c != null) {
+                do {
+                    c.mostrarEspeciesCuidadas();
+                    System.out.print("\nIngrese el nombre cientifico de la especie que quiera remover (0 para salir): ");
+                    esp = leerString();
+
+                    e = s.existeEspecie(esp);
+
+                    if (esp.equals("0")) break;
+
+                    if (e != null) {
+                        c.quitarEspecie(e);
+                    }
+                    System.out.print("\n¿Quiere remover otra especie de este cuidador? (s/n): ");
+                    quitarOtra = leerBoolean();
+                } while (quitarOtra);
+                
+                System.out.print("\n¿Quiere remover una especie de otro cuidador? (s/n): ");
+                quitarOtra = leerBoolean();
+            }
+            else {
+                break;
+            }
+        } while (quitarOtra);
+        
+    }
+
+    private void asignarIntinerarioGuia(Sistema s) {
+        
+    }
+
+    private void removerIntinerarioGuia(Sistema s) {
         
     }
     
+    private void listarXantiguedad(Sistema s) {
+        
+    }
     
 }

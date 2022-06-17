@@ -144,6 +144,20 @@ public class Sistema implements Serializable {
     }
     
     /**
+     * Devuelve todos los guias en el sistema
+     * @return un arraylist de guias dentro del sistema
+     */
+    public ArrayList<Guia> obtenerGuias(){
+        ArrayList<Guia> guias = new ArrayList<>();
+        for (Empleado empleado : empleados) {
+            if (empleado instanceof Guia) {
+                guias.add((Guia)empleado);
+            }
+        }
+        return guias;
+    }
+    
+    /**
      *
      * @param nomCientifico el nombre cientifico de la especie que se esta buscando
      * @return la especie si se encontro, null en otro caso
@@ -202,6 +216,32 @@ public class Sistema implements Serializable {
         System.out.println("\n" + SEPARADOR_MEDIO + "Empleados" + SEPARADOR_MEDIO);
         for (int i = 0; i < empleados.size(); i++) {
             empleados.get(i).mostrarDatos();
+            System.out.println(SEPARADOR);
+        }
+    }
+    
+    /**
+     * Muestra los cuidadores en el sistema por consola
+     */
+    public void mostrarCuidadores(){
+        System.out.println("\n" + SEPARADOR_MEDIO + "Cuidadores" + SEPARADOR_MEDIO);
+        ArrayList<Cuidador> cuidadores = obtenerCuidadores();
+        
+        for (int i = 0; i < cuidadores.size(); i++) {
+            cuidadores.get(i).mostrarDatos();
+            System.out.println(SEPARADOR);
+        }
+    }
+    
+    /**
+     * Muestra los guias en el sistema por consola
+     */
+    public void mostrarGuias(){
+        System.out.println("\n" + SEPARADOR_MEDIO + "Guias" + SEPARADOR_MEDIO);
+        ArrayList<Guia> guias = obtenerGuias();
+        
+        for (int i = 0; i < guias.size(); i++) {
+            guias.get(i).mostrarDatos();
             System.out.println(SEPARADOR);
         }
     }
@@ -269,6 +309,8 @@ public class Sistema implements Serializable {
     /**
     *  @param a es el nombre del archivo del que se deserializa 
      * @return sistema que deserializo del archivo
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
     */
     public Sistema deSerializar(String a) throws IOException, ClassNotFoundException {
         FileInputStream f = new FileInputStream(a);
@@ -281,6 +323,7 @@ public class Sistema implements Serializable {
 
     /**
     *  @param a es el nombre del archivo en el que se serializa 
+     * @throws java.io.IOException 
     */
     public void serializar(String a) throws IOException {
         FileOutputStream f = new FileOutputStream(a);

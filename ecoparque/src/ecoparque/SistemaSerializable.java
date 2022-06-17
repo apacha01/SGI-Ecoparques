@@ -72,6 +72,9 @@ public class SistemaSerializable {
             if (e == null) {
                 System.out.println("ERROR: La combinacion usuario/contraseña ingresada no es valida.\n");
             } else {
+                if (usuario.equals("0") && contra.equals("0")) {
+                    break;
+                }
                 seguir = e.ingresar(s);
             }
         }

@@ -359,14 +359,16 @@ public class LecturaPorConsola {
                 return e;
             }
             else{
-                s.mostrarEmpleados();
+                s.mostrarCuidadores();
                 System.out.print("\nIngrese el nombre de usuario del cuidador de esta especie (0 para salir): ");
                 cuidador = leerString();
+                
+                //ASD
                 e.add(s.existeCuidador(cuidador));
 
                 if(cuidador.equals("0")) break;
                 if (e.get(i) == null) {
-                    System.err.println("Error: ese empleado no existe o no es un cuidador.\n");
+                    System.err.println("Error: ese cuidador no existe.\n");
                     hayMas = true;
                 }
                 else {
@@ -380,6 +382,39 @@ public class LecturaPorConsola {
         
         e.removeAll(Collections.singleton(null));
                 
+        
+        return e;
+    }
+    
+    /**
+     * Pide los cuidadores de la especie
+     * @param s sistema de donde se sacan los cuidadores
+     * @return un Empleado encargado de cuidar a la especie
+     */
+    public static Cuidador pedirCuidador(Sistema s){
+        Cuidador e = null;
+        String cuidador;
+        
+        
+        if (s.obtenerCuidadores().isEmpty()) {
+            System.err.println("No hay cuidadores registrados en el sistema.");
+            return e;
+        }
+        else{
+            do {
+                s.mostrarCuidadores();
+                System.out.print("\nIngrese el nombre de usuario del cuidador de esta especie (0 para salir): ");
+                cuidador = leerString();
+                e = s.existeCuidador(cuidador);
+
+                if(cuidador.equals("0")) break;
+                if (e == null) {
+                    System.err.println("Error: ese cuidador no existe.");
+                }
+                else {break;}
+            } while (true);
+            
+        }
         
         return e;
     }
@@ -430,6 +465,8 @@ public class LecturaPorConsola {
                 s.mostrarHabitats();
                 System.out.print("\nIngrese el nombre del habitat que quiere seleccionar (0 para salir): ");
                 habitat = leerString();
+                
+                //ASD
                 e.add(s.existeHabitat(habitat));
 
                 if(habitat.equals("0")) break;
