@@ -24,6 +24,12 @@ public class Zona implements Serializable{
         this.nombre = nombre;
         this.extension = extension;
         this.especies = especies;
+        for (Especie esp : especies) {
+            try {
+                esp.getZona().quitarEspecie(esp);   //Quito la especie de la zona en la q estaba (ya que solo puede estar en 1)
+            }catch(NullPointerException ex) {}      //Si no tiene zona, zona == null. Asiq trato la excepcion
+            esp.asignarZona(this);                  //La agrego en la que acaban de ingresar
+        }
     }
 
     /**
@@ -97,7 +103,7 @@ public class Zona implements Serializable{
         System.out.println("Extensión de la Zona: " + extension + " m2");
         System.out.println("Esta zona esta habitada por las siguientes especies:");
         for (Especie especie : especies) {
-            System.out.println("\t" + especie.getNomEspecie());
+            System.out.println("\t" + especie.getNomEspecie() + " (" + especie.getNomCientifico() + ")");
         }
     }
 }

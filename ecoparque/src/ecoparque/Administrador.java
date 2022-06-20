@@ -7,14 +7,15 @@ import clasesAuxiliares.Clima;
 import clasesAuxiliares.Vegetacion;
 import clasesAuxiliares.Continente;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
  * @author Agustín Pacheco
  */
-public class Administrador extends Empleado implements Serializable{
+public class Administrador extends Empleado {
     
     public Administrador(String usuario, String contra, String nombre, String direccion, String telefono, Date fechaIngreso) {
         super(usuario, contra, nombre, direccion, telefono, fechaIngreso);
@@ -52,6 +53,8 @@ public class Administrador extends Empleado implements Serializable{
         System.out.println(INHABILITAR_ZONA + ". Inhabilitar zona.");
         System.out.println(REGISTRAR_HABITAT + ". Registrar habitat.");
         System.out.println(INHABILITAR_HABITAT + ". Inhabilitar habitat.");
+        System.out.println(REGISTRAR_INTINERARIO + ". Registrar intinerario.");
+        System.out.println(INHABILITAR_INTINERARIO + ". Inhabilitar intinerario.");
         System.out.println(ASIGNAR_ESP_CUIDADOR + ". Asignar una especie a un cuidador.");
         System.out.println(REMOVER_ESP_CUIDADOR + ". Remover una especie a un cuidador.");
         System.out.println(ASIGNAR_INT_GUIA + ". Asignar un intinerario a un guia.");
@@ -74,6 +77,8 @@ public class Administrador extends Empleado implements Serializable{
             case INHABILITAR_ZONA: inhabilitar(STRING_ZONA, s); break;
             case REGISTRAR_HABITAT: registrar(STRING_HABITAT, s); break;
             case INHABILITAR_HABITAT: inhabilitar(STRING_HABITAT, s); break;
+            case REGISTRAR_INTINERARIO: registrar(STRING_INTINERARIO, s); break;
+            case INHABILITAR_INTINERARIO: inhabilitar(STRING_INTINERARIO, s); break;
             case ASIGNAR_ESP_CUIDADOR: asignarEspecieCuidador(s); break;
             case REMOVER_ESP_CUIDADOR: removerEspecieCuidador(s); break;
             case ASIGNAR_INT_GUIA: asignarIntinerarioGuia(s); break;
@@ -112,7 +117,7 @@ public class Administrador extends Empleado implements Serializable{
     }
 
     private void darAltaEmp(Sistema s) {
-        int opc = -1;
+        int opc;
         Empleado e = null;
         String _nomUsuario;
         String _contra;
@@ -130,7 +135,7 @@ public class Administrador extends Empleado implements Serializable{
         
         do {
             if (existeEmpleado) {
-                System.err.println("Ese empleado ya esta registrado en el sistema, no se puede repetir.");
+                System.err.println("Error: Ese empleado ya esta registrado en el sistema, no se puede repetir.");
             }
             _nomUsuario = pedirUsuario();
             existeEmpleado = true;
@@ -142,7 +147,6 @@ public class Administrador extends Empleado implements Serializable{
         _fechaIngreso = new Date();
         
         switch(opc){
-            case -1: System.err.println("Error 1 al dar de alta empleado."); break;
             case 1:
                 e = new Cuidador(_nomUsuario,_contra,_nombre,_direccion,_telefono, _fechaIngreso);
                 break;
@@ -150,7 +154,7 @@ public class Administrador extends Empleado implements Serializable{
                 e = new Guia(_nomUsuario,_contra,_nombre,_direccion,_telefono, _fechaIngreso);
                 break;
             case 3: return; //NO DEBERIA SER NECESARIO
-            default: System.err.println("Error 2 al dar de alta empleado."); break;
+            default: System.err.println("Error al dar de alta empleado."); break;
         }
         if (e != null) s.getEmpleados().add(e);
     }
@@ -189,7 +193,7 @@ public class Administrador extends Empleado implements Serializable{
         
         do {
             if (hay) {
-                System.err.println("Ese nombre cientifico ya existe en el sistema, no se puede repetir.");
+                System.err.println("Error: Ese nombre cientifico ya existe en el sistema, no se puede repetir.");
             }
             nomCient = pedirNombreCientificoEspecie();
             hay = true;
@@ -200,7 +204,7 @@ public class Administrador extends Empleado implements Serializable{
         cuidadores = pedirCuidadores(s);
         
         if (cuidadores.isEmpty()) {
-            System.err.println("No se puede dar de alta una especie sin un empleado que la cuide.");
+            System.err.println("Error: No se puede dar de alta una especie sin un empleado que la cuide.");
             return;
         }
         
@@ -248,10 +252,6 @@ public class Administrador extends Empleado implements Serializable{
             e = s.existeEspecie(espBaja);
             if (e != null) {
                 if (confirmarDecision()) {
-                    //ELIMINO LA ESPECIE DE LOS CUIDADORES QUE LA CUIDAN
-                    for (Cuidador cuidador : e.getCuidadores()) {
-                        cuidador.quitarEspecie(e);
-                    }
                     break;
                 }
             }
@@ -274,7 +274,7 @@ public class Administrador extends Empleado implements Serializable{
                 //USO LA VARIABLE tieneEspecie PARA NO CREAR OTRA, EL NOMBRE NO COINCIDE CON LA FUNCION QUE CUMPLE
                 do {
                     if (tieneEspecie) {
-                        System.err.println("La extension no puede ser menor a 0.");
+                        System.err.println("Error: La extension no puede ser menor a 0.");
                     }
                     extZona = leerDouble();
                     tieneEspecie = true;
@@ -288,17 +288,10 @@ public class Administrador extends Empleado implements Serializable{
                     ArrayList<Especie> e = pedirEspecies(sis);
                     Zona z = new Zona(nomZona,extZona,e);
                     sis.getZonas().add(z);
-                    
-                    //GUARDO EN LA ESPECIE LA ZONA EN LA QUE SE LA ESTA PONIENDO
-                    for (Especie esp : e) {
-                        try {
-                            esp.getZona().quitarEspecie(esp);   //Quito la especie de la zona (ya que solo puede estar en 1)
-                        }catch(NullPointerException ex) {}      //Si no tiene zona, zona == null. Asiq trato la excepcion
-                        esp.asignarZona(z);                 //La agrego en la que acaban de ingresar
-                    }
                 }
                 else { sis.getZonas().add(new Zona(nomZona,extZona)); }
                 break;
+                
             case STRING_HABITAT:
                 System.out.print("\nIngrese el nombre del habitat: ");
                 String nom = leerString();
@@ -311,7 +304,24 @@ public class Administrador extends Empleado implements Serializable{
                 
                 sis.getHabitats().add(new Habitat(nom,c,v,conts));
                 break;
-            default: System.err.println("Error al registrar, no es ni una zona ni un habitat."); break;
+                
+            case STRING_INTINERARIO:
+                String codigo;
+                double duracion, longitud;
+                int maxVisitas, numEspeciesVisita;
+                
+                codigo = pedirCodigoIntinerario();
+                duracion = pedirDuracionIntinerario();
+                longitud = pedirLongitudIntinerario();
+                maxVisitas = pedirMaximoVisitas();
+                numEspeciesVisita = pedirNumEspeciesVisita();
+                
+                Intinerario i = new Intinerario(codigo,duracion,longitud,maxVisitas,numEspeciesVisita);
+                
+                sis.getInts().add(i);
+                
+                break;
+            default: System.err.println("Error al registrar, no es ni una zona ni un habitat ni un intinerario."); break;
         }
     }
 
@@ -336,15 +346,10 @@ public class Administrador extends Empleado implements Serializable{
                             break;
                         }
                     }
-                    else { System.err.println("Esa zona no existe."); }
+                    else { System.err.println("Error: Esa zona no existe."); }
                 }
 
                 if (z != null) {
-                    //QUITO A LAS ESPECIES LA ZONA YA QUE SE INHABILITA
-                    for (Especie especie : z.getEspecies()) {
-                        especie.quitarZona();
-                    }
-
                     sis.eliminarZona(z);
                 }
                 
@@ -371,10 +376,36 @@ public class Administrador extends Empleado implements Serializable{
                     }
                 }
 
-                sis.eliminarHabitat(h);
+                if (h != null) sis.eliminarHabitat(h);
                 
                 break;
-            default: System.err.println("Error al inhabilitar, no es ni una zona ni un habitat."); break;
+                
+            case STRING_INTINERARIO:
+                String inhabilitarCod;
+                Intinerario i = null;
+                
+                while(true){
+                    System.out.println("\n¿Qué intinerario desea inhabilitar?");
+                    sis.mostrarIntinerarios();
+                    System.out.print("\nIngrese el codigo del intinerario que desea elminiar (0 para salir): ");
+                    inhabilitarCod = leerString();
+
+                    if (inhabilitarCod.equals("0")) break;
+
+                    i = sis.existeIntinerario(inhabilitarCod);
+                    
+                    if (i != null) {
+                        if (confirmarDecision()) {
+                            break;
+                        }
+                    }
+                }
+
+                if (i != null) sis.eliminarIntinerario(i);
+                
+                break;
+                
+            default: System.err.println("Error al inhabilitar, no es ni una zona ni un habitat ni un intinerario."); break;
         }
     }
 
@@ -382,16 +413,13 @@ public class Administrador extends Empleado implements Serializable{
         ArrayList<Especie> e;
         Cuidador c;
         
-        while(true){
-            e = pedirEspecies(s);
-            if (e != null && e.isEmpty()) {
-                c = pedirCuidador(s);
-                if (c != null) {
-                    c.tomarEspecies(e);
-                    break;
-                }
-            }
-        }
+        e = pedirEspecies(s);
+        if (e == null || e.isEmpty()) return;
+        
+        c = pedirCuidador(s);
+        if (c == null) return;
+        
+        c.tomarEspecies(e);
     }
 
     private void removerEspecieCuidador(Sistema s) {
@@ -416,6 +444,10 @@ public class Administrador extends Empleado implements Serializable{
                     if (e != null) {
                         c.quitarEspecie(e);
                     }
+                    else{
+                        System.err.println("Error: Esa especie no existe");
+                    }
+                    
                     System.out.print("\n¿Quiere remover otra especie de este cuidador? (s/n): ");
                     quitarOtra = leerBoolean();
                 } while (quitarOtra);
@@ -431,15 +463,46 @@ public class Administrador extends Empleado implements Serializable{
     }
 
     private void asignarIntinerarioGuia(Sistema s) {
+        Intinerario i;
+        Guia g;
         
+        i = pedirIntinerario(s);
+        if (i == null) return;
+        
+        g = pedirGuia(s);
+        if (g == null) return;
+
+        g.tomarIntinerario(i);
     }
 
     private void removerIntinerarioGuia(Sistema s) {
+        Guia g;
+        Intinerario i;
+        
+        g = pedirGuia(s);
+        if (g == null) return;
+        
+        i = pedirIntinerario(s);
+        if (i == null) return;
+        
+        g.quitarIntinerario(i);
         
     }
     
     private void listarXantiguedad(Sistema s) {
+        //NUEVA LISTA PARA NO MODIFICAR LA EXISTENTE, SOLO PIDE MOSTRAR POR ANTIGUEDAD NO ORDENAR
+        ArrayList<Empleado> e = s.getEmpleados();
         
+        Collections.sort(e, new Comparator<Empleado>() {
+            @Override
+            public int compare(Empleado e1, Empleado e2) {
+                    return (e1.getFechaIngreso()).compareTo((e2.getFechaIngreso()));
+            }
+        });
+        
+        for (Empleado e1 : e) {
+            e1.mostrarDatos();
+        }
     }
     
 }

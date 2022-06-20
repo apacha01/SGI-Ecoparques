@@ -30,7 +30,11 @@ public class Especie implements Serializable{
      * @param c Cuidador a agregar que cuida la especie
      */
     public void agregarCuidador(Cuidador c){
-        if(c != null) cuidadores.add(c);
+        if(c != null && !cuidadores.contains(c)) cuidadores.add(c);
+    }
+    
+    public void quitarCuidador(Cuidador c){
+        cuidadores.remove(c);
     }
     
     /**

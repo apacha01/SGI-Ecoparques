@@ -61,6 +61,7 @@ public class SistemaSerializable {
         }
 
         while (seguir) {
+            System.out.println(SEPARADOR_MEDIO + "SISTEMA DE GESTIÓN DE INFORMACIÓN PARA ECOPARQUES" + SEPARADOR_MEDIO);
             System.out.print("\nIngrese el nombre de usuario: ");
             String usuario = LecturaPorConsola.leerString();
             

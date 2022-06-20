@@ -7,7 +7,9 @@ import static clasesAuxiliares.Continente.toStringContinente;
 import static clasesAuxiliares.Constantes.*;
 import ecoparque.Cuidador;
 import ecoparque.Especie;
+import ecoparque.Guia;
 import ecoparque.Habitat;
+import ecoparque.Intinerario;
 import ecoparque.Sistema;
 import ecoparque.Zona;
 import java.util.ArrayList;
@@ -47,7 +49,7 @@ public class LecturaPorConsola {
         try{
             System.out.print("\nIngrese un número entero: ");   
             opc = in.nextInt();
-        }catch(InputMismatchException e){System.err.println("\nEso no es un número entero.\n");}
+        }catch(InputMismatchException e){System.err.println("Error: Eso no es un número entero.");}
         
         return opc;
     }
@@ -74,7 +76,7 @@ public class LecturaPorConsola {
         try{
             System.out.print("\nIngrese un número (para un decimal utilice la coma ',' en lugar del punto '.'): ");   
             lectura = in.nextDouble();
-        }catch(InputMismatchException e){System.err.println("Eso no es un número, recuerde usar la coma.");}
+        }catch(InputMismatchException e){System.err.println("Error: Eso no es un número, recuerde usar la coma.");}
         
         return lectura;
     }
@@ -104,7 +106,7 @@ public class LecturaPorConsola {
                 System.out.print("\nIngrese un número entero entre 1 y " + max +  ": ");
                 opc = in.nextInt();
             }
-        } catch (InputMismatchException e){System.err.println("\nEso no es un número entero.\n");}
+        } catch (InputMismatchException e){System.err.println("Error: Eso no es un número entero.");}
         
         return opc;
     }
@@ -132,10 +134,10 @@ public class LecturaPorConsola {
         
         try{
             while(opc > max || opc < min){   
-                System.out.println("Ingrese un número entero entre " + min + " y " + max +  "...");   
+                System.out.print("\nIngrese un número entero entre " + min + " y " + max +  ": ");   
                 opc = in.nextInt();
             }
-        }catch(InputMismatchException e){System.err.println("\nEso no es un número entero.\n");}
+        }catch(InputMismatchException e){System.err.println("Error: Eso no es un número entero.");}
         
         
         return opc;
@@ -320,7 +322,7 @@ public class LecturaPorConsola {
      */
     public static String pedirNombreCientificoEspecie(){
         //PIDO NOMBRE DEL HABITAT A REGISTRAR
-        System.out.print("\nIngrese el nombre cientifico de la especie: ");
+        System.out.print("Ingrese el nombre cientifico de la especie: ");
         String s = leerString();
         if (s.equals("")) {
             throw new NullPointerException("ERROR: Su nombre no puede ser nulo.");
@@ -348,42 +350,47 @@ public class LecturaPorConsola {
      * @return un Empleado encargado de cuidar a la especie
      */
     public static ArrayList<Cuidador> pedirCuidadores(Sistema s){
-        ArrayList<Cuidador> e = new ArrayList<>();
+        ArrayList<Cuidador> c = new ArrayList<>();
+        Cuidador cuid;
         String cuidador;
         boolean hayMas;
-        int i = 0;
         
         do{
             if (s.obtenerCuidadores().isEmpty()) {
-                System.err.println("No hay cuidadores registrados en el sistema.");
-                return e;
+                System.err.println("Error: No hay cuidadores registrados en el sistema.");
+                return c;
             }
             else{
                 s.mostrarCuidadores();
                 System.out.print("\nIngrese el nombre de usuario del cuidador de esta especie (0 para salir): ");
                 cuidador = leerString();
                 
-                //ASD
-                e.add(s.existeCuidador(cuidador));
-
                 if(cuidador.equals("0")) break;
-                if (e.get(i) == null) {
+                
+                cuid = s.existeCuidador(cuidador);
+                
+                if (cuid == null) {
                     System.err.println("Error: ese cuidador no existe.\n");
                     hayMas = true;
                 }
                 else {
-
-                    System.out.print("¿Hay más cuidadores que desee elegir? (s/n): ");
-                    hayMas = leerBoolean();
+                    if (!c.contains(cuid)) {
+                        c.add(cuid);
+                        System.out.print("¿Hay más cuidadores que desee elegir? (s/n): ");
+                        hayMas = leerBoolean();
+                    }
+                    else{
+                        System.err.println("Error: Ese cuidador ya lo selecciono anteriormente.");
+                        hayMas = true;
+                    }
                 }
-                i++;
             }
         }while(hayMas);
         
-        e.removeAll(Collections.singleton(null));
+        c.removeAll(Collections.singleton(null));
                 
         
-        return e;
+        return c;
     }
     
     /**
@@ -397,7 +404,7 @@ public class LecturaPorConsola {
         
         
         if (s.obtenerCuidadores().isEmpty()) {
-            System.err.println("No hay cuidadores registrados en el sistema.");
+            System.err.println("Error: No hay cuidadores registrados en el sistema.");
             return e;
         }
         else{
@@ -428,7 +435,7 @@ public class LecturaPorConsola {
             if (s.getZonas().isEmpty()) {
                 e = null;
                 hayMas = false;
-                System.err.println("No hay zonas en el sistema.");
+                System.err.println("Error: No hay zonas en el sistema.");
             }
             else{
                 s.mostrarZonas();
@@ -451,41 +458,45 @@ public class LecturaPorConsola {
     }
     
     public static ArrayList<Habitat> pedirHabitats(Sistema s){
-        ArrayList<Habitat> e = new ArrayList<>();
+        ArrayList<Habitat> h = new ArrayList<>();
+        Habitat hab;
         String habitat;
         boolean hayMas;
-        int i = 0;
         
         do{
             if (s.getHabitats().isEmpty()) {
-                System.err.println("No hay habitats registrados en el sistema.");
-                return e;
+                System.err.println("Error: No hay habitats registrados en el sistema.");
+                return h;
             }
             else{
                 s.mostrarHabitats();
                 System.out.print("\nIngrese el nombre del habitat que quiere seleccionar (0 para salir): ");
                 habitat = leerString();
                 
-                //ASD
-                e.add(s.existeHabitat(habitat));
-
                 if(habitat.equals("0")) break;
-                if (e.get(i) == null) {
+                
+                hab = s.existeHabitat(habitat);
+                
+                if (hab == null) {
                     System.err.println("Error: ese habitat no existe.\n");
                     hayMas = true;
                 }
                 else {
-
-                    System.out.print("¿Hay más habitats que desee elegir? (s/n): ");
-                    hayMas = leerBoolean();
+                    if (!h.contains(hab)) {
+                        h.add(hab);
+                        System.out.print("¿Hay más habitats que desee elegir? (s/n): ");
+                        hayMas = leerBoolean();
+                    }
+                    else{
+                        System.err.println("Error: Ese habitat ya lo selecciono anteriormente.");
+                        hayMas = true;
+                    }
+                    
                 }
-                i++;
             }
         }while(hayMas);
         
-        e.removeAll(Collections.singleton(null));
-        
-        return e;
+        return h;
     }
     
     //////////////////////////////////////////DATOS PARA ZONAS//////////////////////////////////////////
@@ -498,40 +509,41 @@ public class LecturaPorConsola {
      */
     public static ArrayList<Especie> pedirEspecies(Sistema s){
         ArrayList<Especie> e = new ArrayList<>();
+        Especie esp;
         String especie;
         boolean hayMas;
-        int i = 0;
         
         do{
             if (s.getEspecies().isEmpty()) {
                 hayMas = false;
-                System.err.println("No hay especies en el sistema.");
+                System.err.println("Error: No hay especies en el sistema.");
             }
             else{
                 s.mostrarEspecies();
                 System.out.print("\nIngrese el nombre de cientifico de la especie (0 para salir): ");
                 especie = leerString();
                 
-                //ASD se pueden repetir especies, si se selecciona una vez prohibir que se vuelva a elegir
-                e.add(s.existeEspecie(especie));
-
-                
                 if(especie.equals("0")) break;
-                if (e.get(i) == null) {
+                
+                esp = s.existeEspecie(especie);
+                
+                if (esp == null) {
                     System.err.println("Error: esa especie no existe.\n");
                     hayMas = true;
                 }
-                else {
-
-                    System.out.print("¿Hay más especies que desee elegir? (s/n): ");
-                    hayMas = leerBoolean();
+                else{
+                    if (!e.contains(esp)) {
+                        e.add(esp);
+                        System.out.print("¿Hay más especies que desee elegir? (s/n): ");
+                        hayMas = leerBoolean();
+                    }
+                    else{
+                        System.err.println("Error: Esa especie ya la selecciono anteriormente.");
+                        hayMas = true;
+                    }
                 }
-
-                i++;
             }
         }while(hayMas);
-        
-        e.removeAll(Collections.singleton(null));
         
         return e;
     }
@@ -590,9 +602,9 @@ public class LecturaPorConsola {
     public static ArrayList<Continente> pedirContinentes(){
         ArrayList<Continente> conts = new ArrayList<>();
         int opc;
-        boolean hayMas = false;
+        boolean hayMas;
         
-        while(hayMas){
+        do{
             System.out.println("Ingrese el continente (0 para salir): ");
             
             System.out.println((AMERICA - SUMA_CONTINENTE) + ". " + toStringContinente(AMERICA));
@@ -610,10 +622,137 @@ public class LecturaPorConsola {
                 System.out.print("¿Hay más continentes que contengan este habitat? (s/n): ");
                 hayMas = leerBoolean();
             }
-        }
+        }while(hayMas);
         
         
         return conts;
+    }
+    
+    //////////////////////////////////////////DATOS PARA INTINERARIOS//////////////////////////////////////////
+    
+    public static String pedirCodigoIntinerario(){
+        String codigo;
+        
+        System.out.print("\nIngrese el codigo del intinerario: ");
+        codigo = leerString();
+        
+        return codigo;
+    }
+    
+    public static double pedirDuracionIntinerario(){
+        double duracion;
+        int hora, min;
+        
+        while(true){
+            System.out.print("\nIngrese la cantidad de horas que dura el recorrido del intinerario: ");
+            hora = leerInt();
+            if (hora >= 0) {
+                break;
+            }
+            System.err.println("Error: La hora no puede ser negativa.");
+        }
+        while(true){
+            System.out.print("\nIngrese la cantidad de minutos que dura el recorrido del intinerario: ");
+            min = leerInt();
+            if (min >= 0 && min < 60) {
+                break;
+            }
+            System.err.println("Error: Los minutos no pueden ser negativos o superar 60.");
+        }
+        
+        duracion = hora + (min/60);
+        
+        return duracion;
+    }
+    
+    public static double pedirLongitudIntinerario(){
+        double longitud;
+        
+        System.out.print("\nIngrese la longitud del recorrido del intinerario en m: ");
+        longitud = leerDouble();
+        
+        return longitud;
+    }
+    
+    public static int pedirMaximoVisitas(){
+        int max;
+        
+        System.out.print("\nIngrese el numero maximo de visitantes que puede tener este intinerario: ");
+        max = leerInt();
+        
+        return max;
+    }
+    
+    public static int pedirNumEspeciesVisita(){
+        int espVisita;
+        
+        System.out.print("\nIngrese el numero de especies que visita este intinerario: ");
+        espVisita = leerInt();
+        
+        return espVisita;
+    }
+    
+    public static Intinerario pedirIntinerario(Sistema s){
+        Intinerario i;
+        String codIntinerario;
+        boolean hayMas;
+        
+        do{
+            if (s.getInts().isEmpty()) {
+                i = null;
+                hayMas = false;
+                System.err.println("Error: No hay intinerarios en el sistema.");
+            }
+            else{
+                s.mostrarIntinerarios();
+                System.out.print("\nIngrese el codigo del intinerario (0 para salir): ");
+                codIntinerario = leerString();
+                i = s.existeIntinerario(codIntinerario);
+                
+                if(codIntinerario.equals("0")) break;
+                if (i == null) {
+                    System.err.println("Error: ese intinerario no existe.\n");
+                    hayMas = true;
+                }
+                else{
+                    hayMas = false;
+                }
+            }
+        }while(hayMas);
+        
+        return i;
+        
+    }
+    
+    public static Guia pedirGuia(Sistema s){
+        Guia g;
+        String guia;
+        boolean hayMas;
+        
+        do{
+            if (s.obtenerGuias().isEmpty()) {
+                g = null;
+                hayMas = false;
+                System.err.println("Error: No hay guias en el sistema.");
+            }
+            else{
+                s.mostrarGuias();
+                System.out.print("\nIngrese el nombre de usuario del guia (0 para salir): ");
+                guia = leerString();
+                g = s.existeGuia(guia);
+                
+                if(guia.equals("0")) break;
+                if (g == null) {
+                    System.err.println("Error: ese guia no existe.\n");
+                    hayMas = true;
+                }
+                else{
+                    hayMas = false;
+                }
+            }
+        }while(hayMas);
+        
+        return g;
     }
     
 }

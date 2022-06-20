@@ -76,10 +76,9 @@ public class Habitat implements Serializable{
     }
     
     public void mostrarDatos(){
-        System.out.println(SEPARADOR);
         System.out.println("Nombre del habitat: " + nom);
         System.out.println("Clima actual del habitat: " + clima.toStringClima(clima.getClimaActual()));
-        System.out.println("Tipo de vegetacóión del habitat" + vegPredominante.toStringVegetacion(vegPredominante.getVeg()));
+        System.out.println("Tipo de vegetacóión del habitat: " + vegPredominante.toStringVegetacion(vegPredominante.getVeg()));
         System.out.println("Esta especie se encuentra en los continentes:");
         for (int i = 0; i < conts.size(); i++) {
             System.out.println("\t" + conts.get(i).toStringContinente(i));

@@ -20,6 +20,10 @@ public class Cuidador extends Empleado{
         tomaEspecie = new ArrayList<>();
         especiesCuidadas = new ArrayList<>();
     }
+
+    public ArrayList<Especie> getEspeciesCuidadas() {
+        return especiesCuidadas;
+    }
     
     @Override
     public void mostrarDatos(){
@@ -35,21 +39,36 @@ public class Cuidador extends Empleado{
     }
     
     public void tomarEspecie(Especie e){
-        especiesCuidadas.add(e);
-        tomaEspecie.add(new Date());
+        if (!especiesCuidadas.contains(e)) {
+            especiesCuidadas.add(e);
+            tomaEspecie.add(new Date());
+        }
+        else{
+            System.err.println("Error: Este cuidador ya cuida la especie " + e.getNomEspecie());
+        }
     }
     
     public void quitarEspecie(Especie e){
         int index = especiesCuidadas.indexOf(e);
         
-        especiesCuidadas.remove(index);
-        tomaEspecie.remove(index);
+        if (index != -1) {
+            e.quitarCuidador(this);
+            especiesCuidadas.remove(index);
+            tomaEspecie.remove(index);
+        }
     }
     
     public void tomarEspecies(ArrayList<Especie> es){
         for (int i = 0; i < es.size(); i++) {
-            especiesCuidadas.add(es.get(i));
-            tomaEspecie.add(new Date());
+            
+            if (!especiesCuidadas.contains(es.get(i))) {
+                es.get(i).agregarCuidador(this);
+                especiesCuidadas.add(es.get(i));
+                tomaEspecie.add(new Date());
+            }
+            else{
+                System.err.println("Error: Este cuidador ya cuida la especie " + es.get(i).getNomEspecie());
+            }
         }
     }
     

@@ -2,12 +2,13 @@
 package clasesAuxiliares;
 
 import static clasesAuxiliares.Constantes.*;
+import java.io.Serializable;
 
 /**
  *
  * @author agust
  */
-public class Clima {    
+public class Clima implements Serializable{    
     private int climaActual;
 
     public Clima(int climaActual){

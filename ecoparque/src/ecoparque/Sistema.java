@@ -19,14 +19,14 @@ public class Sistema implements Serializable {
     private ArrayList<Especie> especies;
     private ArrayList<Habitat> habitats;
     private ArrayList<Zona> zonas;
-    //private ArrayList<Intinerario> ints;
+    private ArrayList<Intinerario> ints;
     
     public Sistema() {
         empleados = new ArrayList<>();
         especies = new ArrayList<>();
         habitats = new ArrayList<>();
         zonas = new ArrayList<>();
-        //ints = new ArrayList<>();
+        ints = new ArrayList<>();
     }
     
     /**
@@ -73,6 +73,10 @@ public class Sistema implements Serializable {
     public ArrayList<Zona> getZonas() {
         return zonas;
     }
+
+    public ArrayList<Intinerario> getInts() {
+        return ints;
+    }
     
     /**
      *
@@ -109,7 +113,33 @@ public class Sistema implements Serializable {
      */
     public void eliminarEmpleado(Empleado e){
         if (e == null) return;
+        //Si es un cuidador elimino dentro de la especie a dicho cuidador
+        if (e instanceof Cuidador) {
+            for (Especie especieCuidada : ((Cuidador) e).getEspeciesCuidadas()) {
+                especieCuidada.quitarCuidador((Cuidador) e);
+            }
+        }
+        //Si es un guia libero el intinerario, ya que solo un guia a la vez lo puede usar
+        if (e instanceof Guia) {
+            for (Intinerario intinerario : ((Guia) e).getIntinerarios()) {
+                ((Guia) e).quitarIntinerario(intinerario);
+            }
+        }
         empleados.remove(e);
+    }
+    
+    /**
+     * Devuelve todos los cuidadores en el sistema
+     * @return un arraylist de cuidadores dentro del sistema
+     */
+    public ArrayList<Cuidador> obtenerCuidadores(){
+        ArrayList<Cuidador> cuidadores = new ArrayList<>();
+        for (Empleado empleado : empleados) {
+            if (empleado instanceof Cuidador) {
+                cuidadores.add((Cuidador)empleado);
+            }
+        }
+        return cuidadores;
     }
     
     /**
@@ -130,20 +160,6 @@ public class Sistema implements Serializable {
     }
     
     /**
-     * Devuelve todos los cuidadores en el sistema
-     * @return un arraylist de cuidadores dentro del sistema
-     */
-    public ArrayList<Cuidador> obtenerCuidadores(){
-        ArrayList<Cuidador> cuidadores = new ArrayList<>();
-        for (Empleado empleado : empleados) {
-            if (empleado instanceof Cuidador) {
-                cuidadores.add((Cuidador)empleado);
-            }
-        }
-        return cuidadores;
-    }
-    
-    /**
      * Devuelve todos los guias en el sistema
      * @return un arraylist de guias dentro del sistema
      */
@@ -156,6 +172,17 @@ public class Sistema implements Serializable {
         }
         return guias;
     }
+    
+    public Guia existeGuia(String usuario){
+        ArrayList<Guia> guias = obtenerGuias();
+        for (Guia guia : guias) {
+            if (guia.getUsuario().equals(usuario)) {
+                return guia;
+            }
+        }
+        return null;
+    }
+    
     
     /**
      *
@@ -178,6 +205,11 @@ public class Sistema implements Serializable {
      */
     public void eliminarEspecie(Especie e){
         if (e == null) return;
+        //ELIMINO LA ESPECIE DE LOS CUIDADORES QUE LA CUIDAN
+        for (Cuidador cuidador : e.getCuidadores()) {
+            cuidador.quitarEspecie(e);
+        }
+        e.getZona().quitarEspecie(e);
         especies.remove(e);
     }
     
@@ -192,6 +224,10 @@ public class Sistema implements Serializable {
     
     public void eliminarZona(Zona z){
         if (z == null) return;
+        //LE SACO LA ZONA A LAS ESPECIES QUE TENIAN ESTA ZONA
+        for (Especie especie : z.getEspecies()) {
+            especie.quitarZona();
+        }
         zonas.remove(z);
     }
     
@@ -207,6 +243,20 @@ public class Sistema implements Serializable {
     public void eliminarHabitat(Habitat h){
         if (h == null) return;
         habitats.remove(h);
+    }
+    
+    public Intinerario existeIntinerario(String cod){
+        for (Intinerario intinerario : ints) {
+            if (intinerario.getCodigo().equals(cod)) {
+                return intinerario;
+            }
+        }
+        return null;
+    }
+    
+    public void eliminarIntinerario(Intinerario i){
+        if (i == null) return;
+        ints.remove(i);
     }
     
     /**
@@ -295,15 +345,15 @@ public class Sistema implements Serializable {
      * Muestra los intinerarios en el sistema por consola
      */
     public void mostrarIntinerarios (){
-//        System.out.println("\n" + SEPARADOR_MEDIO + "Intinerarios" + SEPARADOR_MEDIO);
-//        if (ints.isEmpty()) {
-//            System.out.println("No hay intinerarios registradas en el sistema.");
-//        } else {
-//            for (int i = 0; i < ints.size(); i++) {
-//              ints.get(i).mostrarDatos();
-//              System.out.println(SEPARADOR);
-//            }
-//        }
+        System.out.println("\n" + SEPARADOR_MEDIO + "Intinerarios" + SEPARADOR_MEDIO);
+        if (ints.isEmpty()) {
+            System.out.println("No hay intinerarios registradas en el sistema.");
+        } else {
+            for (int i = 0; i < ints.size(); i++) {
+              ints.get(i).mostrarDatos();
+              System.out.println(SEPARADOR);
+            }
+        }
     }
     
     /**

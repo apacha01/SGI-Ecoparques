@@ -2,12 +2,13 @@
 package clasesAuxiliares;
 
 import static clasesAuxiliares.Constantes.*;
+import java.io.Serializable;
 
 /**
  *
  * @author Agustín Pacheco
  */
-public class Vegetacion {
+public class Vegetacion implements Serializable{
     
     private int veg;
 

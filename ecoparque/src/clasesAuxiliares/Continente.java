@@ -2,12 +2,13 @@
 package clasesAuxiliares;
 
 import static clasesAuxiliares.Constantes.*;
+import java.io.Serializable;
 
 /**
  *
  * @author Agustin Pacheco
  */
-public class Continente {
+public class Continente implements Serializable{
     
     private int continente;
 

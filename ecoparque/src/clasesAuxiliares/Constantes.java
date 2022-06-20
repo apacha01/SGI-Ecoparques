@@ -19,12 +19,14 @@ public class Constantes {
     public static final int INHABILITAR_ZONA = 8;
     public static final int REGISTRAR_HABITAT = 9;
     public static final int INHABILITAR_HABITAT = 10;
-    public static final int ASIGNAR_ESP_CUIDADOR = 11;
-    public static final int REMOVER_ESP_CUIDADOR = 12;
-    public static final int ASIGNAR_INT_GUIA = 13;
-    public static final int REMOVER_INT_GUIA = 14;
-    public static final int LISTAR_EMPLEADOS_X_ANTIGUEDAD = 15;
-    public static final int CANT_OPC_MENU_ADMIN = 15;
+    public static final int REGISTRAR_INTINERARIO = 11;
+    public static final int INHABILITAR_INTINERARIO = 12;
+    public static final int ASIGNAR_ESP_CUIDADOR = 13;
+    public static final int REMOVER_ESP_CUIDADOR = 14;
+    public static final int ASIGNAR_INT_GUIA = 15;
+    public static final int REMOVER_INT_GUIA = 16;
+    public static final int LISTAR_EMPLEADOS_X_ANTIGUEDAD = 17;
+    public static final int CANT_OPC_MENU_ADMIN = 17;
     public static final int CANT_OPC_MENU_GUIA = 3;
     public static final int CANT_OPC_MENU_CUIDADOR = 3;
     //PARA EL CLIMA
@@ -55,4 +57,5 @@ public class Constantes {
     public static final String SEPARADOR_MEDIO = "-------------------------";
     public static final String STRING_ZONA = "Zona";
     public static final String STRING_HABITAT = "Habitat";
+    public static final String STRING_INTINERARIO = "Intinerario";
 }
