@@ -209,7 +209,9 @@ public class Sistema implements Serializable {
         for (Cuidador cuidador : e.getCuidadores()) {
             cuidador.quitarEspecie(e);
         }
-        e.getZona().quitarEspecie(e);
+        if (e.getZona() != null) {
+            e.getZona().quitarEspecie(e);
+        }
         especies.remove(e);
     }
     

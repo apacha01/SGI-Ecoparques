@@ -14,7 +14,7 @@ public class Continente implements Serializable{
 
     public Continente(int continente) {
         if(isContinente(continente)) this.continente = continente;
-        else { System.err.println("Error: ese continente no existe."); continente = 0; }
+        else { System.err.println("Error: ese continente no existe."); }
     }
     
     /**
@@ -47,7 +47,7 @@ public class Continente implements Serializable{
             case ANTARTIDA: return "Antartida";
             case OCEANIA: return "Oceania";
             case EUROPA: return "Europa";
-            default: return "";
+            default: return "Error: No es un continente.";
         }
     }
     

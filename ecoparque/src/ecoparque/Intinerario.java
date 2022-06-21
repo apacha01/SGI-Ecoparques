@@ -4,6 +4,7 @@
  */
 package ecoparque;
 
+import clasesAuxiliares.Duracion;
 import java.io.Serializable;
 
 /**
@@ -13,13 +14,13 @@ import java.io.Serializable;
 public class Intinerario implements Serializable{
     
     private String codigo;
-    private double duracion;
+    private Duracion duracion;
     private double longitud;
     private int maxVisitantes;
     private int numEspeciesVisita;
     private boolean ocupado;
 
-    public Intinerario(String codigo, double duracion, double longitud, int maxVisitantes, int numEspeciesVisita) {
+    public Intinerario(String codigo, Duracion duracion, double longitud, int maxVisitantes, int numEspeciesVisita) {
         this.codigo = codigo;
         this.duracion = duracion;
         this.longitud = longitud;
@@ -71,7 +72,7 @@ public class Intinerario implements Serializable{
      *
      * @return the value of duracion
      */
-    public double getDuracion() {
+    public Duracion getDuracion() {
         return duracion;
     }
     
@@ -86,10 +87,7 @@ public class Intinerario implements Serializable{
     
     public void mostrarDatos(){
         System.out.println("Codigo del intinerario: " + codigo);
-                                                                    //Le saco la parte decimal
-        System.out.println("Duracion del intinerario: " + (int)(duracion - (duracion%1)) +  "hs " +
-                //Calculo la parte decimal en minutos
-                (int)((duracion%1) *60) + "min");
+        System.out.println("Duracion del intinerario: " + duracion.toStringDuracion());
         System.out.println("Longitud del intinerario: " + longitud + " m");
         System.out.println("Numero maximo de visitantes del intinerario: " + maxVisitantes);
         System.out.println("Cantidad de especies que visita el intinerario: " + numEspeciesVisita);

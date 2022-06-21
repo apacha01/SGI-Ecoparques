@@ -5,6 +5,9 @@ import static clasesAuxiliares.Constantes.*;
 import clasesAuxiliares.Vegetacion;
 import clasesAuxiliares.Continente;
 import clasesAuxiliares.Clima;
+import static clasesAuxiliares.Clima.toStringClima;
+import static clasesAuxiliares.Continente.toStringContinente;
+import static clasesAuxiliares.Vegetacion.toStringVegetacion;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -77,11 +80,11 @@ public class Habitat implements Serializable{
     
     public void mostrarDatos(){
         System.out.println("Nombre del habitat: " + nom);
-        System.out.println("Clima actual del habitat: " + clima.toStringClima(clima.getClimaActual()));
-        System.out.println("Tipo de vegetacóión del habitat: " + vegPredominante.toStringVegetacion(vegPredominante.getVeg()));
-        System.out.println("Esta especie se encuentra en los continentes:");
-        for (int i = 0; i < conts.size(); i++) {
-            System.out.println("\t" + conts.get(i).toStringContinente(i));
+        System.out.println("Clima actual del habitat: " + toStringClima(clima.getClimaActual()));
+        System.out.println("Tipo de vegetacóión del habitat: " + toStringVegetacion(vegPredominante.getVeg()));
+        System.out.println("Este habitat se encuentra en " + (conts.size() > 1 ? "los continentes" : "el continente") + ":");
+        for (Continente cont : conts) {
+            System.out.println("\t" + toStringContinente(cont.getContinente()));
         }
     }
     

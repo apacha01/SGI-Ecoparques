@@ -64,9 +64,17 @@ public class Especie implements Serializable{
         System.out.println("Nombre de la Especie: " + nomEspecie);
         System.out.println("Nombre Científico: " + nomCientifico);
         System.out.println("Descripción:\n\t" + descripcion);
-        System.out.println("Esta especie es cuidada por:");
-        for (int i = 0; i < cuidadores.size(); i++) {
-            System.out.println("\t" + cuidadores.get(i).getNombre());
+        if (!cuidadores.isEmpty()) {
+            System.out.println("Esta especie es cuidada por:");
+            for (int i = 0; i < cuidadores.size(); i++) {
+                System.out.println("\t" + cuidadores.get(i).getNombre());
+            }
+        }
+        if (!habitats.isEmpty()) {
+            System.out.println("Esta especie se encuentra en " + (habitats.size() > 1 ? "los habitats" : "el habitat") + ":");
+            for (int i = 0; i < habitats.size(); i++) {
+                System.out.println("\t" + habitats.get(i).getNom());
+            }
         }
         if(zona != null) System.out.println("Zona en la que se encuentra la especie: " + zona.getNombre());
     }

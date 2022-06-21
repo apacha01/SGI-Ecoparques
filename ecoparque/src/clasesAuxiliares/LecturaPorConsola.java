@@ -355,22 +355,23 @@ public class LecturaPorConsola {
         String cuidador;
         boolean hayMas;
         
-        do{
-            if (s.obtenerCuidadores().isEmpty()) {
-                System.err.println("Error: No hay cuidadores registrados en el sistema.");
-                return c;
-            }
-            else{
+        
+        if (s.obtenerCuidadores().isEmpty()) {
+            System.err.println("Error: No hay cuidadores registrados en el sistema.");
+            return c;
+        }
+        else{
+            do{
                 s.mostrarCuidadores();
                 System.out.print("\nIngrese el nombre de usuario del cuidador de esta especie (0 para salir): ");
                 cuidador = leerString();
-                
+
                 if(cuidador.equals("0")) break;
-                
+
                 cuid = s.existeCuidador(cuidador);
-                
+
                 if (cuid == null) {
-                    System.err.println("Error: ese cuidador no existe.\n");
+                    System.err.println("Error: ese cuidador no existe.");
                     hayMas = true;
                 }
                 else {
@@ -384,8 +385,9 @@ public class LecturaPorConsola {
                         hayMas = true;
                     }
                 }
-            }
-        }while(hayMas);
+            }while(hayMas);
+        }
+        
         
         c.removeAll(Collections.singleton(null));
                 
@@ -607,9 +609,9 @@ public class LecturaPorConsola {
         do{
             System.out.println("Ingrese el continente (0 para salir): ");
             
-            System.out.println((AMERICA - SUMA_CONTINENTE) + ". " + toStringContinente(AMERICA));
             System.out.println((AFRICA - SUMA_CONTINENTE) + ". " + toStringContinente(AFRICA));
             System.out.println((ANTARTIDA - SUMA_CONTINENTE) + ". " + toStringContinente(ANTARTIDA));
+            System.out.println((AMERICA - SUMA_CONTINENTE) + ". " + toStringContinente(AMERICA));
             System.out.println((ASIA - SUMA_CONTINENTE) + ". " + toStringContinente(ASIA));
             System.out.println((OCEANIA - SUMA_CONTINENTE) + ". " + toStringContinente(OCEANIA));
             System.out.println((EUROPA - SUMA_CONTINENTE) + ". " + toStringContinente(EUROPA));
@@ -639,8 +641,8 @@ public class LecturaPorConsola {
         return codigo;
     }
     
-    public static double pedirDuracionIntinerario(){
-        double duracion;
+    public static Duracion pedirDuracionIntinerario(){
+        Duracion duracion;
         int hora, min;
         
         while(true){
@@ -660,7 +662,7 @@ public class LecturaPorConsola {
             System.err.println("Error: Los minutos no pueden ser negativos o superar 60.");
         }
         
-        duracion = hora + (min/60);
+        duracion = new Duracion(hora,min);
         
         return duracion;
     }

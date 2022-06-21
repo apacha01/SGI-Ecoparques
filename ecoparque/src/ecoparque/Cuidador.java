@@ -52,7 +52,6 @@ public class Cuidador extends Empleado{
         int index = especiesCuidadas.indexOf(e);
         
         if (index != -1) {
-            e.quitarCuidador(this);
             especiesCuidadas.remove(index);
             tomaEspecie.remove(index);
         }

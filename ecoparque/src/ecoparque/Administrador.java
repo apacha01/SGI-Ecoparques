@@ -6,6 +6,7 @@ import static clasesAuxiliares.LecturaPorConsola.*;
 import clasesAuxiliares.Clima;
 import clasesAuxiliares.Vegetacion;
 import clasesAuxiliares.Continente;
+import clasesAuxiliares.Duracion;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -261,11 +262,11 @@ public class Administrador extends Empleado {
     }
 
     private void registrar(String s, Sistema sis) {
+        boolean tieneEspecie = false;
         switch (s) {
             case STRING_ZONA:
                 String nomZona;
                 Double extZona;
-                boolean tieneEspecie = false;
                 
                 System.out.print("\nIngrese el nombre de la zona: ");
                 nomZona = leerString();
@@ -293,21 +294,38 @@ public class Administrador extends Empleado {
                 break;
                 
             case STRING_HABITAT:
+                String nom;
+                Habitat h;
+                Clima c;
+                Vegetacion v;
+                ArrayList<Continente> conts;
+                ArrayList<Especie> esps;
+                
                 System.out.print("\nIngrese el nombre del habitat: ");
-                String nom = leerString();
+                nom = leerString();
                 
-                Clima c = pedirClima();
+                c = pedirClima();
+                v = pedirVegetacion();
+                conts = pedirContinentes();
+                h = new Habitat(nom,c,v,conts);
                 
-                Vegetacion v = pedirVegetacion();
+                System.out.print("\n¿Hay especies en este habitat? (s/n): ");
+                tieneEspecie = leerBoolean();
+                if (tieneEspecie) {
+                    esps = pedirEspecies(sis);
                 
-                ArrayList<Continente> conts = pedirContinentes();
+                    for (Especie esp : esps) {
+                        esp.asignarHabitat(h);
+                    }
+                }
                 
-                sis.getHabitats().add(new Habitat(nom,c,v,conts));
+                sis.getHabitats().add(h);
                 break;
                 
             case STRING_INTINERARIO:
                 String codigo;
-                double duracion, longitud;
+                Duracion duracion;
+                double longitud;
                 int maxVisitas, numEspeciesVisita;
                 
                 codigo = pedirCodigoIntinerario();
@@ -349,9 +367,7 @@ public class Administrador extends Empleado {
                     else { System.err.println("Error: Esa zona no existe."); }
                 }
 
-                if (z != null) {
-                    sis.eliminarZona(z);
-                }
+                if (z != null) sis.eliminarZona(z);
                 
                 break;
 
@@ -373,6 +389,9 @@ public class Administrador extends Empleado {
                         if (confirmarDecision()) {
                             break;
                         }
+                    }
+                    else{
+                        System.err.println("Error: Ese habitat no existe.");
                     }
                 }
 
@@ -443,6 +462,7 @@ public class Administrador extends Empleado {
 
                     if (e != null) {
                         c.quitarEspecie(e);
+                        e.quitarCuidador(c);
                     }
                     else{
                         System.err.println("Error: Esa especie no existe");
@@ -500,8 +520,10 @@ public class Administrador extends Empleado {
             }
         });
         
+        System.out.println("\n" + SEPARADOR_MEDIO + "Empleados" + SEPARADOR_MEDIO);
         for (Empleado e1 : e) {
             e1.mostrarDatos();
+            System.out.println(SEPARADOR);
         }
     }
     
