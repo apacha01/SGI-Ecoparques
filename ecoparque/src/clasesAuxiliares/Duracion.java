@@ -22,22 +22,6 @@ public class Duracion {
         this.segundos = segundos;
     }
     
-    public void setHora(int hora) {
-        this.hora = hora;
-    }
-
-    public void setMinutos(int minutos) {
-        this.minutos = minutos;
-    }
-
-    public void setSegundos(int segundos) {
-        this.segundos = segundos;
-    }
-    
-    public Duracion getDuracion(){
-        return this;
-    }
-    
     public String toStringDuracion(){
         return hora + (hora == 1 ? "h" : "hs") + " " + minutos + (minutos == 1 ? "min" : "mins");
     }
