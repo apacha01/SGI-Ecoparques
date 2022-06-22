@@ -54,6 +54,10 @@ public class LecturaPorConsola {
         return opc;
     }
     
+    /**
+     *
+     * @return
+     */
     public static int leerInt(){
         int lectura;
         
@@ -81,6 +85,10 @@ public class LecturaPorConsola {
         return lectura;
     }
     
+    /**
+     *
+     * @return
+     */
     public static double leerDouble(){
         double lectura;
         
@@ -111,6 +119,11 @@ public class LecturaPorConsola {
         return opc;
     }
     
+    /**
+     *
+     * @param max
+     * @return
+     */
     public static int leerInt(int max){
         int num;
         
@@ -143,6 +156,12 @@ public class LecturaPorConsola {
         return opc;
     }
     
+    /**
+     *
+     * @param min
+     * @param max
+     * @return
+     */
     public static int leerInt(int min, int max){
         int num;
         
@@ -428,6 +447,11 @@ public class LecturaPorConsola {
         return e;
     }
     
+    /**
+     *
+     * @param s
+     * @return
+     */
     public static Zona pedirZona(Sistema s){
         Zona e;
         String zona;
@@ -459,6 +483,11 @@ public class LecturaPorConsola {
         return e;
     }
     
+    /**
+     *
+     * @param s
+     * @return
+     */
     public static ArrayList<Habitat> pedirHabitats(Sistema s){
         ArrayList<Habitat> h = new ArrayList<>();
         Habitat hab;
@@ -631,6 +660,11 @@ public class LecturaPorConsola {
     }
     
     //////////////////////////////////////////DATOS PARA INTINERARIOS//////////////////////////////////////////
+
+    /**
+     *
+     * @return
+     */
     
     public static String pedirCodigoIntinerario(){
         String codigo;
@@ -641,6 +675,10 @@ public class LecturaPorConsola {
         return codigo;
     }
     
+    /**
+     *
+     * @return
+     */
     public static Duracion pedirDuracionIntinerario(){
         Duracion duracion;
         int hora, min;
@@ -667,6 +705,10 @@ public class LecturaPorConsola {
         return duracion;
     }
     
+    /**
+     *
+     * @return
+     */
     public static double pedirLongitudIntinerario(){
         double longitud;
         
@@ -676,6 +718,10 @@ public class LecturaPorConsola {
         return longitud;
     }
     
+    /**
+     *
+     * @return
+     */
     public static int pedirMaximoVisitas(){
         int max;
         
@@ -685,6 +731,10 @@ public class LecturaPorConsola {
         return max;
     }
     
+    /**
+     *
+     * @return
+     */
     public static int pedirNumEspeciesVisita(){
         int espVisita;
         
@@ -694,6 +744,11 @@ public class LecturaPorConsola {
         return espVisita;
     }
     
+    /**
+     *
+     * @param s
+     * @return
+     */
     public static Intinerario pedirIntinerario(Sistema s){
         Intinerario i;
         String codIntinerario;
@@ -726,6 +781,11 @@ public class LecturaPorConsola {
         
     }
     
+    /**
+     *
+     * @param s
+     * @return
+     */
     public static Guia pedirGuia(Sistema s){
         Guia g;
         String guia;

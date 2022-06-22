@@ -12,6 +12,10 @@ public class Continente implements Serializable{
     
     private int continente;
 
+    /**
+     *
+     * @param continente
+     */
     public Continente(int continente) {
         if(isContinente(continente)) this.continente = continente;
         else { System.err.println("Error: ese continente no existe."); }
@@ -35,10 +39,20 @@ public class Continente implements Serializable{
         this.continente = continente;
     }
     
+    /**
+     *
+     * @param i
+     * @return
+     */
     public boolean isContinente(int i){
         return (i == AMERICA || i == AFRICA || i == ASIA || i == ANTARTIDA || i == OCEANIA || i == EUROPA);
     }
     
+    /**
+     *
+     * @param cont
+     * @return
+     */
     public static String toStringContinente(int cont){
         switch(cont){
             case AMERICA: return "America";

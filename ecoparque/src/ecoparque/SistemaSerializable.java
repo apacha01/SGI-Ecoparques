@@ -24,7 +24,6 @@ public class SistemaSerializable {
         try {
             
             s = s.deSerializar(NOMBRE_ARCHIVO);
-            System.out.println("SISTEMA DE GESTIÓN DE INFORMACIÓN PARA ECOPARQUES");
             
         } catch (Exception e) {
             
@@ -71,11 +70,11 @@ public class SistemaSerializable {
             Empleado e = s.existeEmpleado(usuario,contra);
 
             if (e == null) {
-                System.out.println("ERROR: La combinacion usuario/contraseña ingresada no es valida.\n");
-            } else {
                 if (usuario.equals("0") && contra.equals("0")) {
                     break;
                 }
+                System.err.println("Error: La combinacion usuario/contraseña ingresada no es valida.\n");
+            } else {
                 seguir = e.ingresar(s);
             }
         }

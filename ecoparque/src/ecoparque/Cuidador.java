@@ -10,21 +10,37 @@ import java.util.Date;
  * @author Agustín Pacheco
  */
 
-public class Cuidador extends Empleado{
+public class Cuidador extends NoAdministrador{
     
     private ArrayList<Date> tomaEspecie;
     private ArrayList<Especie> especiesCuidadas;
 
+    /**
+     *
+     * @param usuario
+     * @param contra
+     * @param nombre
+     * @param direccion
+     * @param telefono
+     * @param fechaIngreso
+     */
     public Cuidador(String usuario, String contra, String nombre, String direccion, String telefono, Date fechaIngreso) {
         super(usuario, contra, nombre, direccion, telefono, fechaIngreso);
         tomaEspecie = new ArrayList<>();
         especiesCuidadas = new ArrayList<>();
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Especie> getEspeciesCuidadas() {
         return especiesCuidadas;
     }
     
+    /**
+     *
+     */
     @Override
     public void mostrarDatos(){
         System.out.println("Tipo de usuario: CUIDADOR");
@@ -38,16 +54,24 @@ public class Cuidador extends Empleado{
         }
     }
     
+    /**
+     *
+     * @param e
+     */
     public void tomarEspecie(Especie e){
         if (!especiesCuidadas.contains(e)) {
             especiesCuidadas.add(e);
             tomaEspecie.add(new Date());
         }
         else{
-            System.err.println("Error: Este cuidador ya cuida la especie " + e.getNomEspecie());
+            System.err.println("Error: Este cuidador ya cuida la especie " + e.getNomEspecie() + " (" + e.getNomCientifico() + ")");
         }
     }
     
+    /**
+     *
+     * @param e
+     */
     public void quitarEspecie(Especie e){
         int index = especiesCuidadas.indexOf(e);
         
@@ -57,6 +81,10 @@ public class Cuidador extends Empleado{
         }
     }
     
+    /**
+     *
+     * @param es
+     */
     public void tomarEspecies(ArrayList<Especie> es){
         for (int i = 0; i < es.size(); i++) {
             
@@ -71,6 +99,9 @@ public class Cuidador extends Empleado{
         }
     }
     
+    /**
+     *
+     */
     public void mostrarEspeciesCuidadas(){
         System.out.println("Especies del cuidador " + this.getNombre());
         for (Especie especieCuidada : especiesCuidadas) {
@@ -78,20 +109,23 @@ public class Cuidador extends Empleado{
         }
     }
     
-    @Override
-    public boolean ingresar(Sistema s) {
-        printMenu();
-        return false;
-    }
-    
+    /**
+     *
+     */
     @Override
     public void printMenu(){
         System.out.println("\n" + SEPARADOR_MEDIO + "MENU DE CUIDADOR" + SEPARADOR_MEDIO);
         super.printMenu();
     }
     
+    /**
+     *
+     * @param s
+     */
     @Override
-    public void consultarDatos(Sistema s){
-        
+    public void consultarDatos(Sistema s) {
+        System.out.println(SEPARADOR_MEDIO + "MIS DATOS" + SEPARADOR_MEDIO);
+        mostrarDatos();
+        System.out.println(SEPARADOR);
     }
 }

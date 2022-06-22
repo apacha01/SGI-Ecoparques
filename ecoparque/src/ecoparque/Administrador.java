@@ -18,16 +18,33 @@ import java.util.Date;
  */
 public class Administrador extends Empleado {
     
+    /**
+     *
+     * @param usuario
+     * @param contra
+     * @param nombre
+     * @param direccion
+     * @param telefono
+     * @param fechaIngreso
+     */
     public Administrador(String usuario, String contra, String nombre, String direccion, String telefono, Date fechaIngreso) {
         super(usuario, contra, nombre, direccion, telefono, fechaIngreso);
     }
     
+    /**
+     *
+     */
     @Override
     public void mostrarDatos(){
         System.out.println("Tipo de usuario: ADMINISTRADOR");
         super.mostrarDatos();
     }
     
+    /**
+     *
+     * @param s
+     * @return
+     */
     @Override
     public boolean ingresar(Sistema s) {
         boolean seguir = true;
@@ -42,6 +59,9 @@ public class Administrador extends Empleado {
         return true;
     }
     
+    /**
+     *
+     */
     @Override
     public void printMenu() {
         System.out.println("\n" + SEPARADOR_MEDIO + "MENU DE ADMINISTRADOR" + SEPARADOR_MEDIO);
@@ -96,6 +116,10 @@ public class Administrador extends Empleado {
         return seguir;
     }
     
+    /**
+     *
+     * @param s
+     */
     @Override
     public void consultarDatos(Sistema s) {
         System.out.println("\n");
@@ -161,7 +185,6 @@ public class Administrador extends Empleado {
     }
 
     private void darBajaEmp(Sistema s) {
-        //ASD hacer q no se pueda darBaja un ADMIN (o hacer q se pueda darAlta uno y SOLO DAR BAJA SI HAY AL MENOS 2)
         String empBaja;
         Empleado e = null;
         
@@ -501,6 +524,10 @@ public class Administrador extends Empleado {
         
         g = pedirGuia(s);
         if (g == null) return;
+        if (g.getIntinerarios().isEmpty()){
+            System.err.println("Error: Este guia no tiene intinerarios");
+            return;
+        }
         
         i = pedirIntinerario(s);
         if (i == null) return;

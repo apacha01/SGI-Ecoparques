@@ -16,6 +16,13 @@ public class Especie implements Serializable{
     private ArrayList<Habitat> habitats;
     private Zona zona;
 
+    /**
+     *
+     * @param nomEspecie
+     * @param nomCientifico
+     * @param descripcion
+     * @param cuidadores
+     */
     public Especie(String nomEspecie, String nomCientifico, String descripcion, ArrayList<Cuidador> cuidadores) {
         this.nomEspecie = nomEspecie;
         this.nomCientifico = nomCientifico;
@@ -33,6 +40,10 @@ public class Especie implements Serializable{
         if(c != null && !cuidadores.contains(c)) cuidadores.add(c);
     }
     
+    /**
+     *
+     * @param c
+     */
     public void quitarCuidador(Cuidador c){
         cuidadores.remove(c);
     }
@@ -45,14 +56,25 @@ public class Especie implements Serializable{
         zona = z;
     }
     
+    /**
+     *
+     */
     public void quitarZona(){
         zona = null;
     }
     
+    /**
+     *
+     * @param h
+     */
     public void asignarHabitat(Habitat h){
         habitats.add(h);
     }
     
+    /**
+     *
+     * @param h
+     */
     public void asignarHabitats(ArrayList<Habitat> h){
         habitats = h;
     }
@@ -79,18 +101,34 @@ public class Especie implements Serializable{
         if(zona != null) System.out.println("Zona en la que se encuentra la especie: " + zona.getNombre());
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNomEspecie() {
         return nomEspecie;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getNomCientifico() {
         return nomCientifico;
     }
 
+    /**
+     *
+     * @return
+     */
     public Zona getZona() {
         return zona;
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Cuidador> getCuidadores() {
         return cuidadores;
     }

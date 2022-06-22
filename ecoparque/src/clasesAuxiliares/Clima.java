@@ -11,11 +11,20 @@ import java.io.Serializable;
 public class Clima implements Serializable{    
     private int climaActual;
 
+    /**
+     *
+     * @param climaActual
+     */
     public Clima(int climaActual){
         if(isClima(climaActual)) this.climaActual = climaActual;
         else { System.err.println("Error: ese clima no existe."); climaActual = 0; }
     }
     
+    /**
+     *
+     * @param i
+     * @return
+     */
     public boolean isClima(int i){
         return (i == SOLEADO || i == NUBLADO || i == LLUVIA || i == TORMENTA || i == TEMPLADO);
     }
@@ -38,6 +47,11 @@ public class Clima implements Serializable{
         this.climaActual = climaActual;
     }
     
+    /**
+     *
+     * @param clima
+     * @return
+     */
     public static String toStringClima(int clima){
         switch(clima){
             case SOLEADO: return "Soleado";

@@ -27,8 +27,7 @@ public class Constantes {
     public static final int REMOVER_INT_GUIA = 16;
     public static final int LISTAR_EMPLEADOS_X_ANTIGUEDAD = 17;
     public static final int CANT_OPC_MENU_ADMIN = 17;
-    public static final int CANT_OPC_MENU_GUIA = 3;
-    public static final int CANT_OPC_MENU_CUIDADOR = 3;
+    public static final int CANT_OPC_MENU_NO_ADMIN = 3;
     //PARA EL CLIMA
     public static final int SUMA_CLIMA = 100;
     public static final int SOLEADO = 101;

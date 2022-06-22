@@ -23,7 +23,13 @@ public class Habitat implements Serializable{
     private Vegetacion vegPredominante;
     private ArrayList<Continente> conts;
 
-    
+    /**
+     *
+     * @param nom
+     * @param clima
+     * @param vegPredominante
+     * @param cont
+     */
     public Habitat(String nom, Clima clima, Vegetacion vegPredominante, ArrayList<Continente> cont) {
         this.nom = nom;
         this.clima = clima;
@@ -31,6 +37,13 @@ public class Habitat implements Serializable{
         this.conts = cont;
     }
     
+    /**
+     *
+     * @param nom
+     * @param clima
+     * @param vegPredominante
+     * @param cont
+     */
     public Habitat(String nom, Clima clima, Vegetacion vegPredominante, Continente cont) {
         this.nom = nom;
         this.clima = clima;
@@ -39,6 +52,10 @@ public class Habitat implements Serializable{
         conts.add(cont);
     }
 
+    /**
+     *
+     * @param c
+     */
     public void agregarContinente(Continente c){
         conts.add(c);
     }
@@ -61,23 +78,43 @@ public class Habitat implements Serializable{
         this.nom = nom;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getClima() {
         return clima.getClimaActual();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getVegPredominante() {
         return vegPredominante.getVeg();
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Continente> getConts() {
         return conts;
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     public int getIthCont(int i){
         if (conts.isEmpty()) return 0;
         return conts.get(i).getContinente();
     }
     
+    /**
+     *
+     */
     public void mostrarDatos(){
         System.out.println("Nombre del habitat: " + nom);
         System.out.println("Clima actual del habitat: " + toStringClima(clima.getClimaActual()));

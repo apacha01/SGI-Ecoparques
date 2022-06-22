@@ -20,6 +20,14 @@ public class Intinerario implements Serializable{
     private int numEspeciesVisita;
     private boolean ocupado;
 
+    /**
+     *
+     * @param codigo
+     * @param duracion
+     * @param longitud
+     * @param maxVisitantes
+     * @param numEspeciesVisita
+     */
     public Intinerario(String codigo, Duracion duracion, double longitud, int maxVisitantes, int numEspeciesVisita) {
         this.codigo = codigo;
         this.duracion = duracion;
@@ -29,10 +37,18 @@ public class Intinerario implements Serializable{
         ocupado = false;
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean isOcupado() {
         return ocupado;
     }
 
+    /**
+     *
+     * @param ocupado
+     */
     public void setOcupado(boolean ocupado) {
         this.ocupado = ocupado;
     }
@@ -85,6 +101,9 @@ public class Intinerario implements Serializable{
         return codigo;
     }
     
+    /**
+     *
+     */
     public void mostrarDatos(){
         System.out.println("Codigo del intinerario: " + codigo);
         System.out.println("Duracion del intinerario: " + duracion.toStringDuracion());

@@ -21,6 +21,9 @@ public class Sistema implements Serializable {
     private ArrayList<Zona> zonas;
     private ArrayList<Intinerario> ints;
     
+    /**
+     *
+     */
     public Sistema() {
         empleados = new ArrayList<>();
         especies = new ArrayList<>();
@@ -62,18 +65,34 @@ public class Sistema implements Serializable {
         this.especies = especies;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Habitat> getHabitats() {
         return habitats;
     }
 
+    /**
+     *
+     * @param habitats
+     */
     public void setHabitats(ArrayList<Habitat> habitats) {
         this.habitats = habitats;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Zona> getZonas() {
         return zonas;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Intinerario> getInts() {
         return ints;
     }
@@ -113,6 +132,11 @@ public class Sistema implements Serializable {
      */
     public void eliminarEmpleado(Empleado e){
         if (e == null) return;
+        //Si es un administrador no lo elimino
+        if (e instanceof Administrador) {
+            System.err.println("Error: No se puede dar de baja al administrador.");
+            return;
+        }
         //Si es un cuidador elimino dentro de la especie a dicho cuidador
         if (e instanceof Cuidador) {
             for (Especie especieCuidada : ((Cuidador) e).getEspeciesCuidadas()) {
@@ -173,6 +197,11 @@ public class Sistema implements Serializable {
         return guias;
     }
     
+    /**
+     *
+     * @param usuario
+     * @return
+     */
     public Guia existeGuia(String usuario){
         ArrayList<Guia> guias = obtenerGuias();
         for (Guia guia : guias) {
@@ -215,6 +244,11 @@ public class Sistema implements Serializable {
         especies.remove(e);
     }
     
+    /**
+     *
+     * @param nombre
+     * @return
+     */
     public Zona existeZona(String nombre){
         for (Zona zona: zonas) {
             if (zona.getNombre().equalsIgnoreCase(nombre)){
@@ -224,6 +258,10 @@ public class Sistema implements Serializable {
         return null;
     }
     
+    /**
+     *
+     * @param z
+     */
     public void eliminarZona(Zona z){
         if (z == null) return;
         //LE SACO LA ZONA A LAS ESPECIES QUE TENIAN ESTA ZONA
@@ -233,6 +271,11 @@ public class Sistema implements Serializable {
         zonas.remove(z);
     }
     
+    /**
+     *
+     * @param s
+     * @return
+     */
     public Habitat existeHabitat(String s){
         for (Habitat h: habitats) {
             if (h.getNom().equals(s)){
@@ -242,11 +285,20 @@ public class Sistema implements Serializable {
         return null;
     }
     
+    /**
+     *
+     * @param h
+     */
     public void eliminarHabitat(Habitat h){
         if (h == null) return;
         habitats.remove(h);
     }
     
+    /**
+     *
+     * @param cod
+     * @return
+     */
     public Intinerario existeIntinerario(String cod){
         for (Intinerario intinerario : ints) {
             if (intinerario.getCodigo().equals(cod)) {
@@ -256,6 +308,10 @@ public class Sistema implements Serializable {
         return null;
     }
     
+    /**
+     *
+     * @param i
+     */
     public void eliminarIntinerario(Intinerario i){
         if (i == null) return;
         ints.remove(i);
