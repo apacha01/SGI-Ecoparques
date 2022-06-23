@@ -1,7 +1,6 @@
 
 package ecoparque;
 
-import static clasesAuxiliares.Constantes.*;
 import clasesAuxiliares.Vegetacion;
 import clasesAuxiliares.Continente;
 import clasesAuxiliares.Clima;

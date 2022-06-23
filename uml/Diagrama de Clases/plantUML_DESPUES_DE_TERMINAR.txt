@@ -1,0 +1,74 @@
+@startuml
+hide circles
+skinparam classAttributeIconSize 0
+skinparam monochrome true
+hide members
+
+interface java.io.Serializable
+
+package ecoparque {
+    abstract class Empleado
+    class Administrador
+    class Sistema
+    class Zona
+    class Especie
+    class Habitat
+    class Guia
+    class Cuidador
+    abstract class NoAdministrador
+    class Intinerario
+    class SistemaSerializable
+    class Main
+}
+
+package clasesAuxiliares {
+    class Constantes
+    class LecturaPorConsola
+    class Clima
+    class Continente
+    class Duracion
+    class Vegetacion
+}
+
+note "Demasiadas dependencias\nasique no las conecto" as N1
+note "Demasiadas realizaciones asique no la conecto\nLa dejo para que se sepa que el sistema es serializable" as N2 
+
+Main ..> SistemaSerializable
+
+SistemaSerializable ..> Empleado
+
+Sistema <.. SistemaSerializable
+Sistema "1" *-> "*" Empleado
+Sistema "1" *-> "*" Especie
+'A PARTIR DE ACA NO PONGO LOS 1 PARA QUE NO SE SUPERPONGAN Y SE VEA BIEN
+Sistema *-> "*" Habitat
+Sistema *-> "*" Zona
+Sistema *-> "*" Intinerario
+
+Especie "1" o-> "*" Cuidador
+Especie "1" *-> "*" Habitat
+Especie ..> Zona
+Especie "*" <-* "1" Cuidador
+
+Habitat ..> Clima
+Habitat ..> Continente
+Habitat ..> Vegetacion
+
+Zona "1" *-> "*" Especie
+
+Intinerario ..> Duracion
+
+NoAdministrador --|> Empleado
+
+Administrador --|> Empleado
+
+Cuidador --|> NoAdministrador
+
+Guia --|> NoAdministrador
+Guia "1" *-> "*" Intinerario
+
+Constantes .. N1
+LecturaPorConsola .. N1
+java.io.Serializable .. N2
+
+@enduml

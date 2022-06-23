@@ -1,0 +1,55 @@
+@startuml
+skinparam actorStyle awesome
+left to right direction
+
+actor Administrador as a
+
+Rectangle NoAdministrador{
+  actor Cuidador as c
+  actor Guia as g
+}
+
+Rectangle "Casos de Uso"  {
+  usecase "Salir del Menu" as UC1
+  usecase "Consultar Datos" as UC2
+  usecase "Alta Empleado" as UC3
+  usecase "Baja Empleado" as UC4
+  usecase "Alta Especie" as UC5
+  usecase "Baja Especie" as UC6
+  usecase "Registrar Zona" as UC7
+  usecase "Inhabilitar Zona" as UC8
+  usecase "Registrar Habitat" as UC9
+  usecase "Inhabilitar Habitat" as UC10
+  usecase "Registrar Intinerario" as UC11
+  usecase "Inhabilitar Intinerario" as UC12
+  usecase "Asignar especie a cuidador" as UC13
+  usecase "Remover especie de cuidador" as UC14
+  usecase "Asignar intinerario a guia" as UC15
+  usecase "Remover intinerario de guia" as UC16
+  usecase "Listar empleados por antigedad" as UC17
+}
+
+a --> UC1
+a --> UC2
+a --> UC3
+a --> UC4
+a --> UC5
+a --> UC6
+a --> UC7
+a --> UC8
+a --> UC9
+a --> UC10
+a --> UC11
+a --> UC12
+a --> UC13
+a --> UC14
+a --> UC15
+a --> UC16
+a --> UC17
+
+UC1 <-- c
+UC2 <-- c
+
+UC1 <-- g
+UC2 <-- g
+@enduml
