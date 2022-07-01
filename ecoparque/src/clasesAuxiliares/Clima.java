@@ -1,6 +1,8 @@
 
 package clasesAuxiliares;
 
+
+import static clasesAuxiliares.InOut.*;
 import static clasesAuxiliares.Constantes.*;
 import java.io.Serializable;
 
@@ -17,7 +19,7 @@ public class Clima implements Serializable{
      */
     public Clima(int climaActual){
         if(isClima(climaActual)) this.climaActual = climaActual;
-        else { System.err.println("Error: ese clima no existe."); climaActual = 0; }
+        else { printError("ese clima no existe"); climaActual = 0; }
     }
     
     /**

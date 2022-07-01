@@ -2,6 +2,7 @@
 package ecoparque;
 
 import static clasesAuxiliares.Constantes.*;
+import static clasesAuxiliares.InOut.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -40,10 +41,10 @@ public class Guia extends NoAdministrador {
     public void tomarIntinerario(Intinerario i){
         if (i.isOcupado()) {
             if (intinerarios.contains(i)) {
-                System.err.println("Error: Este intinerario ya esta en posesion de " + this.getNombre());
+                printError("Este intinerario ya esta en posesion de " + this.getNombre());
             }
             else{
-                System.err.println("Error: Este intinerario ya lo tiene otro guia.");
+                printError("Este intinerario ya lo tiene otro guia");
             }
         }
         else{
@@ -67,7 +68,7 @@ public class Guia extends NoAdministrador {
                 intinerarioAsignado.remove(index);
             }
             else{
-                System.err.println("Error: El guia " + getNombre() + " no tiene un intinerario con el codigo " + i.getCodigo());
+                printError("El guia " + getNombre() + " no tiene un intinerario con el codigo " + i.getCodigo());
             }
         }
     }
@@ -81,7 +82,7 @@ public class Guia extends NoAdministrador {
      */
     @Override
     public void printMenu(){
-        System.out.println("\n" + SEPARADOR_MEDIO + "MENU DE GUIA" + SEPARADOR_MEDIO);
+        printLine("\n" + SEPARADOR_MEDIO + "MENU DE GUIA" + SEPARADOR_MEDIO);
         super.printMenu();
     }
     
@@ -90,12 +91,12 @@ public class Guia extends NoAdministrador {
      */
     @Override
     public void mostrarDatos(){
-        System.out.println("Tipo de usuario: GUIA");
+        printLine("Tipo de usuario: GUIA");
         super.mostrarDatos();
         if (!intinerarios.isEmpty()) {
-            System.out.println("Intinerarios que posee:");
+            printLine("Intinerarios que posee:");
             for (int i = 0; i < intinerarios.size(); i++) {
-            System.out.println("\t" + intinerarios.get(i).getCodigo() + " (Fecha en la que tomo este intinerario: " + 
+            printLine("\t" + intinerarios.get(i).getCodigo() + " (Fecha en la que tomo este intinerario: " + 
                     intinerarioAsignado.get(i) + ")");
             }
         }
@@ -107,9 +108,9 @@ public class Guia extends NoAdministrador {
      */
     @Override
     public void consultarDatos(Sistema s) {
-        System.out.println(SEPARADOR_MEDIO + "MIS DATOS" + SEPARADOR_MEDIO);
+        printLine(SEPARADOR_MEDIO + "MIS DATOS" + SEPARADOR_MEDIO);
         mostrarDatos();
-        System.out.println(SEPARADOR);
+        printLine(SEPARADOR);
     }
 
     @Override

@@ -4,9 +4,7 @@ package ecoparque;
 import clasesAuxiliares.Vegetacion;
 import clasesAuxiliares.Continente;
 import clasesAuxiliares.Clima;
-import static clasesAuxiliares.Clima.toStringClima;
-import static clasesAuxiliares.Continente.toStringContinente;
-import static clasesAuxiliares.Vegetacion.toStringVegetacion;
+import static clasesAuxiliares.InOut.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -76,12 +74,12 @@ public class Habitat implements Serializable{
      *
      */
     public void mostrarDatos(){
-        System.out.println("Nombre del habitat: " + nom);
-        System.out.println("Clima actual del habitat: " + clima.toString());
-        System.out.println("Tipo de vegetacóión del habitat: " + vegPredominante.toString());
-        System.out.println("Este habitat se encuentra en " + (conts.size() > 1 ? "los continentes" : "el continente") + ":");
+        printLine("Nombre del habitat: " + nom);
+        printLine("Clima actual del habitat: " + clima.toString());
+        printLine("Tipo de vegetacóión del habitat: " + vegPredominante.toString());
+        printLine("Este habitat se encuentra en " + (conts.size() > 1 ? "los continentes" : "el continente") + ":");
         for (Continente cont : conts) {
-            System.out.println("\t" + cont.toString());
+            printLine("\t" + cont.toString());
         }
     }
 }

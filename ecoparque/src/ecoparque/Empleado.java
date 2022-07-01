@@ -2,6 +2,7 @@
 package ecoparque;
 
 import static clasesAuxiliares.Constantes.*;
+import static clasesAuxiliares.InOut.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -62,20 +63,20 @@ public abstract class Empleado implements Serializable{
      *
      */
     public void printMenu(){
-        System.out.println(SALIR_MENU + ". Salir");
-        System.out.println(CONSULTAR_DATOS +  ". Consultar Datos");
+        printLine(SALIR_MENU + ". Salir");
+        printLine(CONSULTAR_DATOS +  ". Consultar Datos");
     }
     
     /**
      *
      */
     public void mostrarDatos(){
-        System.out.println("Nombre de Usuario: " + usuario);
-        System.out.println("Contraseña: " + contra);
-        System.out.println("Nombre Completo: " + nombre);
-        System.out.println("Dirección: " + direccion);
-        System.out.println("Telefono: " + telefono);
-        System.out.println("Fecha de Ingreso al Sistema: " + fechaIngreso);
+        printLine("Nombre de Usuario: " + usuario);
+        printLine("Contraseña: " + contra);
+        printLine("Nombre Completo: " + nombre);
+        printLine("Dirección: " + direccion);
+        printLine("Telefono: " + telefono);
+        printLine("Fecha de Ingreso al Sistema: " + fechaIngreso);
     }
     
     /**

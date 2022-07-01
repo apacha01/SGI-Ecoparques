@@ -21,7 +21,20 @@ import java.util.Scanner;
  * Clase con métodos para leer por consola distintos tipos de datos.
  * @author Agustín Pacheco
  */
-public class LecturaPorConsola {
+public class InOut {
+    //////////////////////////////////////////FUNCIONES DE ESCRITURA POR CONSOLA//////////////////////////////////////////
+    public static void printLine(String s){
+        System.out.println(s);
+    }
+    
+    public static void print(String s){
+        System.out.print("\n" + s);
+    }
+    
+    public static void printError(String s){
+        System.err.println("Error: " + s + (s.endsWith(".") ? "" : "."));
+    }
+    
     
     //////////////////////////////////////////FUNCIONES DE LECTURA POR CONSOLA//////////////////////////////////////////
     /**
@@ -47,9 +60,9 @@ public class LecturaPorConsola {
         int opc = Integer.MIN_VALUE;
         
         try{
-            System.out.print("\nIngrese un número entero: ");   
+            print("Ingrese un número entero: ");   
             opc = in.nextInt();
-        }catch(InputMismatchException e){System.err.println("Error: Eso no es un número entero.");}
+        }catch(InputMismatchException e){printError("Eso no es un número entero");}
         
         return opc;
     }
@@ -78,9 +91,9 @@ public class LecturaPorConsola {
         double lectura = Integer.MIN_VALUE;
         
         try{
-            System.out.print("\nIngrese un número (para un decimal utilice la coma ',' en lugar del punto '.'): ");   
+            print("Ingrese un número (para un decimal utilice la coma ',' en lugar del punto '.'): ");   
             lectura = in.nextDouble();
-        }catch(InputMismatchException e){System.err.println("Error: Eso no es un número, recuerde usar la coma.");}
+        }catch(InputMismatchException e){printError("Eso no es un número, recuerde usar la coma");}
         
         return lectura;
     }
@@ -111,10 +124,10 @@ public class LecturaPorConsola {
         
         try{
             while(opc > max || opc < 1){
-                System.out.print("\nIngrese un número entero entre 1 y " + max +  ": ");
+                print("Ingrese un número entero entre 1 y " + max +  ": ");
                 opc = in.nextInt();
             }
-        } catch (InputMismatchException e){System.err.println("Error: Eso no es un número entero.");}
+        } catch (InputMismatchException e){printError("Eso no es un número entero");}
         
         return opc;
     }
@@ -147,10 +160,10 @@ public class LecturaPorConsola {
         
         try{
             while(opc > max || opc < min){   
-                System.out.print("\nIngrese un número entero entre " + min + " y " + max +  ": ");   
+                print("Ingrese un número entero entre " + min + " y " + max +  ": ");   
                 opc = in.nextInt();
             }
-        }catch(InputMismatchException e){System.err.println("Error: Eso no es un número entero.");}
+        }catch(InputMismatchException e){printError("Eso no es un número entero");}
         
         
         return opc;
@@ -191,7 +204,7 @@ public class LecturaPorConsola {
         
         do{
             if (flag) {
-                System.out.print("Debe ingresar 'S' (o 's') o 'N' (o 'n') para la respuesta: ");
+                print("Debe ingresar 'S' (o 's') o 'N' (o 'n') para la respuesta: ");
             }
             c = leerChar();
             flag = true;
@@ -217,7 +230,7 @@ public class LecturaPorConsola {
      */
     public static String pedirUsuario(){
         //PIDO NOMBRE DE USUARIO DEL EMPLEADO
-        System.out.print("Ingrese su usuario: ");
+        print("Ingrese su usuario: ");
         String usuario = leerString();
         if (usuario.equals("")) {
             throw new NullPointerException("ERROR: El usuario no puede ser nulo.");
@@ -232,7 +245,7 @@ public class LecturaPorConsola {
      */
     public static String pedirContra(){
         //PIDO CONTRASEÑA PARA EL USUARIO
-        System.out.print("Ingrese su contraseña: ");
+        print("Ingrese su contraseña: ");
         String contra = leerString();
         if (contra.equals("")) {
             throw new NullPointerException("ERROR: La password no puede ser nula.");
@@ -247,7 +260,7 @@ public class LecturaPorConsola {
      */
     public static String pedirNombreEmpleado(){
         //PIDO NOMBRE DEL EMPLEADO
-        System.out.print("Ingrese su nombre completo: ");
+        print("Ingrese su nombre completo: ");
         String nombre = leerString();
         if (nombre.equals("")) {
             throw new NullPointerException("ERROR: Su nombre no puede ser nulo.");
@@ -262,7 +275,7 @@ public class LecturaPorConsola {
      */
     public static String pedirDireccion(){
         //PIDO DIRECCIÓN DEL EMPLEADO
-        System.out.print("Ingrese su dirección: ");
+        print("Ingrese su dirección: ");
         String direccion = leerString();
         if (direccion.equals("")) {
             throw new NullPointerException("ERROR: Su dirección no puede ser nula.");
@@ -277,7 +290,7 @@ public class LecturaPorConsola {
      */
     public static String pedirTelefono(){
         //PIDO TELEFONO DEL EMPLEADO
-        System.out.print("Ingrese su telefono: ");
+        print("Ingrese su telefono: ");
         String telefono = leerString();
         if (telefono.equals("")) {
             throw new NullPointerException("ERROR: Su telefono no puede ser nulo.");
@@ -306,7 +319,7 @@ public class LecturaPorConsola {
     public static boolean confirmarDecision(){
         boolean decision = true;
         
-        System.out.print("\n¿Está seguro que desea realizar esta acción? (s/n): ");
+        print("¿Está seguro que desea realizar esta acción? (s/n): ");
         decision = leerBoolean();
         
         return decision;
@@ -320,7 +333,7 @@ public class LecturaPorConsola {
      */
     public static String pedirNombreColoquialEspecie(){
         //PIDO NOMBRE DEL HABITAT A REGISTRAR
-        System.out.print("\nIngrese el nombre de la especie: ");
+        print("Ingrese el nombre de la especie: ");
         String s = leerString();
         if (s.equals("")) {
             throw new NullPointerException("ERROR: Su nombre no puede ser nulo.");
@@ -335,7 +348,7 @@ public class LecturaPorConsola {
      */
     public static String pedirNombreCientificoEspecie(){
         //PIDO NOMBRE DEL HABITAT A REGISTRAR
-        System.out.print("Ingrese el nombre cientifico de la especie: ");
+        print("Ingrese el nombre cientifico de la especie: ");
         String s = leerString();
         if (s.equals("")) {
             throw new NullPointerException("ERROR: Su nombre no puede ser nulo.");
@@ -349,7 +362,7 @@ public class LecturaPorConsola {
      * @throws NullPointerException
      */
     public static String pedirDescripcion(){
-        System.out.println("Ingrese la descripcion de la especie: ");
+        printLine("Ingrese la descripcion de la especie: ");
         String s = leerString();
         if (s.equals("")) {
             throw new NullPointerException("ERROR: Su nombre no puede ser nulo.");
@@ -370,13 +383,13 @@ public class LecturaPorConsola {
         
         
         if (s.hayCuidadores()) {
-            System.err.println("Error: No hay cuidadores registrados en el sistema.");
+            printError("No hay cuidadores registrados en el sistema");
             return c;
         }
         else{
             do{
                 s.mostrarCuidadores();
-                System.out.print("\nIngrese el nombre de usuario del cuidador de esta especie (0 para salir): ");
+                print("Ingrese el nombre de usuario del cuidador de esta especie (0 para salir): ");
                 cuidador = leerString();
 
                 if(cuidador.equals("0")) break;
@@ -384,17 +397,17 @@ public class LecturaPorConsola {
                 cuid = s.existeCuidador(cuidador);
 
                 if (cuid == null) {
-                    System.err.println("Error: ese cuidador no existe.");
+                    printError("ese cuidador no existe");
                     hayMas = true;
                 }
                 else {
                     if (!c.contains(cuid)) {
                         c.add(cuid);
-                        System.out.print("¿Hay más cuidadores que desee elegir? (s/n): ");
+                        print("¿Hay más cuidadores que desee elegir? (s/n): ");
                         hayMas = leerBoolean();
                     }
                     else{
-                        System.err.println("Error: Ese cuidador ya lo selecciono anteriormente.");
+                        printError("Ese cuidador ya lo selecciono anteriormente");
                         hayMas = true;
                     }
                 }
@@ -419,19 +432,19 @@ public class LecturaPorConsola {
         
         
         if (s.hayCuidadores()) {
-            System.err.println("Error: No hay cuidadores registrados en el sistema.");
+            printError("No hay cuidadores registrados en el sistema");
             return e;
         }
         else{
             do {
                 s.mostrarCuidadores();
-                System.out.print("\nIngrese el nombre de usuario del cuidador de esta especie (0 para salir): ");
+                print("Ingrese el nombre de usuario del cuidador de esta especie (0 para salir): ");
                 cuidador = leerString();
                 e = s.existeCuidador(cuidador);
 
                 if(cuidador.equals("0")) break;
                 if (e == null) {
-                    System.err.println("Error: ese cuidador no existe.");
+                    printError("ese cuidador no existe");
                 }
                 else {break;}
             } while (true);
@@ -455,17 +468,17 @@ public class LecturaPorConsola {
             if (s.hayZonas()) {
                 e = null;
                 hayMas = false;
-                System.err.println("Error: No hay zonas en el sistema.");
+                printError("No hay zonas en el sistema");
             }
             else{
                 s.mostrarZonas();
-                System.out.print("\nIngrese el nombre de la zona (0 para salir): ");
+                print("Ingrese el nombre de la zona (0 para salir): ");
                 zona = leerString();
                 e = s.existeZona(zona);
                 
                 if(zona.equals("0")) break;
                 if (e == null) {
-                    System.err.println("Error: esa zona no existe.\n");
+                    printError("esa zona no existe");
                     hayMas = true;
                 }
                 else{
@@ -490,12 +503,12 @@ public class LecturaPorConsola {
         
         do{
             if (s.hayHabitats()) {
-                System.err.println("Error: No hay habitats registrados en el sistema.");
+                printError("No hay habitats registrados en el sistema");
                 return h;
             }
             else{
                 s.mostrarHabitats();
-                System.out.print("\nIngrese el nombre del habitat que quiere seleccionar (0 para salir): ");
+                print("Ingrese el nombre del habitat que quiere seleccionar (0 para salir): ");
                 habitat = leerString();
                 
                 if(habitat.equals("0")) break;
@@ -503,17 +516,17 @@ public class LecturaPorConsola {
                 hab = s.existeHabitat(habitat);
                 
                 if (hab == null) {
-                    System.err.println("Error: ese habitat no existe.\n");
+                    printError("ese habitat no existe");
                     hayMas = true;
                 }
                 else {
                     if (!h.contains(hab)) {
                         h.add(hab);
-                        System.out.print("¿Hay más habitats que desee elegir? (s/n): ");
+                        print("¿Hay más habitats que desee elegir? (s/n): ");
                         hayMas = leerBoolean();
                     }
                     else{
-                        System.err.println("Error: Ese habitat ya lo selecciono anteriormente.");
+                        printError("Ese habitat ya lo selecciono anteriormente");
                         hayMas = true;
                     }
                     
@@ -541,11 +554,11 @@ public class LecturaPorConsola {
         do{
             if (s.hayEspecies()) {
                 hayMas = false;
-                System.err.println("Error: No hay especies en el sistema.");
+                printError("No hay especies en el sistema");
             }
             else{
                 s.mostrarEspecies();
-                System.out.print("\nIngrese el nombre de cientifico de la especie (0 para salir): ");
+                print("Ingrese el nombre de cientifico de la especie (0 para salir): ");
                 especie = leerString();
                 
                 if(especie.equals("0")) break;
@@ -553,17 +566,17 @@ public class LecturaPorConsola {
                 esp = s.existeEspecie(especie);
                 
                 if (esp == null) {
-                    System.err.println("Error: esa especie no existe.\n");
+                    printError("esa especie no existe");
                     hayMas = true;
                 }
                 else{
                     if (!e.contains(esp)) {
                         e.add(esp);
-                        System.out.print("¿Hay más especies que desee elegir? (s/n): ");
+                        print("¿Hay más especies que desee elegir? (s/n): ");
                         hayMas = leerBoolean();
                     }
                     else{
-                        System.err.println("Error: Esa especie ya la selecciono anteriormente.");
+                        printError("Esa especie ya la selecciono anteriormente");
                         hayMas = true;
                     }
                 }
@@ -583,13 +596,13 @@ public class LecturaPorConsola {
         Clima c;
         int opc;
         
-        System.out.println("Ingrese el clima (0 para salir): ");
+        printLine("Ingrese el clima (0 para salir): ");
         
-        System.out.println((SOLEADO - SUMA_CLIMA) + ". " + toStringClima(SOLEADO));
-        System.out.println((NUBLADO - SUMA_CLIMA) + ". " + toStringClima(NUBLADO));
-        System.out.println((LLUVIA - SUMA_CLIMA) + ". " + toStringClima(LLUVIA));
-        System.out.println((TORMENTA - SUMA_CLIMA) + ". " + toStringClima(TORMENTA));
-        System.out.println((TEMPLADO - SUMA_CLIMA) + ". " + toStringClima(TEMPLADO));
+        printLine((SOLEADO - SUMA_CLIMA) + ". " + toStringClima(SOLEADO));
+        printLine((NUBLADO - SUMA_CLIMA) + ". " + toStringClima(NUBLADO));
+        printLine((LLUVIA - SUMA_CLIMA) + ". " + toStringClima(LLUVIA));
+        printLine((TORMENTA - SUMA_CLIMA) + ". " + toStringClima(TORMENTA));
+        printLine((TEMPLADO - SUMA_CLIMA) + ". " + toStringClima(TEMPLADO));
         opc = leerInt(0,5) + SUMA_CLIMA;
 
         if (opc == SUMA_CLIMA) return null;
@@ -606,12 +619,12 @@ public class LecturaPorConsola {
         Vegetacion v;
         int opc;
         
-        System.out.println("Ingrese la vegetacion (0 para salir): ");
+        printLine("Ingrese la vegetacion (0 para salir): ");
         
-        System.out.println((PASTIZAL - SUMA_VEGETACION) + ". " + toStringVegetacion(PASTIZAL));
-        System.out.println((SABANA - SUMA_VEGETACION) + ". " + toStringVegetacion(SABANA));
-        System.out.println((BOSQUE - SUMA_VEGETACION) + ". " + toStringVegetacion(BOSQUE));
-        System.out.println((DESIERTO - SUMA_VEGETACION) + ". " + toStringVegetacion(DESIERTO));
+        printLine((PASTIZAL - SUMA_VEGETACION) + ". " + toStringVegetacion(PASTIZAL));
+        printLine((SABANA - SUMA_VEGETACION) + ". " + toStringVegetacion(SABANA));
+        printLine((BOSQUE - SUMA_VEGETACION) + ". " + toStringVegetacion(BOSQUE));
+        printLine((DESIERTO - SUMA_VEGETACION) + ". " + toStringVegetacion(DESIERTO));
         opc = leerInt(0,4) + SUMA_VEGETACION;
 
         if (opc == SUMA_VEGETACION) return null;
@@ -630,21 +643,21 @@ public class LecturaPorConsola {
         boolean hayMas;
         
         do{
-            System.out.println("Ingrese el continente (0 para salir): ");
+            printLine("Ingrese el continente (0 para salir): ");
             
-            System.out.println((AFRICA - SUMA_CONTINENTE) + ". " + toStringContinente(AFRICA));
-            System.out.println((ANTARTIDA - SUMA_CONTINENTE) + ". " + toStringContinente(ANTARTIDA));
-            System.out.println((AMERICA - SUMA_CONTINENTE) + ". " + toStringContinente(AMERICA));
-            System.out.println((ASIA - SUMA_CONTINENTE) + ". " + toStringContinente(ASIA));
-            System.out.println((OCEANIA - SUMA_CONTINENTE) + ". " + toStringContinente(OCEANIA));
-            System.out.println((EUROPA - SUMA_CONTINENTE) + ". " + toStringContinente(EUROPA));
+            printLine((AFRICA - SUMA_CONTINENTE) + ". " + toStringContinente(AFRICA));
+            printLine((ANTARTIDA - SUMA_CONTINENTE) + ". " + toStringContinente(ANTARTIDA));
+            printLine((AMERICA - SUMA_CONTINENTE) + ". " + toStringContinente(AMERICA));
+            printLine((ASIA - SUMA_CONTINENTE) + ". " + toStringContinente(ASIA));
+            printLine((OCEANIA - SUMA_CONTINENTE) + ". " + toStringContinente(OCEANIA));
+            printLine((EUROPA - SUMA_CONTINENTE) + ". " + toStringContinente(EUROPA));
             
             opc = leerInt(0,6) + SUMA_CONTINENTE;
             
             if (opc == SUMA_CONTINENTE) break;
             else {
                 conts.add(new Continente(opc));
-                System.out.print("¿Hay más continentes que contengan este habitat? (s/n): ");
+                print("¿Hay más continentes que contengan este habitat? (s/n): ");
                 hayMas = leerBoolean();
             }
         }while(hayMas);
@@ -663,7 +676,7 @@ public class LecturaPorConsola {
     public static String pedirCodigoIntinerario(){
         String codigo;
         
-        System.out.print("\nIngrese el codigo del intinerario: ");
+        print("Ingrese el codigo del intinerario: ");
         codigo = leerString();
         
         return codigo;
@@ -678,20 +691,20 @@ public class LecturaPorConsola {
         int hora, min;
         
         while(true){
-            System.out.print("\nIngrese la cantidad de horas que dura el recorrido del intinerario: ");
+            print("Ingrese la cantidad de horas que dura el recorrido del intinerario: ");
             hora = leerInt();
             if (hora >= 0) {
                 break;
             }
-            System.err.println("Error: La hora no puede ser negativa.");
+            printError("La hora no puede ser negativa");
         }
         while(true){
-            System.out.print("\nIngrese la cantidad de minutos que dura el recorrido del intinerario: ");
+            print("Ingrese la cantidad de minutos que dura el recorrido del intinerario: ");
             min = leerInt();
             if (min >= 0 && min < 60) {
                 break;
             }
-            System.err.println("Error: Los minutos no pueden ser negativos o superar 60.");
+            printError("Los minutos no pueden ser negativos o superar 60");
         }
         
         duracion = new Duracion(hora,min);
@@ -706,7 +719,7 @@ public class LecturaPorConsola {
     public static double pedirLongitudIntinerario(){
         double longitud;
         
-        System.out.print("\nIngrese la longitud del recorrido del intinerario en m: ");
+        print("Ingrese la longitud del recorrido del intinerario en m: ");
         longitud = leerDouble();
         
         return longitud;
@@ -719,7 +732,7 @@ public class LecturaPorConsola {
     public static int pedirMaximoVisitas(){
         int max;
         
-        System.out.print("\nIngrese el numero maximo de visitantes que puede tener este intinerario: ");
+        print("Ingrese el numero maximo de visitantes que puede tener este intinerario: ");
         max = leerInt();
         
         return max;
@@ -732,7 +745,7 @@ public class LecturaPorConsola {
     public static int pedirNumEspeciesVisita(){
         int espVisita;
         
-        System.out.print("\nIngrese el numero de especies que visita este intinerario: ");
+        print("Ingrese el numero de especies que visita este intinerario: ");
         espVisita = leerInt();
         
         return espVisita;
@@ -752,17 +765,17 @@ public class LecturaPorConsola {
             if (s.hayIntinerarios()) {
                 i = null;
                 hayMas = false;
-                System.err.println("Error: No hay intinerarios en el sistema.");
+                printError("No hay intinerarios en el sistema");
             }
             else{
                 s.mostrarIntinerarios();
-                System.out.print("\nIngrese el codigo del intinerario (0 para salir): ");
+                print("Ingrese el codigo del intinerario (0 para salir): ");
                 codIntinerario = leerString();
                 i = s.existeIntinerario(codIntinerario);
                 
                 if(codIntinerario.equals("0")) break;
                 if (i == null) {
-                    System.err.println("Error: ese intinerario no existe.\n");
+                    printError("ese intinerario no existe");
                     hayMas = true;
                 }
                 else{
@@ -789,17 +802,17 @@ public class LecturaPorConsola {
             if (s.hayGuias()) {
                 g = null;
                 hayMas = false;
-                System.err.println("Error: No hay guias en el sistema.");
+                printError("No hay guias en el sistema");
             }
             else{
                 s.mostrarGuias();
-                System.out.print("\nIngrese el nombre de usuario del guia (0 para salir): ");
+                print("Ingrese el nombre de usuario del guia (0 para salir): ");
                 guia = leerString();
                 g = s.existeGuia(guia);
                 
                 if(guia.equals("0")) break;
                 if (g == null) {
-                    System.err.println("Error: ese guia no existe.\n");
+                    printError("ese guia no existe");
                     hayMas = true;
                 }
                 else{

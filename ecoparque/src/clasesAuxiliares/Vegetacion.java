@@ -2,6 +2,7 @@
 package clasesAuxiliares;
 
 import static clasesAuxiliares.Constantes.*;
+import static clasesAuxiliares.InOut.*;
 import java.io.Serializable;
 
 /**
@@ -18,7 +19,7 @@ public class Vegetacion implements Serializable{
      */
     public Vegetacion(int veg){
         if(isVegetacion(veg)) this.veg = veg;
-        else { System.err.println("Error: esa vegetación no existe."); veg = 0;}
+        else { printError("esa vegetación no existe"); veg = 0;}
     }
     
     /**

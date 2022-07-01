@@ -1,8 +1,9 @@
 
 package ecoparque;
 
-import clasesAuxiliares.LecturaPorConsola;
+import clasesAuxiliares.InOut;
 import static clasesAuxiliares.Constantes.*;
+import static clasesAuxiliares.InOut.*;
 import java.io.IOException;
 import java.util.Date;
 
@@ -27,23 +28,23 @@ public class SistemaSerializable {
             
         } catch (Exception e) {
             
-            System.out.println("Al ser la primera vez que se ingresa al sistema necesitaremos que introduzca sus datos personales "
+            printLine("Al ser la primera vez que se ingresa al sistema necesitaremos que introduzca sus datos personales "
                     + "Sr(a) Administrador(a).");
             
             //PIDO NOMBRE DE USUARIO DEL EMPLEADO
-            String usuario = LecturaPorConsola.pedirUsuario();
+            String usuario = InOut.pedirUsuario();
             
             //PIDO CONTRASEÑA PARA EL USUARIO
-            String contra = LecturaPorConsola.pedirContra();
+            String contra = InOut.pedirContra();
             
             //PIDO NOMBRE DEL EMPLEADO
-            String nombre = LecturaPorConsola.pedirNombreEmpleado();
+            String nombre = InOut.pedirNombreEmpleado();
             
             //PIDO DIRECCIÓN DEL EMPLEADO
-            String direccion = LecturaPorConsola.pedirDireccion();
+            String direccion = InOut.pedirDireccion();
             
             //PIDO TELEFONO DEL EMPLEADO
-            String telefono = LecturaPorConsola.pedirTelefono();
+            String telefono = InOut.pedirTelefono();
             
             //LA FECHA DE INGRESO ES LA FECHA AL MOMENTO DE REGISTRARSE
             Date fechaIngreso = new Date();
@@ -52,7 +53,7 @@ public class SistemaSerializable {
             
             try {
                 s.serializar(NOMBRE_ARCHIVO);
-                System.out.println("El arranque ha sido exitoso. Ahora se debe reiniciar el sistema...");
+                printLine("El arranque ha sido exitoso. Ahora se debe reiniciar el sistema...");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -60,12 +61,12 @@ public class SistemaSerializable {
         }
 
         while (seguir) {
-            System.out.println("\n" + SEPARADOR_MEDIO + "SISTEMA DE GESTIÓN DE INFORMACIÓN PARA ECOPARQUES" + SEPARADOR_MEDIO);
-            System.out.print("\nIngrese el nombre de usuario: ");
-            String usuario = LecturaPorConsola.leerString();
+            printLine("\n" + SEPARADOR_MEDIO + "SISTEMA DE GESTIÓN DE INFORMACIÓN PARA ECOPARQUES" + SEPARADOR_MEDIO);
+            print("Ingrese el nombre de usuario: ");
+            String usuario = InOut.leerString();
             
-            System.out.print("\nIngrese la contraseña: ");
-            String contra = LecturaPorConsola.leerString();
+            print("Ingrese la contraseña: ");
+            String contra = InOut.leerString();
             
             Empleado e = s.existeEmpleado(usuario,contra);
 
@@ -73,7 +74,7 @@ public class SistemaSerializable {
                 if (usuario.equals("0") && contra.equals("0")) {
                     break;
                 }
-                System.err.println("Error: La combinacion usuario/contraseña ingresada no es valida.\n");
+                printError("La combinacion usuario/contraseña ingresada no es valida");
             } else {
                 seguir = e.ingresar(s);
             }

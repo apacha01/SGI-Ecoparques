@@ -2,7 +2,7 @@
 package ecoparque;
 
 import static clasesAuxiliares.Constantes.*;
-import static clasesAuxiliares.LecturaPorConsola.*;
+import static clasesAuxiliares.InOut.*;
 import clasesAuxiliares.Clima;
 import clasesAuxiliares.Vegetacion;
 import clasesAuxiliares.Continente;
@@ -36,7 +36,7 @@ public class Administrador extends Empleado {
      */
     @Override
     public void mostrarDatos(){
-        System.out.println("Tipo de usuario: ADMINISTRADOR");
+        printLine("Tipo de usuario: ADMINISTRADOR");
         super.mostrarDatos();
     }
     
@@ -64,30 +64,30 @@ public class Administrador extends Empleado {
      */
     @Override
     public void printMenu() {
-        System.out.println("\n" + SEPARADOR_MEDIO + "MENU DE ADMINISTRADOR" + SEPARADOR_MEDIO);
+        printLine("\n" + SEPARADOR_MEDIO + "MENU DE ADMINISTRADOR" + SEPARADOR_MEDIO);
         super.printMenu();
-        System.out.println(DAR_ALTA_EMPLEADO + ". Dar de alta un empleado.");
-        System.out.println(DAR_BAJA_EMPLEADO + ". Dar de baja un empleado.");
-        System.out.println(DAR_ALTA_ESPECIE + ". Dar de alta una especie.");
-        System.out.println(DAR_BAJA_ESPECIE + ". Dar de baja una especie.");
-        System.out.println(REGISTRAR_ZONA + ". Registrar zona.");
-        System.out.println(INHABILITAR_ZONA + ". Inhabilitar zona.");
-        System.out.println(REGISTRAR_HABITAT + ". Registrar habitat.");
-        System.out.println(INHABILITAR_HABITAT + ". Inhabilitar habitat.");
-        System.out.println(REGISTRAR_INTINERARIO + ". Registrar intinerario.");
-        System.out.println(INHABILITAR_INTINERARIO + ". Inhabilitar intinerario.");
-        System.out.println(ASIGNAR_ESP_CUIDADOR + ". Asignar una especie a un cuidador.");
-        System.out.println(REMOVER_ESP_CUIDADOR + ". Remover una especie a un cuidador.");
-        System.out.println(ASIGNAR_INT_GUIA + ". Asignar un intinerario a un guia.");
-        System.out.println(REMOVER_INT_GUIA + ". Remover un intinerario a un guia.");
-        System.out.println(LISTAR_EMPLEADOS_X_ANTIGUEDAD + ". Listar empleados por antiguedad.");
+        printLine(DAR_ALTA_EMPLEADO + ". Dar de alta un empleado.");
+        printLine(DAR_BAJA_EMPLEADO + ". Dar de baja un empleado.");
+        printLine(DAR_ALTA_ESPECIE + ". Dar de alta una especie.");
+        printLine(DAR_BAJA_ESPECIE + ". Dar de baja una especie.");
+        printLine(REGISTRAR_ZONA + ". Registrar zona.");
+        printLine(INHABILITAR_ZONA + ". Inhabilitar zona.");
+        printLine(REGISTRAR_HABITAT + ". Registrar habitat.");
+        printLine(INHABILITAR_HABITAT + ". Inhabilitar habitat.");
+        printLine(REGISTRAR_INTINERARIO + ". Registrar intinerario.");
+        printLine(INHABILITAR_INTINERARIO + ". Inhabilitar intinerario.");
+        printLine(ASIGNAR_ESP_CUIDADOR + ". Asignar una especie a un cuidador.");
+        printLine(REMOVER_ESP_CUIDADOR + ". Remover una especie a un cuidador.");
+        printLine(ASIGNAR_INT_GUIA + ". Asignar un intinerario a un guia.");
+        printLine(REMOVER_INT_GUIA + ". Remover un intinerario a un guia.");
+        printLine(LISTAR_EMPLEADOS_X_ANTIGUEDAD + ". Listar empleados por antiguedad.");
     }
 
     private boolean procesarOpcion(int op, Sistema s){
         boolean seguir = true;
         switch(op){
             //ASD modificar cada cosa???
-            case Integer.MIN_VALUE: System.err.println("Ocurrió un error al elegir la opción del menu."); break;
+            case Integer.MIN_VALUE: printError("Ocurrió un error al elegir la opción del menu."); break;
             case SALIR_MENU: seguir = false; break;
             case CONSULTAR_DATOS: consultarDatos(s); break;
             case DAR_ALTA_EMPLEADO: darAltaEmp(s); break;
@@ -105,7 +105,7 @@ public class Administrador extends Empleado {
             case ASIGNAR_INT_GUIA: asignarIntinerarioGuia(s); break;
             case REMOVER_INT_GUIA: removerIntinerarioGuia(s); break;
             case LISTAR_EMPLEADOS_X_ANTIGUEDAD: listarXantiguedad(s); break;
-            default: System.err.println("Error: esa opción no existe."); break;
+            default: printError("esa opción no existe"); break;
         }
         
         if (op >= 3 && op <= CANT_OPC_MENU_ADMIN-1) {
@@ -122,7 +122,7 @@ public class Administrador extends Empleado {
      */
     @Override
     public void consultarDatos(Sistema s) {
-        System.out.println("\n");
+        printLine("\n");
         
         //MUESTRO EMPLEADOS
         s.mostrarEmpleados();
@@ -152,15 +152,15 @@ public class Administrador extends Empleado {
         Date _fechaIngreso;
         boolean existeEmpleado = false;
         
-        System.out.println("\n¿Qué tipo de empleado desea ingresar al sistema?\n");
-        System.out.println("1. Cuidador\n2. Guía\n3. Salir");
+        printLine("\n¿Qué tipo de empleado desea ingresar al sistema?\n");
+        printLine("1. Cuidador\n2. Guía\n3. Salir");
         opc = leerInt(3);
         
         if (opc == 3) return;
         
         do {
             if (existeEmpleado) {
-                System.err.println("Error: Ese empleado ya esta registrado en el sistema, no se puede repetir.");
+                printError("Ese empleado ya esta registrado en el sistema, no se puede repetir");
             }
             _nomUsuario = pedirUsuario();
             existeEmpleado = true;
@@ -179,7 +179,7 @@ public class Administrador extends Empleado {
                 e = new Guia(_nomUsuario,_contra,_nombre,_direccion,_telefono, _fechaIngreso);
                 break;
             case 3: return; //NO DEBERIA SER NECESARIO
-            default: System.err.println("Error al dar de alta empleado."); break;
+            default: printError("Error al dar de alta empleado"); break;
         }
         if (e != null) s.agregarEmpleado(e);
     }
@@ -189,9 +189,9 @@ public class Administrador extends Empleado {
         Empleado e = null;
         
         while(true){
-            System.out.println("\n¿Qué empleado desea dar de baja?");
+            printLine("\n¿Qué empleado desea dar de baja?");
             s.mostrarEmpleados();
-            System.out.print("\nIngrese el nombre de usuario del empleado que desea elminiar (0 para salir): ");
+            print("Ingrese el nombre de usuario del empleado que desea elminiar (0 para salir): ");
             empBaja = leerString();
             if (empBaja.equals("0")) break;
             e = s.existeEmpleado(empBaja);
@@ -217,7 +217,7 @@ public class Administrador extends Empleado {
         
         do {
             if (hay) {
-                System.err.println("Error: Ese nombre cientifico ya existe en el sistema, no se puede repetir.");
+                printError("Ese nombre cientifico ya existe en el sistema, no se puede repetir");
             }
             nomCient = pedirNombreCientificoEspecie();
             hay = true;
@@ -228,7 +228,7 @@ public class Administrador extends Empleado {
         cuidadores = pedirCuidadores(s);
         
         if (cuidadores.isEmpty()) {
-            System.err.println("Error: No se puede dar de alta una especie sin un empleado que la cuide.");
+            printError("No se puede dar de alta una especie sin un empleado que la cuide");
             return;
         }
         
@@ -240,7 +240,7 @@ public class Administrador extends Empleado {
         }
         
         //PARA ZONAS
-        System.out.print("\n¿Existe alguna zona en la que se encuentre esta especie? (s/n): ");
+        print("¿Existe alguna zona en la que se encuentre esta especie? (s/n): ");
         hay = leerBoolean();
         if (hay) {
             Zona zona = pedirZona(s);
@@ -251,7 +251,7 @@ public class Administrador extends Empleado {
         }
         
         //PARA HABITATS
-        System.out.print("\n¿Existe algun habitat en el que se encuentre esta especie? (s/n): ");
+        print("¿Existe algun habitat en el que se encuentre esta especie? (s/n): ");
         hay = leerBoolean();
         if (hay) {
             ArrayList<Habitat> habitats = pedirHabitats(s);
@@ -266,9 +266,9 @@ public class Administrador extends Empleado {
         Especie e = null;
         
         while(true){
-            System.out.println("\n¿Qué especie desea dar de baja?");
+            printLine("¿Qué especie desea dar de baja?");
             s.mostrarEspecies();
-            System.out.print("\nIngrese el nombre cientifico de la especie que desea elminiar (0 para salir): ");
+            print("Ingrese el nombre cientifico de la especie que desea elminiar (0 para salir): ");
             espBaja = leerString();
             
             if (espBaja.equals("0")) break;
@@ -291,21 +291,21 @@ public class Administrador extends Empleado {
                 String nomZona;
                 Double extZona;
                 
-                System.out.print("\nIngrese el nombre de la zona: ");
+                print("Ingrese el nombre de la zona: ");
                 nomZona = leerString();
                 
-                System.out.print("\nExtensión de la zona en m2: ");
+                print("Extensión de la zona en m2: ");
                 //USO LA VARIABLE tieneEspecie PARA NO CREAR OTRA, EL NOMBRE NO COINCIDE CON LA FUNCION QUE CUMPLE
                 do {
                     if (tieneEspecie) {
-                        System.err.println("Error: La extension no puede ser menor a 0.");
+                        printError("La extension no puede ser menor a 0");
                     }
                     extZona = leerDouble();
                     tieneEspecie = true;
                 } while (extZona < 0);
                 
                 
-                System.out.print("\n¿Esta zona tiene especies? (s/n): ");
+                print("¿Esta zona tiene especies? (s/n): ");
                 tieneEspecie = leerBoolean();
                 
                 if (tieneEspecie){
@@ -324,7 +324,7 @@ public class Administrador extends Empleado {
                 ArrayList<Continente> conts;
                 ArrayList<Especie> esps;
                 
-                System.out.print("\nIngrese el nombre del habitat: ");
+                print("Ingrese el nombre del habitat: ");
                 nom = leerString();
                 
                 c = pedirClima();
@@ -332,7 +332,7 @@ public class Administrador extends Empleado {
                 conts = pedirContinentes();
                 h = new Habitat(nom,c,v,conts);
                 
-                System.out.print("\n¿Hay especies en este habitat? (s/n): ");
+                print("¿Hay especies en este habitat? (s/n): ");
                 tieneEspecie = leerBoolean();
                 if (tieneEspecie) {
                     esps = pedirEspecies(sis);
@@ -362,7 +362,7 @@ public class Administrador extends Empleado {
                 sis.agregarIntinerario(i);
                 
                 break;
-            default: System.err.println("Error al registrar, no es ni una zona ni un habitat ni un intinerario."); break;
+            default: printError("Error al registrar, no es ni una zona ni un habitat ni un intinerario."); break;
         }
     }
 
@@ -373,9 +373,9 @@ public class Administrador extends Empleado {
                 Zona z = null;
 
                 while(true){
-                    System.out.println("\n¿Qué zona desea inhabilitar?");
+                    printLine("¿Qué zona desea inhabilitar?");
                     sis.mostrarZonas();
-                    System.out.print("\nIngrese el nombre de la zona que desea elminiar (0 para salir): ");
+                    print("Ingrese el nombre de la zona que desea elminiar (0 para salir): ");
                     inhabilitarZona = leerString();
 
                     if (inhabilitarZona.equals("0")) break;
@@ -387,7 +387,7 @@ public class Administrador extends Empleado {
                             break;
                         }
                     }
-                    else { System.err.println("Error: Esa zona no existe."); }
+                    else { printError("Esa zona no existe"); }
                 }
 
                 if (z != null) sis.eliminarZona(z);
@@ -399,9 +399,9 @@ public class Administrador extends Empleado {
                 Habitat h = null;
 
                 while(true){
-                    System.out.println("\n¿Qué habitats desea inhabilitar?");
+                    printLine("¿Qué habitats desea inhabilitar?");
                     sis.mostrarHabitats();
-                    System.out.print("\nIngrese el nombre del habitat que desea elminiar (0 para salir): ");
+                    print("Ingrese el nombre del habitat que desea elminiar (0 para salir): ");
                     inhabilitarHabitat = leerString();
 
                     if (inhabilitarHabitat.equals("0")) break;
@@ -414,7 +414,7 @@ public class Administrador extends Empleado {
                         }
                     }
                     else{
-                        System.err.println("Error: Ese habitat no existe.");
+                        printError("Ese habitat no existe");
                     }
                 }
 
@@ -427,9 +427,9 @@ public class Administrador extends Empleado {
                 Intinerario i = null;
                 
                 while(true){
-                    System.out.println("\n¿Qué intinerario desea inhabilitar?");
+                    printLine("¿Qué intinerario desea inhabilitar?");
                     sis.mostrarIntinerarios();
-                    System.out.print("\nIngrese el codigo del intinerario que desea elminiar (0 para salir): ");
+                    print("Ingrese el codigo del intinerario que desea elminiar (0 para salir): ");
                     inhabilitarCod = leerString();
 
                     if (inhabilitarCod.equals("0")) break;
@@ -447,7 +447,7 @@ public class Administrador extends Empleado {
                 
                 break;
                 
-            default: System.err.println("Error al inhabilitar, no es ni una zona ni un habitat ni un intinerario."); break;
+            default: printError("Error al inhabilitar, no es ni una zona ni un habitat ni un intinerario."); break;
         }
     }
 
@@ -476,7 +476,7 @@ public class Administrador extends Empleado {
             if (c != null) {
                 do {
                     c.mostrarEspeciesCuidadas();
-                    System.out.print("\nIngrese el nombre cientifico de la especie que quiera remover (0 para salir): ");
+                    print("Ingrese el nombre cientifico de la especie que quiera remover (0 para salir): ");
                     esp = leerString();
 
                     e = s.existeEspecie(esp);
@@ -488,14 +488,14 @@ public class Administrador extends Empleado {
                         e.quitarCuidador(c);
                     }
                     else{
-                        System.err.println("Error: Esa especie no existe");
+                        printError("Esa especie no existe");
                     }
                     
-                    System.out.print("\n¿Quiere remover otra especie de este cuidador? (s/n): ");
+                    print("¿Quiere remover otra especie de este cuidador? (s/n): ");
                     quitarOtra = leerBoolean();
                 } while (quitarOtra);
                 
-                System.out.print("\n¿Quiere remover una especie de otro cuidador? (s/n): ");
+                print("¿Quiere remover una especie de otro cuidador? (s/n): ");
                 quitarOtra = leerBoolean();
             }
             else {
@@ -525,7 +525,7 @@ public class Administrador extends Empleado {
         g = pedirGuia(s);
         if (g == null) return;
         if (g.tieneIntinerarios()){
-            System.err.println("Error: Este guia no tiene intinerarios");
+            printError("Este guia no tiene intinerarios");
             return;
         }
         
@@ -547,16 +547,16 @@ public class Administrador extends Empleado {
             }
         });
         
-        System.out.println("\n" + SEPARADOR_MEDIO + "Empleados" + SEPARADOR_MEDIO);
+        printLine("\n" + SEPARADOR_MEDIO + "Empleados" + SEPARADOR_MEDIO);
         for (Empleado e1 : e) {
             e1.mostrarDatos();
-            System.out.println(SEPARADOR);
+            printLine(SEPARADOR);
         }
     }
 
     @Override
     public void eliminarme() {
-        System.err.println("Error: No se puede dar de baja al administrador.");
+        printError("No se puede dar de baja al administrador");
     }
     
 }

@@ -2,6 +2,7 @@
 package ecoparque;
 
 import static clasesAuxiliares.Constantes.*;
+import static clasesAuxiliares.InOut.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -331,10 +332,10 @@ public class Sistema implements Serializable {
      * Muestra los empleados en el sistema por consola
      */
     public void mostrarEmpleados(){
-        System.out.println("\n" + SEPARADOR_MEDIO + "Empleados" + SEPARADOR_MEDIO);
+        printLine("\n" + SEPARADOR_MEDIO + "Empleados" + SEPARADOR_MEDIO);
         for (int i = 0; i < empleados.size(); i++) {
             empleados.get(i).mostrarDatos();
-            System.out.println(SEPARADOR);
+            printLine(SEPARADOR);
         }
     }
     
@@ -342,12 +343,12 @@ public class Sistema implements Serializable {
      * Muestra los cuidadores en el sistema por consola
      */
     public void mostrarCuidadores(){
-        System.out.println("\n" + SEPARADOR_MEDIO + "Cuidadores" + SEPARADOR_MEDIO);
+        printLine("\n" + SEPARADOR_MEDIO + "Cuidadores" + SEPARADOR_MEDIO);
         ArrayList<Cuidador> cuidadores = obtenerCuidadores();
         
         for (int i = 0; i < cuidadores.size(); i++) {
             cuidadores.get(i).mostrarDatos();
-            System.out.println(SEPARADOR);
+            printLine(SEPARADOR);
         }
     }
     
@@ -355,12 +356,12 @@ public class Sistema implements Serializable {
      * Muestra los guias en el sistema por consola
      */
     public void mostrarGuias(){
-        System.out.println("\n" + SEPARADOR_MEDIO + "Guias" + SEPARADOR_MEDIO);
+        printLine("\n" + SEPARADOR_MEDIO + "Guias" + SEPARADOR_MEDIO);
         ArrayList<Guia> guias = obtenerGuias();
         
         for (Guia guia : guias) {
             guia.mostrarDatos();
-            System.out.println(SEPARADOR);
+            printLine(SEPARADOR);
         }
     }
     
@@ -368,13 +369,13 @@ public class Sistema implements Serializable {
      * Muestra las especies en el sistema por consola
      */
     public void mostrarEspecies() {
-        System.out.println("\n" + SEPARADOR_MEDIO + "Especies" + SEPARADOR_MEDIO);
+        printLine("\n" + SEPARADOR_MEDIO + "Especies" + SEPARADOR_MEDIO);
         if (especies.isEmpty()) {
-            System.out.println("No hay especies registradas en el sistema.");
+            printLine("No hay especies registradas en el sistema.");
         } else {
             for (Especie especie : especies) {
                 especie.mostrarDatos();
-                System.out.println(SEPARADOR);
+                printLine(SEPARADOR);
             }
         }
     }
@@ -383,13 +384,13 @@ public class Sistema implements Serializable {
      * Muestra los habitats en el sistema por consola
      */
     public void mostrarHabitats (){
-        System.out.println("\n" + SEPARADOR_MEDIO + "Habitats" + SEPARADOR_MEDIO);
+        printLine("\n" + SEPARADOR_MEDIO + "Habitats" + SEPARADOR_MEDIO);
         if (habitats.isEmpty()) {
-            System.out.println("No hay habitats registradas en el sistema.");
+            printLine("No hay habitats registradas en el sistema.");
         } else {
             for (Habitat habitat : habitats) {
                 habitat.mostrarDatos();
-                System.out.println(SEPARADOR);
+                printLine(SEPARADOR);
             }
         }
     }
@@ -397,14 +398,14 @@ public class Sistema implements Serializable {
     /**
      * Muestra las zonas en el sistema por consola
      */
-    public void mostrarZonas (){
-        System.out.println("\n" + SEPARADOR_MEDIO + "Zonas" + SEPARADOR_MEDIO);
+    public void mostrarZonas (){        
+        printLine("\n" + SEPARADOR_MEDIO + "Zonas" + SEPARADOR_MEDIO);
         if (zonas.isEmpty()) {
-            System.out.println("No hay zonas registradas en el sistema.");
+            printLine("No hay zonas registradas en el sistema.");
         } else {
             for (Zona zona : zonas) {
                 zona.mostrarDatos();
-                System.out.println(SEPARADOR);
+                printLine(SEPARADOR);
             }
         }
     }
@@ -413,13 +414,13 @@ public class Sistema implements Serializable {
      * Muestra los intinerarios en el sistema por consola
      */
     public void mostrarIntinerarios (){
-        System.out.println("\n" + SEPARADOR_MEDIO + "Intinerarios" + SEPARADOR_MEDIO);
+        printLine("\n" + SEPARADOR_MEDIO + "Intinerarios" + SEPARADOR_MEDIO);
         if (ints.isEmpty()) {
-            System.out.println("No hay intinerarios registradas en el sistema.");
+            printLine("No hay intinerarios registradas en el sistema.");
         } else {
             for (Intinerario int1 : ints) {
                 int1.mostrarDatos();
-                System.out.println(SEPARADOR);
+                printLine(SEPARADOR);
             }
         }
     }

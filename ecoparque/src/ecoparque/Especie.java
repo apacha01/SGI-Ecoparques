@@ -1,6 +1,7 @@
 
 package ecoparque;
 
+import static clasesAuxiliares.InOut.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -88,22 +89,22 @@ public class Especie implements Serializable{
      * Muestra los datos de una especie
      */
     public void mostrarDatos() {
-        System.out.println("Nombre de la Especie: " + nomEspecie);
-        System.out.println("Nombre Científico: " + nomCientifico);
-        System.out.println("Descripción:\n\t" + descripcion);
+        printLine("Nombre de la Especie: " + nomEspecie);
+        printLine("Nombre Científico: " + nomCientifico);
+        printLine("Descripción:\n\t" + descripcion);
         if (!cuidadores.isEmpty()) {
-            System.out.println("Esta especie es cuidada por:");
+            printLine("Esta especie es cuidada por:");
             for (int i = 0; i < cuidadores.size(); i++) {
-                System.out.println("\t" + cuidadores.get(i).getNombre());
+                printLine("\t" + cuidadores.get(i).getNombre());
             }
         }
         if (!habitats.isEmpty()) {
-            System.out.println("Esta especie se encuentra en " + (habitats.size() > 1 ? "los habitats" : "el habitat") + ":");
+            printLine("Esta especie se encuentra en " + (habitats.size() > 1 ? "los habitats" : "el habitat") + ":");
             for (int i = 0; i < habitats.size(); i++) {
-                System.out.println("\t" + habitats.get(i).getNom());
+                printLine("\t" + habitats.get(i).getNom());
             }
         }
-        if(zona != null) System.out.println("Zona en la que se encuentra la especie: " + zona.getNombre());
+        if(zona != null) printLine("Zona en la que se encuentra la especie: " + zona.getNombre());
     }
 
     /**

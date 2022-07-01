@@ -1,6 +1,7 @@
 
 package ecoparque;
 
+import static clasesAuxiliares.InOut.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -82,12 +83,12 @@ public class Zona implements Serializable{
      *
      */
     public void mostrarDatos(){
-        System.out.println("Nombre de la Zona: " + nombre);
-        System.out.println("Extensión de la Zona: " + extension + " m2");
+        printLine("Nombre de la Zona: " + nombre);
+        printLine("Extensión de la Zona: " + extension + " m2");
         if (!especies.isEmpty()) {
-            System.out.println("Esta zona esta habitada por las siguientes especies:");
+            printLine("Esta zona esta habitada por las siguientes especies:");
             for (Especie especie : especies) {
-                System.out.println("\t" + especie.getNomEspecie() + " (" + especie.getNomCientifico() + ")");
+                printLine("\t" + especie.getNomEspecie() + " (" + especie.getNomCientifico() + ")");
             }
         }
     }

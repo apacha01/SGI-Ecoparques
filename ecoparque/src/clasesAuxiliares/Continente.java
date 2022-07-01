@@ -2,6 +2,7 @@
 package clasesAuxiliares;
 
 import static clasesAuxiliares.Constantes.*;
+import static clasesAuxiliares.InOut.*;
 import java.io.Serializable;
 
 /**
@@ -18,7 +19,7 @@ public class Continente implements Serializable{
      */
     public Continente(int continente) {
         if(isContinente(continente)) this.continente = continente;
-        else { System.err.println("Error: ese continente no existe."); }
+        else { printError("ese continente no existe"); }
     }
     
     /**

@@ -5,6 +5,7 @@
 package ecoparque;
 
 import clasesAuxiliares.Duracion;
+import static clasesAuxiliares.InOut.*;
 import java.io.Serializable;
 
 /**
@@ -70,12 +71,12 @@ public class Intinerario implements Serializable{
      *
      */
     public void mostrarDatos(){
-        System.out.println("Codigo del intinerario: " + codigo);
-        System.out.println("Duracion del intinerario: " + duracion.toStringDuracion());
-        System.out.println("Longitud del intinerario: " + longitud + " m");
-        System.out.println("Numero maximo de visitantes del intinerario: " + maxVisitantes);
-        System.out.println("Cantidad de especies que visita el intinerario: " + numEspeciesVisita);
-        System.out.println("¿Se puede hacer este recorrido en este momento? " + 
+        printLine("Codigo del intinerario: " + codigo);
+        printLine("Duracion del intinerario: " + duracion.toStringDuracion());
+        printLine("Longitud del intinerario: " + longitud + " m");
+        printLine("Numero maximo de visitantes del intinerario: " + maxVisitantes);
+        printLine("Cantidad de especies que visita el intinerario: " + numEspeciesVisita);
+        printLine("¿Se puede hacer este recorrido en este momento? " + 
                 (ocupado ? "Si" : "No, en este momento ningun guia realiza este recorrido"));
     }
     

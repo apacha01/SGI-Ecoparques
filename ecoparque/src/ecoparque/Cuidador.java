@@ -2,6 +2,7 @@
 package ecoparque;
 
 import static clasesAuxiliares.Constantes.*;
+import static clasesAuxiliares.InOut.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -42,12 +43,12 @@ public class Cuidador extends NoAdministrador{
      */
     @Override
     public void mostrarDatos(){
-        System.out.println("Tipo de usuario: CUIDADOR");
+        printLine("Tipo de usuario: CUIDADOR");
         super.mostrarDatos();
         if (!especiesCuidadas.isEmpty()) {
-            System.out.println("Especies que cuida:");
+            printLine("Especies que cuida:");
             for (int i = 0; i < especiesCuidadas.size(); i++) {
-                System.out.println("\t" + especiesCuidadas.get(i).getNomEspecie() + " (Fecha en la que tomo esta especie: " + 
+                printLine("\t" + especiesCuidadas.get(i).getNomEspecie() + " (Fecha en la que tomo esta especie: " + 
                         tomaEspecie.get(i) + ")");
             }
         }
@@ -63,7 +64,7 @@ public class Cuidador extends NoAdministrador{
             tomaEspecie.add(new Date());
         }
         else{
-            System.err.println("Error: Este cuidador ya cuida la especie " + e.getNomEspecie() + " (" + e.getNomCientifico() + ")");
+            printError("Este cuidador ya cuida la especie " + e.getNomEspecie() + " (" + e.getNomCientifico() + ")");
         }
     }
     
@@ -93,7 +94,7 @@ public class Cuidador extends NoAdministrador{
                 tomaEspecie.add(new Date());
             }
             else{
-                System.err.println("Error: Este cuidador ya cuida la especie " + es.get(i).getNomEspecie());
+                printError("Este cuidador ya cuida la especie " + es.get(i).getNomEspecie());
             }
         }
     }
@@ -102,9 +103,9 @@ public class Cuidador extends NoAdministrador{
      *
      */
     public void mostrarEspeciesCuidadas(){
-        System.out.println("Especies del cuidador " + this.getNombre());
+        printLine("Especies del cuidador " + this.getNombre());
         for (Especie especieCuidada : especiesCuidadas) {
-            System.out.println("\t" + especieCuidada.getNomCientifico());
+            printLine("\t" + especieCuidada.getNomCientifico());
         }
     }
     
@@ -113,7 +114,7 @@ public class Cuidador extends NoAdministrador{
      */
     @Override
     public void printMenu(){
-        System.out.println("\n" + SEPARADOR_MEDIO + "MENU DE CUIDADOR" + SEPARADOR_MEDIO);
+        printLine("\n" + SEPARADOR_MEDIO + "MENU DE CUIDADOR" + SEPARADOR_MEDIO);
         super.printMenu();
     }
     
@@ -123,8 +124,8 @@ public class Cuidador extends NoAdministrador{
      */
     @Override
     public void consultarDatos(Sistema s) {
-        System.out.println(SEPARADOR_MEDIO + "MIS DATOS" + SEPARADOR_MEDIO);
+        printLine(SEPARADOR_MEDIO + "MIS DATOS" + SEPARADOR_MEDIO);
         mostrarDatos();
-        System.out.println(SEPARADOR);
+        printLine(SEPARADOR);
     }
 }
