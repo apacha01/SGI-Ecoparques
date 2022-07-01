@@ -22,24 +22,6 @@ public class Continente implements Serializable{
     }
     
     /**
-     * Get the value of continente
-     *
-     * @return the value of continente
-     */
-    public int getContinente() {
-        return continente;
-    }
-
-    /**
-     * Set the value of continente
-     *
-     * @param continente new value of continente
-     */
-    public void setContinente(int continente) {
-        this.continente = continente;
-    }
-    
-    /**
      *
      * @param i
      * @return
@@ -55,6 +37,19 @@ public class Continente implements Serializable{
      */
     public static String toStringContinente(int cont){
         switch(cont){
+            case AMERICA: return "America";
+            case AFRICA: return "Africa";
+            case ASIA: return "Asia";
+            case ANTARTIDA: return "Antartida";
+            case OCEANIA: return "Oceania";
+            case EUROPA: return "Europa";
+            default: return "Error: No es un continente.";
+        }
+    }
+    
+    @Override
+    public String toString(){
+        switch(continente){
             case AMERICA: return "America";
             case AFRICA: return "Africa";
             case ASIA: return "Asia";

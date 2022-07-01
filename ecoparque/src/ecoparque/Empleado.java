@@ -39,40 +39,8 @@ public abstract class Empleado implements Serializable{
      *
      * @return
      */
-    public String getUsuario() {
-        return usuario;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getContra() {
-        return contra;
-    }
-
-    /**
-     *
-     * @return
-     */
     public String getNombre() {
         return nombre;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getDireccion() {
-        return direccion;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getTelefono() {
-        return telefono;
     }
 
     /**
@@ -83,6 +51,13 @@ public abstract class Empleado implements Serializable{
         return fechaIngreso;
     }
     
+    public boolean coincideUsuario(String usuario){
+        return this.usuario.equals(usuario);
+    }
+    
+    public boolean coincideContra(String contra){
+        return this.contra.equals(contra);
+    }
     /**
      *
      */
@@ -115,4 +90,9 @@ public abstract class Empleado implements Serializable{
      * @return
      */
     public abstract boolean ingresar(Sistema s);
+    
+    /**
+     *
+     */
+    public abstract void eliminarme();
 }

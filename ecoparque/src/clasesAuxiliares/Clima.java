@@ -37,15 +37,6 @@ public class Clima implements Serializable{
     public int getClimaActual() {
         return climaActual;
     }
-
-    /**
-     * Set the value of climaActual
-     *
-     * @param climaActual new value of climaActual
-     */
-    public void setClimaActual(int climaActual) {
-        this.climaActual = climaActual;
-    }
     
     /**
      *
@@ -54,6 +45,18 @@ public class Clima implements Serializable{
      */
     public static String toStringClima(int clima){
         switch(clima){
+            case SOLEADO: return "Soleado";
+            case NUBLADO: return "Nublado";
+            case LLUVIA: return "Lluvia";
+            case TORMENTA: return "Tormenta";
+            case TEMPLADO: return "Templado";
+            default: return "";
+        }
+    }
+    
+    @Override
+    public String toString(){
+        switch(climaActual){
             case SOLEADO: return "Soleado";
             case NUBLADO: return "Nublado";
             case LLUVIA: return "Lluvia";

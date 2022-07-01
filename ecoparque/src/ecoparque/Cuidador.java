@@ -29,13 +29,12 @@ public class Cuidador extends NoAdministrador{
         tomaEspecie = new ArrayList<>();
         especiesCuidadas = new ArrayList<>();
     }
-
-    /**
-     *
-     * @return
-     */
-    public ArrayList<Especie> getEspeciesCuidadas() {
-        return especiesCuidadas;
+    
+    @Override
+    public void eliminarme(){
+        for (Especie especieCuidada : especiesCuidadas) {
+            especieCuidada.quitarCuidador(this);
+        }
     }
     
     /**

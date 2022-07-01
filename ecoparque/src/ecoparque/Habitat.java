@@ -67,48 +67,9 @@ public class Habitat implements Serializable{
     public String getNom() {
         return nom;
     }
-
-    /**
-     * Set the value of nom
-     *
-     * @param nom new value of nom
-     */
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public int getClima() {
-        return clima.getClimaActual();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public int getVegPredominante() {
-        return vegPredominante.getVeg();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public ArrayList<Continente> getConts() {
-        return conts;
-    }
-
-    /**
-     *
-     * @param i
-     * @return
-     */
-    public int getIthCont(int i){
-        if (conts.isEmpty()) return 0;
-        return conts.get(i).getContinente();
+    
+    public boolean coincideNombre(String nombre){
+        return nom.equals(nombre);
     }
     
     /**
@@ -116,12 +77,11 @@ public class Habitat implements Serializable{
      */
     public void mostrarDatos(){
         System.out.println("Nombre del habitat: " + nom);
-        System.out.println("Clima actual del habitat: " + toStringClima(clima.getClimaActual()));
-        System.out.println("Tipo de vegetacóión del habitat: " + toStringVegetacion(vegPredominante.getVeg()));
+        System.out.println("Clima actual del habitat: " + clima.toString());
+        System.out.println("Tipo de vegetacóión del habitat: " + vegPredominante.toString());
         System.out.println("Este habitat se encuentra en " + (conts.size() > 1 ? "los continentes" : "el continente") + ":");
         for (Continente cont : conts) {
-            System.out.println("\t" + toStringContinente(cont.getContinente()));
+            System.out.println("\t" + cont.toString());
         }
     }
-    
 }

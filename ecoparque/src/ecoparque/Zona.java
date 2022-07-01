@@ -36,29 +36,8 @@ public class Zona implements Serializable{
         this.extension = extension;
         this.especies = especies;
         for (Especie esp : especies) {
-            try {
-                esp.getZona().quitarEspecie(esp);   //Quito la especie de la zona en la q estaba (ya que solo puede estar en 1)
-            }catch(NullPointerException ex) {}      //Si no tiene zona, zona == null. Asiq trato la excepcion
             esp.asignarZona(this);                  //La agrego en la que acaban de ingresar
         }
-    }
-
-    /**
-     * Get the value of extension
-     *
-     * @return the value of extension
-     */
-    public double getExtension() {
-        return extension;
-    }
-
-    /**
-     * Set the value of extension
-     *
-     * @param extension new value of extension
-     */
-    public void setExtension(double extension) {
-        this.extension = extension;
     }
 
     /**
@@ -70,15 +49,10 @@ public class Zona implements Serializable{
         return nombre;
     }
 
-    /**
-     * Set the value of nombre
-     *
-     * @param nombre new value of nombre
-     */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public boolean coincideNombre(String nom){
+        return nombre.equalsIgnoreCase(nom);
     }
-
+    
     /**
      * Agrega una especie a la zona
      * @param e especie a agregar en la lista de la zona
@@ -93,15 +67,6 @@ public class Zona implements Serializable{
      */
     public void quitarEspecie(Especie e){
         especies.remove(e);
-    }
-    
-    /**
-     * Get the value of especies
-     *
-     * @return the value of especies
-     */
-    public ArrayList<Especie> getEspecies(){
-        return especies;
     }
     
     /**
@@ -124,6 +89,12 @@ public class Zona implements Serializable{
             for (Especie especie : especies) {
                 System.out.println("\t" + especie.getNomEspecie() + " (" + especie.getNomCientifico() + ")");
             }
+        }
+    }
+    
+    public void eliminarme(){
+        for (Especie especie : especies) {
+            especie.quitarZona();
         }
     }
 }

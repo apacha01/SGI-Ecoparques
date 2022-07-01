@@ -54,51 +54,16 @@ public class Intinerario implements Serializable{
     }
     
     /**
-     * Get the value of numEspeciesVisita
-     *
-     * @return the value of numEspeciesVisita
-     */
-    public int getNumEspeciesVisita() {
-        return numEspeciesVisita;
-    }
-
-
-    /**
-     * Get the value of maxVisitantes
-     *
-     * @return the value of maxVisitantes
-     */
-    public int getMaxVisitantes() {
-        return maxVisitantes;
-    }
-
-
-    /**
-     * Get the value of longitud
-     *
-     * @return the value of longitud
-     */
-    public double getLongitud() {
-        return longitud;
-    }
-
-
-    /**
-     * Get the value of duracion
-     *
-     * @return the value of duracion
-     */
-    public Duracion getDuracion() {
-        return duracion;
-    }
-    
-    /**
      * Get the value of codigo
      *
      * @return the value of codigo
      */
     public String getCodigo() {
         return codigo;
+    }
+    
+    public boolean coincideCodigo(String cod){
+        return codigo.equals(cod);
     }
     
     /**

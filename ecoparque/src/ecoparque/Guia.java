@@ -28,13 +28,9 @@ public class Guia extends NoAdministrador {
         intinerarioAsignado = new ArrayList<>();
         intinerarios = new ArrayList<>();
     }
-
-    /**
-     *
-     * @return
-     */
-    public ArrayList<Intinerario> getIntinerarios() {
-        return intinerarios;
+    
+    public boolean tieneIntinerarios(){
+        return intinerarios.isEmpty();
     }
     
     /**
@@ -76,6 +72,10 @@ public class Guia extends NoAdministrador {
         }
     }
     
+    public boolean tieneIntinerario(Intinerario i){
+        return intinerarios.contains(i);
+    }
+    
     /**
      *
      */
@@ -110,6 +110,11 @@ public class Guia extends NoAdministrador {
         System.out.println(SEPARADOR_MEDIO + "MIS DATOS" + SEPARADOR_MEDIO);
         mostrarDatos();
         System.out.println(SEPARADOR);
+    }
+
+    @Override
+    public void eliminarme() {
+        intinerarios.clear();
     }
     
 }

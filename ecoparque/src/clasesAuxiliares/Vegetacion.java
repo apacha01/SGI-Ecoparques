@@ -62,4 +62,15 @@ public class Vegetacion implements Serializable{
             default: return "";
         }
     }
+    
+    @Override
+    public String toString(){
+        switch(veg){
+            case PASTIZAL: return "Pastizal";
+            case BOSQUE: return "Bosque";
+            case SABANA: return "Sabana";
+            case DESIERTO: return "Desierto";
+            default: return "";
+        }
+    }
 }

@@ -304,16 +304,10 @@ public class LecturaPorConsola {
      * @return true si esta seguro y false si se retracto
      */
     public static boolean confirmarDecision(){
-        boolean decision = false;
-        char c = 'a';
+        boolean decision = true;
         
-        while(c != 's' && c != 'S' && c != 'n' && c != 'N'){
-            System.out.print("\n¿Está seguro que desea realizar esta acción? (s/n): ");
-            c = leerChar();
-        }
-        
-        if (c == 's' || c == 'S') decision = true;
-        if (c == 'n' || c == 'N') decision = false;
+        System.out.print("\n¿Está seguro que desea realizar esta acción? (s/n): ");
+        decision = leerBoolean();
         
         return decision;
     }
@@ -375,7 +369,7 @@ public class LecturaPorConsola {
         boolean hayMas;
         
         
-        if (s.obtenerCuidadores().isEmpty()) {
+        if (s.hayCuidadores()) {
             System.err.println("Error: No hay cuidadores registrados en el sistema.");
             return c;
         }
@@ -424,7 +418,7 @@ public class LecturaPorConsola {
         String cuidador;
         
         
-        if (s.obtenerCuidadores().isEmpty()) {
+        if (s.hayCuidadores()) {
             System.err.println("Error: No hay cuidadores registrados en el sistema.");
             return e;
         }
@@ -458,7 +452,7 @@ public class LecturaPorConsola {
         boolean hayMas;
         
         do{
-            if (s.getZonas().isEmpty()) {
+            if (s.hayZonas()) {
                 e = null;
                 hayMas = false;
                 System.err.println("Error: No hay zonas en el sistema.");
@@ -495,7 +489,7 @@ public class LecturaPorConsola {
         boolean hayMas;
         
         do{
-            if (s.getHabitats().isEmpty()) {
+            if (s.hayHabitats()) {
                 System.err.println("Error: No hay habitats registrados en el sistema.");
                 return h;
             }
@@ -545,7 +539,7 @@ public class LecturaPorConsola {
         boolean hayMas;
         
         do{
-            if (s.getEspecies().isEmpty()) {
+            if (s.hayEspecies()) {
                 hayMas = false;
                 System.err.println("Error: No hay especies en el sistema.");
             }
@@ -755,7 +749,7 @@ public class LecturaPorConsola {
         boolean hayMas;
         
         do{
-            if (s.getInts().isEmpty()) {
+            if (s.hayIntinerarios()) {
                 i = null;
                 hayMas = false;
                 System.err.println("Error: No hay intinerarios en el sistema.");
@@ -792,7 +786,7 @@ public class LecturaPorConsola {
         boolean hayMas;
         
         do{
-            if (s.obtenerGuias().isEmpty()) {
+            if (s.hayGuias()) {
                 g = null;
                 hayMas = false;
                 System.err.println("Error: No hay guias en el sistema.");

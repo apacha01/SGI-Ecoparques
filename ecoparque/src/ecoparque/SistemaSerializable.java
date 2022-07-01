@@ -48,7 +48,7 @@ public class SistemaSerializable {
             //LA FECHA DE INGRESO ES LA FECHA AL MOMENTO DE REGISTRARSE
             Date fechaIngreso = new Date();
             
-            s.getEmpleados().add(new Administrador(usuario,contra,nombre,direccion,telefono,fechaIngreso));
+            s.agregarEmpleado(new Administrador(usuario,contra,nombre,direccion,telefono,fechaIngreso));
             
             try {
                 s.serializar(NOMBRE_ARCHIVO);

@@ -53,6 +53,7 @@ public class Especie implements Serializable{
      * @param z Zona donde esta la especie
      */
     public void asignarZona(Zona z){
+        if (zona != null) zona.quitarEspecie(this);
         zona = z;
     }
     
@@ -69,6 +70,10 @@ public class Especie implements Serializable{
      */
     public void asignarHabitat(Habitat h){
         habitats.add(h);
+    }
+    
+    public void quitarHabitat(Habitat h){
+        habitats.remove(h);
     }
     
     /**
@@ -116,20 +121,15 @@ public class Especie implements Serializable{
     public String getNomCientifico() {
         return nomCientifico;
     }
-
-    /**
-     *
-     * @return
-     */
-    public Zona getZona() {
-        return zona;
+    
+    public boolean coincideNomCientifico(String nomCientifico){
+        return this.nomCientifico.equals(nomCientifico);
     }
     
-    /**
-     *
-     * @return
-     */
-    public ArrayList<Cuidador> getCuidadores() {
-        return cuidadores;
+    public void eliminarme(){
+        for (Cuidador cuidador : cuidadores) {
+            cuidador.quitarEspecie(this);
+        }
+        if (zona != null) zona.quitarEspecie(this);
     }
 }

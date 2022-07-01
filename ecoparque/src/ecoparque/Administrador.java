@@ -181,7 +181,7 @@ public class Administrador extends Empleado {
             case 3: return; //NO DEBERIA SER NECESARIO
             default: System.err.println("Error al dar de alta empleado."); break;
         }
-        if (e != null) s.getEmpleados().add(e);
+        if (e != null) s.agregarEmpleado(e);
     }
 
     private void darBajaEmp(Sistema s) {
@@ -258,7 +258,7 @@ public class Administrador extends Empleado {
             if (habitats != null && !habitats.isEmpty()) nuevaEspecie.asignarHabitats(habitats);
         }
         
-        s.getEspecies().add(nuevaEspecie);
+        s.agregarEspecie(nuevaEspecie);
     }
 
     private void darBajaEsp(Sistema s) {
@@ -311,9 +311,9 @@ public class Administrador extends Empleado {
                 if (tieneEspecie){
                     ArrayList<Especie> e = pedirEspecies(sis);
                     Zona z = new Zona(nomZona,extZona,e);
-                    sis.getZonas().add(z);
+                    sis.agregarZona(z);
                 }
-                else { sis.getZonas().add(new Zona(nomZona,extZona)); }
+                else { sis.agregarZona(new Zona(nomZona,extZona)); }
                 break;
                 
             case STRING_HABITAT:
@@ -342,7 +342,7 @@ public class Administrador extends Empleado {
                     }
                 }
                 
-                sis.getHabitats().add(h);
+                sis.agregarHabitat(h);
                 break;
                 
             case STRING_INTINERARIO:
@@ -359,7 +359,7 @@ public class Administrador extends Empleado {
                 
                 Intinerario i = new Intinerario(codigo,duracion,longitud,maxVisitas,numEspeciesVisita);
                 
-                sis.getInts().add(i);
+                sis.agregarIntinerario(i);
                 
                 break;
             default: System.err.println("Error al registrar, no es ni una zona ni un habitat ni un intinerario."); break;
@@ -524,7 +524,7 @@ public class Administrador extends Empleado {
         
         g = pedirGuia(s);
         if (g == null) return;
-        if (g.getIntinerarios().isEmpty()){
+        if (g.tieneIntinerarios()){
             System.err.println("Error: Este guia no tiene intinerarios");
             return;
         }
@@ -552,6 +552,11 @@ public class Administrador extends Empleado {
             e1.mostrarDatos();
             System.out.println(SEPARADOR);
         }
+    }
+
+    @Override
+    public void eliminarme() {
+        System.err.println("Error: No se puede dar de baja al administrador.");
     }
     
 }
