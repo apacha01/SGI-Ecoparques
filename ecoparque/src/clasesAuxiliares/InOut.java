@@ -23,14 +23,27 @@ import java.util.Scanner;
  */
 public class InOut {
     //////////////////////////////////////////FUNCIONES DE ESCRITURA POR CONSOLA//////////////////////////////////////////
+
+    /**
+     *
+     * @param s
+     */
     public static void printLine(String s){
         System.out.println(s);
     }
     
+    /**
+     *
+     * @param s
+     */
     public static void print(String s){
         System.out.print("\n" + s);
     }
     
+    /**
+     *
+     * @param s
+     */
     public static void printError(String s){
         System.err.println("Error: " + s + (s.endsWith(".") ? "" : "."));
     }
